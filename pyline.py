@@ -16,9 +16,9 @@ class CodeEditorApp:
 
     def create_widgets(self):
         self.entry = tk.Entry(self.parent)
-        self.entry.grid(row=0, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+        self.entry.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
         self.lbox = tk.Listbox(self.parent,  selectmode='multiple')
-        self.lbox.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+        self.lbox.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
         self.button1 = tk.Button(self.parent, text="Insert Code",command=self.insert_code)
         self.button1.grid(row=2, column=0, padx=10, pady=5, sticky="ew")
         self.button2 = tk.Button(self.parent, text="Insert Word ",command=self.insert_word)
@@ -31,8 +31,10 @@ class CodeEditorApp:
         self.button5.grid(row=4, column=0, padx=10, pady=5, sticky="ew")
         self.button6 = tk.Button(self.parent, text="Clear Lbox",command=self.clearlbox)
         self.button6.grid(row=4, column=1, padx=10, pady=5, sticky="ew")
+        self.button7 = tk.Button(self.parent, text="future senout",command=self.sendtextout)
+        self.button7.grid(row=5, column=1, padx=10, pady=5, sticky="ew")
         self.textwidget = ScrolledText(self.parent, height=10)
-        self.textwidget.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+        self.textwidget.grid(row=7, column=0, padx=10, pady=10, sticky="ew")
         self.parent.grid_columnconfigure(0, weight=1)
         self.parent.grid_columnconfigure(1, weight=1)
 
@@ -83,4 +85,11 @@ class CodeEditorApp:
     def clearlbox(self):
         self.lbox.delete(0, tk.END)
 
+
+    def sendtextout(self):
+        self.output = self.textwidget.get("1.0", tk.END)
+        self.text2.insert(tk.END, self.output)
+
+
+        
             
