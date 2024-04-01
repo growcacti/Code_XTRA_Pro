@@ -1,0 +1,25 @@
+Help on package toml:
+
+NAME
+    toml - Python module which parses and emits TOML.
+
+DESCRIPTION
+    Released under the MIT license.
+
+PACKAGE CONTENTS
+    decoder
+    encoder
+    ordered
+    tz
+
+VERSION
+    0.10.2
+
+FILE
+    /home/jh/.local/lib/python3.12/site-packages/toml/__init__.py
+
+
+
+Directory of toml:
+['TomlArraySeparatorEncoder', 'TomlDecodeError', 'TomlDecoder', 'TomlEncoder', 'TomlNumpyEncoder', 'TomlPathlibEncoder', 'TomlPreserveCommentDecoder', 'TomlPreserveCommentEncoder', 'TomlPreserveInlineDictEncoder', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__path__', '__spec__', '__version__', '_spec_', 'decoder', 'dump', 'dumps', 'encoder', 'load', 'loads', 'tz']
+

@@ -1,0 +1,68 @@
+Help on module runpy:
+
+NAME
+    runpy - runpy.py - locating and running Python code using the module namespace
+
+MODULE REFERENCE
+    https://docs.python.org/3.12/library/runpy.html
+
+    The following documentation is automatically generated from the Python
+    source files.  It may be incomplete, incorrect or include features that
+    are considered implementation detail and may vary between Python
+    implementations.  When in doubt, consult the module reference at the
+    location listed above.
+
+DESCRIPTION
+    Provides support for locating and running Python scripts using the Python
+    module namespace instead of the native filesystem.
+
+    This allows Python code to play nicely with non-filesystem based PEP 302
+    importers when locating support scripts as well as when importing modules.
+
+FUNCTIONS
+    run_module(mod_name, init_globals=None, run_name=None, alter_sys=False)
+        Execute a module's code without importing it.
+
+        mod_name -- an absolute module name or package name.
+
+        Optional arguments:
+        init_globals -- dictionary used to pre-populate the module’s
+        globals dictionary before the code is executed.
+
+        run_name -- if not None, this will be used for setting __name__;
+        otherwise, __name__ will be set to mod_name + '__main__' if the
+        named module is a package and to just mod_name otherwise.
+
+        alter_sys -- if True, sys.argv[0] is updated with the value of
+        __file__ and sys.modules[__name__] is updated with a temporary
+        module object for the module being executed. Both are
+        restored to their original values before the function returns.
+
+        Returns the resulting module globals dictionary.
+
+    run_path(path_name, init_globals=None, run_name=None)
+        Execute code located at the specified filesystem location.
+
+        path_name -- filesystem location of a Python script, zipfile,
+        or directory containing a top level __main__.py script.
+
+        Optional arguments:
+        init_globals -- dictionary used to pre-populate the module’s
+        globals dictionary before the code is executed.
+
+        run_name -- if not None, this will be used to set __name__;
+        otherwise, '<run_path>' will be used for __name__.
+
+        Returns the resulting module globals dictionary.
+
+DATA
+    __all__ = ['run_module', 'run_path']
+
+FILE
+    /usr/local/lib/python3.12/runpy.py
+
+
+
+Directory of runpy:
+['ModuleType', '_Error', '_ModifiedArgv0', '_TempModule', '__all__', '__builtins__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', '_get_code_from_file', '_get_main_module_details', '_get_module_details', '_run_code', '_run_module_as_main', '_run_module_code', 'importlib', 'io', 'os', 'run_module', 'run_path', 'sys']
+

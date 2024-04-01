@@ -1,0 +1,58 @@
+GPT
+
+A regular expression (regex) cheat sheet provides a quick reference to the syntax and functions available for pattern matching and text manipulation. Below is a concise cheat sheet covering basic to intermediate regex concepts, tailored for use in most programming languages that support regular expressions.
+Regular Expression Cheat Sheet
+Basic Matches
+
+    .: Matches any single character except newline.
+    ^: Matches the start of a string.
+    $: Matches the end of a string.
+    [abc]: Matches any one of the characters a, b, or c.
+    [^abc]: Matches any character that is not a, b, or c.
+    a|b: Matches either a or b.
+
+Quantifiers
+
+    *: Matches 0 or more occurrences of the preceding element.
+    +: Matches 1 or more occurrences of the preceding element.
+    ?: Matches 0 or 1 occurrence of the preceding element.
+    {n}: Matches exactly n occurrences of the preceding element.
+    {n,}: Matches n or more occurrences of the preceding element.
+    {n,m}: Matches between n and m occurrences of the preceding element.
+
+Special Characters
+
+    \: Escapes a special character.
+    \n: Newline.
+    \t: Tab.
+    \r: Carriage return.
+
+Character Classes
+
+    \d: Matches any digit (equivalent to [0-9]).
+    \D: Matches any non-digit character.
+    \w: Matches any word character (alphanumeric plus "_").
+    \W: Matches any non-word character.
+    \s: Matches any whitespace character (space, tab, newline).
+    \S: Matches any non-whitespace character.
+
+Groups and Ranges
+
+    (abc): Matches the group "abc".
+    (a|b|c): Matches either a, b, or c.
+    (abc)+: Matches one or more occurrences of the group "abc".
+
+Lookahead and Lookbehind
+
+    (?=...): Positive lookahead assertion.
+    (?!...): Negative lookahead assertion.
+    (?<=...): Positive lookbehind assertion.
+    (?<!...): Negative lookbehind assertion.
+
+Flags
+
+    i: Case-insensitive matching.
+    g: Global match (find all matches rather than stopping after the first match).
+    m: Multiline mode (changes the behavior of ^ and $).
+
+This cheat sheet covers the fundamentals of regex. However, regular expressions can be much more complex and powerful. For specific use cases or advanced features, refer to the documentation of the regex implementation in your programming language of choice.
