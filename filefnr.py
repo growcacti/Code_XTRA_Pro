@@ -80,27 +80,28 @@ class FindReplaceApp:
 
         for parent, dirs, files in os.walk(directory):
             for file in files:
-                if file.endswith('.py'):
-                    file_path = os.path.join(parent, file)
+                
+                file_path = os.path.join(parent, file)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                except UnicodeDecodeError:
                     try:
-                        with open(file_path, 'r', encoding='utf-8') as f:
+                        with open(file_path, 'r', encoding='ISO-8859-1') as f:
                             content = f.read()
-                    except UnicodeDecodeError:
-                        try:
-                            with open(file_path, 'r', encoding='ISO-8859-1') as f:
-                                content = f.read()
-                        except Exception as e:
-                            messagebox.showerror("Error", f"An error occurred while processing {file_path}: {e}")
-                            continue
+                    except Exception as e:
+                        messagebox.showerror("Error", f"An error occurred while processing {file_path}: {e}")
+                        continue
 
-                    count = content.count(find_word)
-                    if count > 0:
-                        if replace and replace_word:
-                            content = content.replace(find_word, replace_word)
-                            with open(file_path, 'w') as f:
-                                f.write(content)
-                            self.list_box.insert(tk.END, f"{file}: Replaced {count} occurrences")
-                        else:
-                            self.list_box.insert(tk.END, f"{file}: Found {count} occurrences")
+                count = content.count(find_word)
+                if count > 0:
+                    if replace and replace_word:
+                        content = content.replace(find_word, replace_word)
+                        with open(file_path, 'w') as f:
+                            f.write(content)
+                        self.list_box.insert(tk.END, f"{file}: Replaced {count} occurrences")
+                    else:
+                        self.list_box.insert(tk.END, f"{file}: Found {count} occurrences")
+
 
 

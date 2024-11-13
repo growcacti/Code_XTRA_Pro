@@ -15,7 +15,8 @@ class PyDDViewer:
         # Input for module/class name
         self.entry = tk.Entry(self.root)
         self.entry.grid(row=0, column=2)
-
+        self.loadbtn = tk.Button(self.root,text ="Manual Load Help",bd=3,bg="lightblue", command=self.load_help)
+        self.loadbtn.grid(row=0,column=4)
         # Text widget to display the documentation
         self.textwidget = st.ScrolledText(self.root, wrap="word", bg="snow", height=40, width=80)
         self.textwidget.grid(row=3, column=1, columnspan=7, rowspan=4)
@@ -64,11 +65,31 @@ class PyDDViewer:
 
     def save_file(self):
         filepath = asksaveasfilename(
-            defaultextension="txt",
+            defaultextension=".txt",
             filetypes=[("Text Files", "*.txt"), ("Python", "py"), ("All Files", "*.*")],
         )
         if filepath:
             with open(filepath, "w") as output_file:
                 text = self.textwidget.get(1.0, tk.END)
                 output_file.write(text)
+
+
+    def load_help(self):
+        """Open a file for editing."""
+        filepath = askopenfilename(
+        filetypes=[
+            ("Python Scripts", "*.py"),
+            ("Text Files", "*.txt"),
+            ("All Files", "*.*"),
+        ]
+        )
+        if not filepath:
+            return
+        self.textwidget.delete(1.0, tk.END)
+        with open(filepath, "r") as input_file:
+            text = input_file.read()
+            self.textwidget.insert(tk.END, text)
+            return filepath
+
+
 

@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, INSERT,END,font,Toplevel
+from tkinter.scrolledtext import ScrolledText
 from tkinter import messagebox as mb
 from tkinter import filedialog
 from tkinter.colorchooser import askcolor
@@ -37,6 +38,13 @@ class UnicodeListGeneratorApp:
         self.output_listbox.grid(row=4, column=0, columnspan=2, padx=10, pady=5)
         self.output_listbox2 = tk.Listbox(self.parent, width=10, height=5, font=listbox_font)
         self.output_listbox2.grid(row=4, column=5, padx=10, pady=5)
+        self.unitext = ScrolledText(
+            self.parent,
+            height=20,
+            width=20,
+            bg="white",
+            bd=10)
+        self.unitext.grid(row=4, column=7)
     def generate_unicode(self):
         start_hex = self.start_entry.get()
         end_hex = self.end_entry.get()
@@ -55,7 +63,8 @@ class UnicodeListGeneratorApp:
             hex_value = f"{code_point:04X}"
             self.output_listbox.insert(tk.END, f"U+{hex_value}: {char}")
             self.output_listbox2.insert(tk.END, f"        {char}")
-
+            self.unitext.insert(tk.END, f"        {char}")
+            self.unitext.insert(tk.END, f"U+{hex_value}: {char}")
     def save_to_file(self):
         # Choose where to save the file
         file_path = filedialog.asksaveasfilename(defaultextension=".txt",
