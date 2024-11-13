@@ -1,0 +1,4491 @@
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main/point.py
+Function: __init__
+Description: """ Create a new point at the origin """
+Code:
+""" Create a new point at the origin """
+        self.x = x if x is not None else 0
+        self.y = y if y is not None else 0
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main/skip_ads.py
+Function: on_press
+Description: No description available
+Code:
+if key == keyboard.Key.pause:
+        global is_enabled
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main/skip_ads.py
+Function: on_release
+Description: No description available
+Code:
+pass
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main/skip_ads.py
+Function: run
+Description: No description available
+Code:
+with keyboard.Listener(on_press=on_press,
+                               on_release=on_release) as listener:
+            listener.join()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main/skip_ads.py
+Function: search
+Description: No description available
+Code:
+if VERBOSE == 'a':
+        print("Searching")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main/skip_ads.py
+Function: run
+Description: No description available
+Code:
+global is_enabled
+        while is_enabled:
+            search()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main/opt_vertify_corner_pos.py
+Function: on_press
+Description: No description available
+Code:
+if key == keyboard.Key.space:
+        pos = pyautogui.position()
+        print("Cursor position: ", pos[0], pos[1])
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main/opt_vertify_corner_pos.py
+Function: on_release
+Description: No description available
+Code:
+pass
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/evaluate.py
+Function: supports_ansi
+Description: """
+    Check if the terminal supports ANSI escape codes
+    """
+Code:
+"""
+    Check if the terminal supports ANSI escape codes
+    """
+    plat = platform.system()
+    supported_platform = plat != "Windows" or "ANSICON" in os.environ
+    is_a_tty = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+    return supported_platform and is_a_tty
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/evaluate.py
+Function: format_evaluation_prompt
+Description: No description available
+Code:
+prompt = EVALUATION_PROMPT.format(guideline=guideline)
+    return prompt
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/evaluate.py
+Function: parse_eval_content
+Description: No description available
+Code:
+try:
+        res = json.loads(content)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/evaluate.py
+Function: evaluate_final_screenshot
+Description: """Load the final screenshot and return True or False if it meets the given guideline."""
+Code:
+"""Load the final screenshot and return True or False if it meets the given guideline."""
+    with open(SCREENSHOT_PATH, "rb") as img_file:
+        img_base64 = base64.b64encode(img_file.read()).decode("utf-8")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/evaluate.py
+Function: run_test_case
+Description: """Returns True if the result of the test with the given prompt meets the given guideline for the given model."""
+Code:
+"""Returns True if the result of the test with the given prompt meets the given guideline for the given model."""
+    # Run `operate` with the model to evaluate and the test case prompt
+    subprocess.run(
+        ["operate", "-m", model, "--prompt", f'"{objective}"'],
+        stdout=subprocess.DEVNULL,
+    )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/evaluate.py
+Function: get_test_model
+Description: No description available
+Code:
+parser = argparse.ArgumentParser(
+        description="Run the self-operating-computer with a specified model."
+    )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/evaluate.py
+Function: main
+Description: No description available
+Code:
+load_dotenv()
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/main.py
+Function: main_entry
+Description: No description available
+Code:
+parser = argparse.ArgumentParser(
+        description="Run the self-operating-computer with a specified model."
+    )
+    parser.add_argument(
+        "-m",
+        "--model",
+        help="Specify the model to use",
+        required=False,
+        default="gpt-4-with-ocr",
+    )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/operate.py
+Function: main
+Description: No description available
+Code:
+"""
+    Main function for the Self-Operating Computer.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/operate.py
+Function: operate
+Description: No description available
+Code:
+if config.verbose:
+        print("[Self Operating Computer][operate]")
+    for operation in operations:
+        if config.verbose:
+            print("[Self Operating Computer][operate] operation", operation)
+        # wait one second
+        time.sleep(1)
+        operate_type = operation.get("operation").lower()
+        operate_thought = operation.get("thought")
+        operate_detail = ""
+        if config.verbose:
+            print("[Self Operating Computer][operate] operate_type", operate_type)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/config.py
+Function: __new__
+Description: No description available
+Code:
+if cls._instance is None:
+            cls._instance = super(Config, cls).__new__(cls)
+            # Put any initialization here
+        return cls._instance
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/config.py
+Function: __init__
+Description: No description available
+Code:
+load_dotenv()
+        self.verbose = False
+        self.openai_api_key = (
+            None  # instance variables are backups in case saving to a `.env` fails
+        )
+        self.google_api_key = (
+            None  # instance variables are backups in case saving to a `.env` fails
+        )
+        self.anthropic_api_key = (
+            None  # instance variables are backups in case saving to a `.env` fails
+        )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/config.py
+Function: initialize_openai
+Description: No description available
+Code:
+if self.verbose:
+            print("[Config][initialize_openai]")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/config.py
+Function: initialize_google
+Description: No description available
+Code:
+if self.google_api_key:
+            if self.verbose:
+                print("[Config][initialize_google] using cached google_api_key")
+            api_key = self.google_api_key
+        else:
+            if self.verbose:
+                print(
+                    "[Config][initialize_google] no cached google_api_key, try to get from env."
+                )
+            api_key = os.getenv("GOOGLE_API_KEY")
+        genai.configure(api_key=api_key, transport="rest")
+        model = genai.GenerativeModel("gemini-pro-vision")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/config.py
+Function: initialize_anthropic
+Description: No description available
+Code:
+if self.anthropic_api_key:
+            api_key = self.anthropic_api_key
+        else:
+            api_key = os.getenv("ANTHROPIC_API_KEY")
+        return anthropic.Anthropic(api_key=api_key)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/config.py
+Function: validation
+Description: """
+        Validate the input parameters for the dialog operation.
+        """
+Code:
+"""
+        Validate the input parameters for the dialog operation.
+        """
+        self.require_api_key(
+            "OPENAI_API_KEY",
+            "OpenAI API key",
+            model == "gpt-4"
+            or voice_mode
+            or model == "gpt-4-with-som"
+            or model == "gpt-4-with-ocr",
+        )
+        self.require_api_key(
+            "GOOGLE_API_KEY", "Google API key", model == "gemini-pro-vision"
+        )
+        self.require_api_key(
+            "ANTHROPIC_API_KEY", "Anthropic API key", model == "claude-3"
+        )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/config.py
+Function: require_api_key
+Description: No description available
+Code:
+key_exists = bool(os.environ.get(key_name))
+        if self.verbose:
+            print("[Config] require_api_key")
+            print("[Config] key_name", key_name)
+            print("[Config] key_description", key_description)
+            print("[Config] key_exists", key_exists)
+        if is_required and not key_exists:
+            self.prompt_and_save_api_key(key_name, key_description)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/config.py
+Function: prompt_and_save_api_key
+Description: No description available
+Code:
+key_value = input_dialog(
+            title="API Key Required", text=f"Please enter your {key_description}:"
+        ).run()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/config.py
+Function: save_api_key_to_env
+Description: No description available
+Code:
+with open(".env", "a") as file:
+            file.write(f"\n{key_name}='{key_value}'")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/exceptions.py
+Function: __init__
+Description: No description available
+Code:
+self.model = model
+        self.message = message
+        super().__init__(self.message)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: get_next_action
+Description: No description available
+Code:
+if config.verbose:
+        print("[Self-Operating Computer][get_next_action]")
+        print("[Self-Operating Computer][get_next_action] model", model)
+    if model == "gpt-4":
+        return call_gpt_4o(messages), None
+    if model == "gpt-4-with-som":
+        operation = await call_gpt_4o_labeled(messages, objective, model)
+        return operation, None
+    if model == "gpt-4-with-ocr":
+        operation = await call_gpt_4o_with_ocr(messages, objective, model)
+        return operation, None
+    if model == "agent-1":
+        return "coming soon"
+    if model == "gemini-pro-vision":
+        return call_gemini_pro_vision(messages, objective), None
+    if model == "llava":
+        operation = call_ollama_llava(messages)
+        return operation, None
+    if model == "claude-3":
+        operation = await call_claude_3_with_ocr(messages, objective, model)
+        return operation, None
+    raise ModelNotRecognizedException(model)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: call_gpt_4o
+Description: No description available
+Code:
+if config.verbose:
+        print("[call_gpt_4_v]")
+    time.sleep(1)
+    client = config.initialize_openai()
+    try:
+        screenshots_dir = "screenshots"
+        if not os.path.exists(screenshots_dir):
+            os.makedirs(screenshots_dir)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: call_gemini_pro_vision
+Description: """
+    Get the next action for Self-Operating Computer using Gemini Pro Vision
+    """
+Code:
+"""
+    Get the next action for Self-Operating Computer using Gemini Pro Vision
+    """
+    if config.verbose:
+        print(
+            "[Self Operating Computer][call_gemini_pro_vision]",
+        )
+    # sleep for a second
+    time.sleep(1)
+    try:
+        screenshots_dir = "screenshots"
+        if not os.path.exists(screenshots_dir):
+            os.makedirs(screenshots_dir)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: call_gpt_4o_with_ocr
+Description: No description available
+Code:
+if config.verbose:
+        print("[call_gpt_4o_with_ocr]")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: call_gpt_4o_labeled
+Description: No description available
+Code:
+time.sleep(1)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: call_ollama_llava
+Description: No description available
+Code:
+if config.verbose:
+        print("[call_ollama_llava]")
+    time.sleep(1)
+    try:
+        screenshots_dir = "screenshots"
+        if not os.path.exists(screenshots_dir):
+            os.makedirs(screenshots_dir)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: call_claude_3_with_ocr
+Description: No description available
+Code:
+if config.verbose:
+        print("[call_claude_3_with_ocr]")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: get_last_assistant_message
+Description: """
+    Retrieve the last message from the assistant in the messages array.
+    If the last assistant message is the first message in the array, return None.
+    """
+Code:
+"""
+    Retrieve the last message from the assistant in the messages array.
+    If the last assistant message is the first message in the array, return None.
+    """
+    for index in reversed(range(len(messages))):
+        if messages[index]["role"] == "assistant":
+            if index == 0:  # Check if the assistant message is the first in the array
+                return None
+            else:
+                return messages[index]
+    return None  # Return None if no assistant message is found
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: gpt_4_fallback
+Description: No description available
+Code:
+if config.verbose:
+        print("[gpt_4_fallback]")
+    system_prompt = get_system_prompt("gpt-4o", objective)
+    new_system_message = {"role": "system", "content": system_prompt}
+    # remove and replace the first message in `messages` with `new_system_message`
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: confirm_system_prompt
+Description: """
+    On `Exception` we default to `call_gpt_4_vision_preview` so we have this function to reassign system prompt in case of a previous failure
+    """
+Code:
+"""
+    On `Exception` we default to `call_gpt_4_vision_preview` so we have this function to reassign system prompt in case of a previous failure
+    """
+    if config.verbose:
+        print("[confirm_system_prompt] model", model)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/apis.py
+Function: clean_json
+Description: No description available
+Code:
+if config.verbose:
+        print("\n\n[clean_json] content before cleaning", content)
+    if content.startswith("```json"):
+        content = content[
+            len("```json") :
+        ].strip()  # Remove starting ```json and trim whitespace
+    elif content.startswith("```"):
+        content = content[
+            len("```") :
+        ].strip()  # Remove starting ``` and trim whitespace
+    if content.endswith("```"):
+        content = content[
+            : -len("```")
+        ].strip()  # Remove ending ``` and trim whitespace
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/prompts.py
+Function: get_system_prompt
+Description: """
+    Format the vision prompt more efficiently and print the name of the prompt used
+    """
+Code:
+"""
+    Format the vision prompt more efficiently and print the name of the prompt used
+    """
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/prompts.py
+Function: get_user_prompt
+Description: No description available
+Code:
+prompt = OPERATE_PROMPT
+    return prompt
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/models/prompts.py
+Function: get_user_first_message_prompt
+Description: No description available
+Code:
+prompt = OPERATE_FIRST_MESSAGE_PROMPT
+    return prompt
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/screenshot.py
+Function: capture_screen_with_cursor
+Description: No description available
+Code:
+user_platform = platform.system()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/style.py
+Function: supports_ansi
+Description: """
+    Check if the terminal supports ANSI escape codes
+    """
+Code:
+"""
+    Check if the terminal supports ANSI escape codes
+    """
+    plat = platform.system()
+    supported_platform = plat != "Windows" or "ANSICON" in os.environ
+    is_a_tty = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+    return supported_platform and is_a_tty
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/ocr.py
+Function: get_text_element
+Description: No description available
+Code:
+"""
+    Searches for a text element in the OCR results and returns its index. Also draws bounding boxes on the image.
+    Args:
+        result (list): The list of results returned by EasyOCR.
+        search_text (str): The text to search for in the OCR results.
+        image_path (str): Path to the original image.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/ocr.py
+Function: get_text_coordinates
+Description: No description available
+Code:
+"""
+    Gets the coordinates of the text element at the specified index as a percentage of screen width and height.
+    Args:
+        result (list): The list of results returned by EasyOCR.
+        index (int): The index of the text element in the results list.
+        image_path (str): Path to the screenshot image.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/operating_system.py
+Function: write
+Description: No description available
+Code:
+try:
+            content = content.replace("\\n", "\n")
+            for char in content:
+                pyautogui.write(char)
+        except Exception as e:
+            print("[OperatingSystem][write] error:", e)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/operating_system.py
+Function: press
+Description: No description available
+Code:
+try:
+            for key in keys:
+                pyautogui.keyDown(key)
+            time.sleep(0.1)
+            for key in keys:
+                pyautogui.keyUp(key)
+        except Exception as e:
+            print("[OperatingSystem][press] error:", e)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/operating_system.py
+Function: mouse
+Description: No description available
+Code:
+try:
+            x = convert_percent_to_decimal(click_detail.get("x"))
+            y = convert_percent_to_decimal(click_detail.get("y"))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/misc.py
+Function: convert_percent_to_decimal
+Description: No description available
+Code:
+try:
+        # Remove the '%' sign and convert to float
+        decimal_value = float(percent)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/misc.py
+Function: parse_operations
+Description: No description available
+Code:
+if response == "DONE":
+        return {"type": "DONE", "data": None}
+    elif response.startswith("CLICK"):
+        # Adjust the regex to match the correct format
+        click_data = re.search(r"CLICK \{ (.+) \}", response).group(1)
+        click_data_json = json.loads(f"{{{click_data}}}")
+        return {"type": "CLICK", "data": click_data_json}
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/label.py
+Function: validate_and_extract_image_data
+Description: No description available
+Code:
+if not data or "messages" not in data:
+        raise ValueError("Invalid request, no messages found")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/label.py
+Function: get_label_coordinates
+Description: No description available
+Code:
+"""
+    Retrieves the coordinates for a given label.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/label.py
+Function: is_overlapping
+Description: No description available
+Code:
+x1_box1, y1_box1, x2_box1, y2_box1 = box1
+    x1_box2, y1_box2, x2_box2, y2_box2 = box2
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/label.py
+Function: add_labels
+Description: No description available
+Code:
+image_bytes = base64.b64decode(base64_data)
+    image_labeled = Image.open(io.BytesIO(image_bytes))  # Corrected this line
+    image_debug = image_labeled.copy()  # Create a copy for the debug image
+    image_original = (
+        image_labeled.copy()
+    )  # Copy of the original image for base64 return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main/operate/utils/label.py
+Function: get_click_position_in_percent
+Description: No description available
+Code:
+"""
+    Calculates the click position at the center of the bounding box and converts it to percentages.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/whack a mole auto script/main.py
+Function: on_clicked
+Description: No description available
+Code:
+if (len(holes) >= 10):
+        with open("holes.txt", "w") as f:
+            for (x, y) in holes:
+                f.write(f"{int(x)}, {int(y)}\n")
+        
+        return False # Stop the listener
+    
+    if pressed:
+        holes.append((x, y))
+        return True # Continue the listener
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/taiko auto script/main.py
+Function: print_elapsed_time
+Description: No description available
+Code:
+global current_time
+    elapsed_time = time.time() - current_time
+    current_time = time.time()
+    print(f"Elapsed time: {elapsed_time}")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/dino game auto script/main.py
+Function: find_similarity
+Description: No description available
+Code:
+# Calculate the difference between the two images
+    diff = ImageChops.difference(base_img, img)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/dino game auto script/main.py
+Function: screenshot
+Description: No description available
+Code:
+screen_img = ImageGrab.grab().convert('L')
+    screen_img_data = screen_img.load()
+    for x in range(lower_area["left"], lower_area["left"] + lower_area["width"]):
+        for y in range(lower_area["top"], lower_area["top"] + lower_area["height"]):
+            screen_img_data[x, y] = 0
+    cv.imshow('lower', np.array(screen_img))
+    if cv.waitKey(1) & 0xFF == ord('q'):
+        cv.destroyAllWindows()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/dino game auto script/simpler.py
+Function: has_green
+Description: No description available
+Code:
+img_data = img.load()
+    for x in range(img.width-1, 0, -1):
+        for y in range(img.height-1, 0, -1):
+            px = img_data[x, y]
+            if px[1] > 100 and px[0] < 100 and px[2] < 100:
+                return True
+    return False
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/bemuse auto script/main.py
+Function: remap_zone
+Description: No description available
+Code:
+found = False
+    while not found:
+        try:
+            box = pyautogui.locateOnScreen('zone.png')
+            print('zone.png found: ', box)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/bemuse auto script/main.py
+Function: check_similarity
+Description: No description available
+Code:
+s = ssim(target_img, base_img, multichannel=True, channel_axis=2)
+    return (s + 1) / 2
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/bemuse auto script/main.py
+Function: main
+Description: No description available
+Code:
+# Check if zone.json exists
+    file_exists = os.path.exists('zone.json')
+    if not file_exists:
+        remap_zone()
+    elif input('Remap Zone? (Y/N)') == 'Y':
+        remap_zone()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/bemuse auto script/attempt_to_simplify.py
+Function: ssi
+Description: No description available
+Code:
+'''
+    Uses the Structural Similarity Index (SSI) to compare two images.
+    Relatively slow, but more accurate than MSE.
+    Returns a value between 0 and 1, where 1 means the images are identical.
+    '''
+    s = ssim(target_img, base_img, multichannel=True, channel_axis=1)
+    return (s + 1) / 2
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/bemuse auto script/attempt_to_simplify.py
+Function: mse
+Description: No description available
+Code:
+'''
+    Uses the Mean Squared Error (MSE) to compare two images.
+    Fast and simple, but less accurate than SSI.
+    Returns any value, could goes up to 5 digits.
+    '''
+    err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)
+    err /= float(imageA.shape[0] * imageA.shape[1])
+    return err
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/clicker/main.py
+Function: find_bonus_button
+Description: No description available
+Code:
+while True:
+        try:
+            pos = gui.locateCenterOnScreen(
+                'bonus_btn.png',
+                confidence=0.8,
+                region=(left, top, width, height)
+            )
+            gui.click(pos)
+        except Exception as e:
+            continue
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/clicker/thread_demo.py
+Function: print_numbers
+Description: No description available
+Code:
+# Define a function that will be executed in a separate thread
+    for i in range(1, 6):
+        print("Thread 1:", i)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/410-pyautogui-game-scripts-main/tests/test-typing-game.py
+Function: test_tesseract
+Description: No description available
+Code:
+import pytesseract
+        text = pytesseract.image_to_string(os.path.join(dir_path, "media/tesseract_test.png"), lang='eng')
+        text = "".join(text.split())
+        self.assertEqual(text, "NowI'mthevillaininyourhistory.Iwastooyoungandblindtosee.Ishould'veknowntheworldwaswideenoughforbothHamiltonandme.")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: resource_path
+Description: """ Get absolute path to resource, works for dev and for PyInstaller 
+        PyInstaller creates a temp folder and stores path in _MEIPASS
+    """
+Code:
+""" Get absolute path to resource, works for dev and for PyInstaller 
+        PyInstaller creates a temp folder and stores path in _MEIPASS
+    """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: play_music_on_windows
+Description: No description available
+Code:
+music_file_path =  SOUND_DIR+"\devil_inside_me.mp3"
+    playsound(music_file_path)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: show_desktop
+Description: No description available
+Code:
+pyautogui.hotkey('winleft','d')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: get_all_processes
+Description: No description available
+Code:
+processes = [p.info for p in psutil.process_iter(attrs=['pid','name'])]
+    return processes
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: print_all_process
+Description: No description available
+Code:
+processes = [p.info for p in psutil.process_iter(attrs=['pid','name'])]
+    for process in processes:
+        print(process)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: close_process
+Description: No description available
+Code:
+print('closing application %s' %(process_name))
+    processes = get_all_processes()
+    terminate_processes = [p for p in processes if process_name in p.info['name']]
+    pid_to_kill = list()
+    for process in terminate_processes:
+        pid_to_kill.append(process['pid'])
+    print(pid_to_kill)
+    ########################
+    for p in pid_to_kill:
+        process = psutil.process(p)
+        print(process)
+        process.terminate()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: open_app
+Description: No description available
+Code:
+# if windows replace '\' with '\\'
+    print('Starting app ',app_path)
+    cmd = 'start ' + app_path
+    subprocess.call(cmd,shell=True)
+    print(app_path,' is opened')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: focus_on_app
+Description: No description available
+Code:
+winlist = pyautogui.getAllWindows()
+    for item in winlist:
+        if window_title in item.title:
+            if maximize:
+                if (not item.maximize()):
+                    item.maximize()
+            if activate:
+                if (not item.isActive):
+                    item.activate()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: is_focused
+Description: No description available
+Code:
+winlist = pyautogui.getAllWindows()
+    for win in winlist:
+        if window_title in win.title:
+            if win.isActive:
+                return True
+            else:
+                return False
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: window_exist
+Description: No description available
+Code:
+winlist = pyautogui.getAllWindows()
+    for win in winlist:
+        if window_title in win.title:
+            return True
+    return False
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: minimize_window
+Description: No description available
+Code:
+winlist = pyautogui.getAllWindows()
+    for item in winlist:
+        if window_title in item.title:
+            if (not item.minimize()):
+                item.minimize()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: print_all_windows
+Description: No description available
+Code:
+winlist = pyautogui.getAllWindows()
+    for win in winlist:
+        print(win.title)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: locate
+Description: No description available
+Code:
+for image in image_list:
+        print("searching for ",image)
+        for i in pyautogui.locateAllOnScreen(image):
+            pyautogui.moveTo(i.left + i.width/2,i.top + i.height/2)
+            if len(i)!=0:
+                print("found",image)
+                x,y = pyautogui.position()
+                print('mouse position is ',x,' ',y)
+                return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: locate_until_found
+Description: No description available
+Code:
+while(True):
+        for image in image_list:
+            print("searching for ",image)
+            for i in pyautogui.locateAllOnScreen(image):
+                pyautogui.moveTo(i.left + i.width/2,i.top + i.height/2)
+                if len(i)!=0:
+                    print("found",image)
+                    x,y = pyautogui.position()
+                    print('mouse position is ',x,' ',y)
+                    return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: print_list
+Description: No description available
+Code:
+for i in range(len(mylist)):
+        # print('%s. %s' %(i,mylist[i]))
+        print(i,'. ',mylist[i])
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: print_mouse_position
+Description: No description available
+Code:
+while True:
+        time.sleep(5)
+        x, y = pyautogui.position()
+        positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
+        print(positionStr)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: execute_cmd
+Description: No description available
+Code:
+''' This function runs a command in shell/Terminal
+    input: cmd , type : str
+    return type : None
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: close_window
+Description: No description available
+Code:
+'''
+    inputs : win_name , type : str 
+    output : None 
+    This function closes the given app_name window
+    '''
+    print('Closing window ',win_name)
+    winlist = pyautogui.getAllWindows()
+    for window in winlist:
+        if window.title == win_name:
+            window.close()
+            print("window closed ")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: move_mouse_random
+Description: No description available
+Code:
+xmin,ymin,xmax,ymax = 10,10,900,900
+    from pyautogui import ( easeInQuad,
+        easeOutQuad,
+        easeInOutQuad,
+        easeInCubic,
+        easeOutCubic,
+        easeInOutCubic,
+        easeInQuart,
+        easeOutQuart,
+        easeInOutQuart,
+        easeInQuint,
+        easeOutQuint,
+        easeInOutQuint,
+        easeInSine,
+        easeOutSine,
+        easeInOutSine,
+        easeInExpo,
+        easeOutExpo,
+        easeInOutExpo,
+        easeInCirc,
+        easeOutCirc,
+        easeInOutCirc,
+        easeInElastic,
+        easeOutElastic,
+        easeInOutElastic,
+        easeInBack,
+        easeOutBack,
+        easeInOutBack,
+        easeInBounce,
+        easeOutBounce,
+        easeInOutBounce,
+        )
+    tween_list = [ easeInQuad,
+        easeOutQuad,
+        easeInOutQuad,
+        easeInCubic,
+        easeOutCubic,
+        easeInOutCubic,
+        easeInQuart,
+        easeOutQuart,
+        easeInOutQuart,
+        easeInQuint,
+        easeOutQuint,
+        easeInOutQuint,
+        easeInSine,
+        easeOutSine,
+        easeInOutSine,
+        easeInExpo,
+        easeOutExpo,
+        easeInOutExpo,
+        easeInCirc,
+        easeOutCirc,
+        easeInOutCirc,
+        easeInElastic,
+        easeOutElastic,
+        easeInOutElastic,
+        easeInBack,
+        easeOutBack,
+        easeInOutBack,
+        easeInBounce,
+        easeOutBounce,
+        easeInOutBounce,]
+    while(True):
+        rand_x = random.randint(xmin,xmax)
+        rand_y = random.randint(ymin,ymax)
+        duration = random.randint(2,6)
+        random_tween_func = tween_list[random.randint(0,len(tween_list)-1)]
+        pyautogui.moveTo(rand_x,rand_y,duration=duration,tween=random_tween_func)
+        time.sleep(10)
+        time.sleep(duration)
+        # print(rand_x,rand_y)
+        x,y = pyautogui.position()
+        print(x,y)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/pyauto_fuctions.py
+Function: main
+Description: No description available
+Code:
+print('Inside main ')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/automation.py
+Function: show_desktop
+Description: No description available
+Code:
+pyautogui.hotkey('winleft','d')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/automation.py
+Function: get_all_processes
+Description: No description available
+Code:
+processes = [p.info for p in psutil.process_iter(attrs=['pid','name'])]
+    return processes
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/automation.py
+Function: print_all_process
+Description: No description available
+Code:
+processes = [p.info for p in psutil.process_iter(attrs=['pid','name'])]
+    for process in processes:
+        print(process)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/automation.py
+Function: close_app
+Description: No description available
+Code:
+print('closing application %s' %(name))
+    processes = get_all_processes()
+    terminate_processes = [p for p in processes if name in p.info['name']]
+    pid_to_kill = list()
+    for process in terminate_processes:
+        pid_to_kill.append(process['pid'])
+    print(pid_to_kill)
+    ########################
+    for p in pid_to_kill:
+        process = psutil.process(p)
+        print(process)
+        process.terminate()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/automation.py
+Function: open_app
+Description: No description available
+Code:
+# if windows replace '\' with '\\'
+    print('Starting app ',app_path)
+    cmd = 'start ' + app_path
+    subprocess.call(cmd,shell=True)
+    print(app_path,' is opened')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/automation.py
+Function: focus_on_app
+Description: No description available
+Code:
+winlist = pyautogui.getAllWindows()
+    for item in winlist:
+        if window_title in item.title:
+            if not item.maximize():
+                item.maximize()
+            if not item.isActive:
+                item.activate()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/automation.py
+Function: locate
+Description: No description available
+Code:
+for image in image_list:
+        print("searching for ",image)
+        for i in pyautogui.locateAllOnScreen(image):
+            pyautogui.moveTo(i.left + i.width/2,i.top + i.height/2)
+            if len(i)!=0:
+                print("found",image)
+                x,y = pyautogui.position()
+                print('mouse position is ',x,' ',y)
+                return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/automation.py
+Function: main
+Description: No description available
+Code:
+cmd = 'dir'
+    x = execute_cmd(cmd)
+    print(x)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/keylogger.py
+Function: init_logfile
+Description: No description available
+Code:
+start_time = str(datetime.now())
+    logfile.write('#'*10 + start_time + '\n')
+    logfile.write("Starting Keylogger\n")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/keylogger.py
+Function: write
+Description: No description available
+Code:
+logfile.write(str(key))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/keylogger.py
+Function: on_press
+Description: No description available
+Code:
+if key=='Key.enter':
+        key='\n'
+    write(key)
+    print('key %s is typed' %(key))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/keylogger.py
+Function: on_release
+Description: No description available
+Code:
+print('key %s is released' %(key))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/keylogger.py
+Function: on_move
+Description: No description available
+Code:
+logfile.write("Mouse moved to ({0}, {1})\n".format(x, y))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/keylogger.py
+Function: on_click
+Description: No description available
+Code:
+if pressed:
+        logfile.write('Mouse clicked at ({0}, {1}) with {2}\n'.format(x, y, button))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/keylogger.py
+Function: on_scroll
+Description: No description available
+Code:
+logfile.write('Mouse scrolled at ({0}, {1})({2}, {3})\n'.format(x, y, dx, dy))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/keylogger.py
+Function: start_listener
+Description: No description available
+Code:
+with keyboard_listener(on_press,on_release) as k_listener :
+        with mouse_listener(on_scroll=on_scroll, on_move=on_move, on_click=on_click) as m_listener :
+            k_listener.join()
+            m_listener.join()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/automation-master/keylogger.py
+Function: main
+Description: No description available
+Code:
+init_logfile()
+    start_listener()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/two_player.py
+Function: __init__
+Description: No description available
+Code:
+self._running = False
+        self._display = None
+        self._refresh = True
+        self.game = Game()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/two_player.py
+Function: on_init
+Description: No description available
+Code:
+pygame.init()
+        self._display = pygame.display.set_mode(config.SCREEN_RESOLUTION_WITH_GAPS)
+        self._running = True
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/two_player.py
+Function: on_event
+Description: No description available
+Code:
+if event.type == pygame.QUIT:
+            self._running = False
+        if event.type == pygame.MOUSEBUTTONUP and event.button == pygame.BUTTON_LEFT:
+            self.game.play(convertToBoardCoord(pygame.mouse.get_pos()))
+            self._refresh = True
+        if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+            self.game.pass_turn()
+            self._refresh = True
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/two_player.py
+Function: on_loop
+Description: No description available
+Code:
+if self._refresh:
+            self.game.compute_territories()
+            if self.game.game_over():
+                self._running = False
+            black, white = self.game.compute_scores()
+            pygame.display.set_caption(f"Round: {len(self.game.log)} B: {black} W: {white}")
+            self._refresh = False
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/two_player.py
+Function: on_render
+Description: No description available
+Code:
+# -------------------------------- draw board -------------------------------- #
+        self._display.fill(config.GREEN)
+        for i in range(config.BOARD_RESOLUTION[0]):
+            xmin = i * config.STONE_SIZE + config.GAP_SIZE//2
+            ymin = 0 + + config.GAP_SIZE//2
+            xmax = i * config.STONE_SIZE + config.GAP_SIZE//2
+            ymax = config.SCREEN_RESOLUTION[1] + config.GAP_SIZE//2
+            pygame.draw.line(self._display, config.RED, (xmin, ymin), (xmax, ymax))
+        for i in range(config.BOARD_RESOLUTION[1]):
+            xmin = 0 + + config.GAP_SIZE//2
+            ymin = i * config.STONE_SIZE + config.GAP_SIZE//2
+            xmax = config.SCREEN_RESOLUTION[0] + config.GAP_SIZE//2
+            ymax = i * config.STONE_SIZE + config.GAP_SIZE//2
+            pygame.draw.line(self._display, config.RED, (xmin, ymin), (xmax, ymax))
+        # -------------------------------- draw stones ------------------------------- #
+        for i in range(config.BOARD_RESOLUTION[0]):
+            for j in range(config.BOARD_RESOLUTION[1]):
+                if self.game.board[i][j] == 2:
+                    pygame.draw.circle(self._display, config.WHITE,
+                                       (j * config.STONE_SIZE + config.GAP_SIZE//2,
+                                        i * config.STONE_SIZE + config.GAP_SIZE//2),
+                                       config.STONE_SIZE//2)
+                if self.game.board[i][j] == 1:
+                    pygame.draw.circle(self._display, config.BLACK,
+                                       (j * config.STONE_SIZE + config.GAP_SIZE//2,
+                                        i * config.STONE_SIZE + config.GAP_SIZE//2),
+                                       config.STONE_SIZE//2)
+                if self.game.board[i][j] == -1:
+                    pygame.draw.circle(self._display, config.BLACK,
+                                       (j * config.STONE_SIZE + config.GAP_SIZE//2,
+                                        i * config.STONE_SIZE + config.GAP_SIZE//2),
+                                       config.STONE_SIZE//8)
+                if self.game.board[i][j] == -2:
+                    pygame.draw.circle(self._display, config.WHITE,
+                                       (j * config.STONE_SIZE + config.GAP_SIZE//2,
+                                        i * config.STONE_SIZE + config.GAP_SIZE//2),
+                                       config.STONE_SIZE//8)
+        # --------------------------------- highlight -------------------------------- #
+        if len(self.game.log) != 0:
+            t, r, c = self.game.log[-1]
+            if r != None:
+                pygame.draw.circle(self._display, config.GRAY,
+                                   (c * config.STONE_SIZE + config.GAP_SIZE//2,
+                                    r * config.STONE_SIZE + config.GAP_SIZE//2),
+                                   config.STONE_SIZE//2, config.STONE_SIZE//8)
+            else:
+                font = pygame.font.SysFont(None, 20)
+                img = font.render(f'{"Black" if t==1 else "White"} passed', True, config.BLUE)
+                self._display.blit(img, (5, 5))
+        # ------------------------------- display time ------------------------------- #
+        font = pygame.font.SysFont(None, 24)
+        s = f"{pygame.time.get_ticks()//1000}"
+        img = font.render(s, True, config.BLUE)
+        self._display.blit(img, (config.SCREEN_RESOLUTION_WITH_GAPS[0]-font.size(s)[0]-5, 5))
+        # --------------------------------- hovering --------------------------------- #
+        r, c = convertToBoardCoord(pygame.mouse.get_pos())
+        if self.game.can_play(r, c):
+            pygame.draw.circle(self._display, config.WHITE if self.game.turn == 2 else config.BLACK,
+                               (c * config.STONE_SIZE + config.GAP_SIZE//2,
+                                r * config.STONE_SIZE + config.GAP_SIZE//2),
+                               config.STONE_SIZE//4)
+        pygame.display.flip()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/two_player.py
+Function: on_cleanup
+Description: No description available
+Code:
+black, white = self.game.compute_scores()
+        print(f'Game finished. Black score is {black} and white score is {white}.')
+        print(f'Game took {len(self.game.log)} rounds and {pygame.time.get_ticks()/1000:.2f} seconds.')
+        pygame.quit()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/two_player.py
+Function: on_execute
+Description: No description available
+Code:
+if self.on_init() == False:
+            self._running = False
+        while(self._running):
+            for event in pygame.event.get():
+                self.on_event(event)
+            self.on_loop()
+            self.on_render()
+        self.on_cleanup()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: pass_turn
+Description: No description available
+Code:
+self.log.append((self.turn, None, None))
+        self.nextTurn()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: play
+Description: No description available
+Code:
+r, c = r_c
+        if self.can_play(r, c):
+            self.take_snapshot()
+            self.log.append((self.turn, r, c))
+            self.board[r][c] = self.turn
+            self.nextTurn()
+            paths = self.compute_captures()
+            self.remove_paths((r, c), paths)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: take_snapshot
+Description: No description available
+Code:
+for i in range(self.rows):
+            for j in range(self.cols):
+                self.snapshot[i][j] = self.board[i][j]
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: can_play
+Description: No description available
+Code:
+# range check
+        if r < 0 or r >= self.rows:
+            return False
+        if c < 0 or c >= self.cols:
+            return False
+        # needs to be empty cell
+        if self.board[r][c] > 0:
+            return False
+        # make the move
+        played = [[self.board[i][j] for j in range(self.cols)] for i in range(self.rows)]
+        played[r][c] = self.turn
+        paths = self.compute_captures(played)
+        self.remove_paths((r, c), paths, played)
+        # cannot play where no liberty
+        if len(paths) == 1 and (r, c) in paths[0]:
+            return False
+        # no replay in Ko position
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if played[i][j] > 0 and self.snapshot[i][j] != played[i][j]:
+                    return True
+        return False
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: compute_scores
+Description: No description available
+Code:
+board = self.board if board == None else board
+        self.compute_territories()
+        white_score = 0
+        black_score = 0
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if board[i][j] == 1 or board[i][j] == -1:
+                    black_score += 1
+                elif board[i][j] == 2 or board[i][j] == -2:
+                    white_score += 1
+        return black_score, white_score
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: game_over
+Description: No description available
+Code:
+if len(self.log) < 2:
+            return False
+        return self.log[-1][1] == None and self.log[-2][1] == None
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: remove_paths
+Description: No description available
+Code:
+board = self.board if board == None else board
+        if len(paths) > 1:
+            for path in paths:
+                if not last_played in path:
+                    self.capture_stone(path, board)
+        elif len(paths) == 1:
+            path = paths[0]
+            self.capture_stone(path, board)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: capture_stone
+Description: No description available
+Code:
+board = self.board if board == None else board
+        for r, c in path:
+            board[r][c] = 0
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: compute_captures
+Description: No description available
+Code:
+board = self.board if board == None else board
+        visited = set()
+        paths = []
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if board[i][j] > 0 and not (i, j) in visited:
+                    color = board[i][j]
+                    liberties = set()
+                    qq = deque()
+                    path = [(i, j)]
+                    qq.append((i, j))
+                    visited.add((i, j))
+                    while len(qq) != 0:
+                        for neighbour in self.get_all_neighbours(qq.popleft()):
+                            nr, nc = neighbour
+                            if not neighbour in visited and board[nr][nc] == color:
+                                qq.append(neighbour)
+                                visited.add(neighbour)
+                                path.append(neighbour)
+                            elif board[nr][nc] <= 0:
+                                liberties.add(neighbour)
+                    if len(liberties) == 0:
+                        paths.append(path)
+        return paths
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: get_all_neighbours
+Description: No description available
+Code:
+def inBoardRange(x, y): return not (x < 0 or y < 0 or x >= self.rows or y >= self.cols)
+        r, c = r_c
+        neighbours = []
+        if inBoardRange(r - 0, c - 1):
+            neighbours.append((r - 0, c - 1))
+        if inBoardRange(r - 0, c + 1):
+            neighbours.append((r - 0, c + 1))
+        if inBoardRange(r - 1, c - 0):
+            neighbours.append((r - 1, c - 0))
+        if inBoardRange(r + 1, c - 0):
+            neighbours.append((r + 1, c - 0))
+        return neighbours
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: compute_territories
+Description: No description available
+Code:
+self.white_region_count = 0
+        self.black_region_count = 0
+        visited = set()
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if self.board[i][j] <= 0 and not (i, j) in visited:
+                    valid = True
+                    path = []
+                    qq = deque()
+                    qq.append((i, j))
+                    visited.add((i, j))
+                    path.append((i, j))
+                    current_color = 0
+                    color_picked = False
+                    while len(qq) != 0:
+                        for nr, nc in self.get_all_neighbours(qq.popleft()):
+                            if not color_picked and self.board[nr][nc] > 0:
+                                current_color = self.board[nr][nc]
+                                color_picked = True
+                            if color_picked and self.board[nr][nc] == 1 and current_color == 2:
+                                valid = False
+                            if color_picked and self.board[nr][nc] == 2 and current_color == 1:
+                                valid = False
+                            if not (nr, nc) in visited:
+                                if self.board[nr][nc] <= 0:
+                                    visited.add((nr, nc))
+                                    qq.append((nr, nc))
+                                    path.append((nr, nc))
+                    for r, c in path:
+                        if valid:
+                            self.board[r][c] = -current_color
+                            if current_color == 1:
+                                self.black_region_count += 1
+                            if current_color == 2:
+                                self.white_region_count += 1
+                        else:
+                            self.board[r][c] = 0
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/game.py
+Function: nextTurn
+Description: No description available
+Code:
+self.turn = 1 if self.turn == 2 else 2
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/one_player.py
+Function: __init__
+Description: No description available
+Code:
+self._running = False
+        self._display = None
+        self._refresh = True
+        self.game = Game()
+        self.bot = Bot(self.game)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/one_player.py
+Function: on_init
+Description: No description available
+Code:
+pygame.init()
+        self._display = pygame.display.set_mode(config.SCREEN_RESOLUTION_WITH_GAPS)
+        self._running = True
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/one_player.py
+Function: on_event
+Description: No description available
+Code:
+if event.type == pygame.QUIT:
+            self._running = False
+        if self.game.turn == config.PLAYER:
+            if event.type == pygame.MOUSEBUTTONUP and event.button == pygame.BUTTON_LEFT:
+                self.game.play(convertToBoardCoord(pygame.mouse.get_pos()))
+                self._refresh = True
+            if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+                self.game.pass_turn()
+                self._refresh = True
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/one_player.py
+Function: on_loop
+Description: No description available
+Code:
+if self._refresh:
+            self.game.compute_territories()
+            if self.game.game_over():
+                self._running = False
+            black, white = self.game.compute_scores()
+            pygame.display.set_caption(f"Round: {len(self.game.log)} B: {black} W: {white}")
+            self._refresh = False
+        if self.bot.status == False and self.game.turn != config.PLAYER:
+            thread = Thread(target=self.bot.play)
+            thread.start()
+        if len(self.game.log) > 0 and self.game.log[-1][0] != config.PLAYER:  # if bot has played
+            self._refresh = True  # refresh screen
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/one_player.py
+Function: on_render
+Description: No description available
+Code:
+# -------------------------------- draw board -------------------------------- #
+        self._display.fill(config.GREEN)
+        for i in range(config.BOARD_RESOLUTION[0]):
+            xmin = i * config.STONE_SIZE + config.GAP_SIZE//2
+            ymin = 0 + + config.GAP_SIZE//2
+            xmax = i * config.STONE_SIZE + config.GAP_SIZE//2
+            ymax = config.SCREEN_RESOLUTION[1] + config.GAP_SIZE//2
+            pygame.draw.line(self._display, config.RED, (xmin, ymin), (xmax, ymax))
+        for i in range(config.BOARD_RESOLUTION[1]):
+            xmin = 0 + + config.GAP_SIZE//2
+            ymin = i * config.STONE_SIZE + config.GAP_SIZE//2
+            xmax = config.SCREEN_RESOLUTION[0] + config.GAP_SIZE//2
+            ymax = i * config.STONE_SIZE + config.GAP_SIZE//2
+            pygame.draw.line(self._display, config.RED, (xmin, ymin), (xmax, ymax))
+        # -------------------------------- draw stones ------------------------------- #
+        for i in range(config.BOARD_RESOLUTION[0]):
+            for j in range(config.BOARD_RESOLUTION[1]):
+                if self.game.board[i][j] == 2:
+                    pygame.draw.circle(self._display, config.WHITE,
+                                       (j * config.STONE_SIZE + config.GAP_SIZE//2,
+                                        i * config.STONE_SIZE + config.GAP_SIZE//2),
+                                       config.STONE_SIZE//2)
+                if self.game.board[i][j] == 1:
+                    pygame.draw.circle(self._display, config.BLACK,
+                                       (j * config.STONE_SIZE + config.GAP_SIZE//2,
+                                        i * config.STONE_SIZE + config.GAP_SIZE//2),
+                                       config.STONE_SIZE//2)
+                if self.game.board[i][j] == -1:
+                    pygame.draw.circle(self._display, config.BLACK,
+                                       (j * config.STONE_SIZE + config.GAP_SIZE//2,
+                                        i * config.STONE_SIZE + config.GAP_SIZE//2),
+                                       config.STONE_SIZE//8)
+                if self.game.board[i][j] == -2:
+                    pygame.draw.circle(self._display, config.WHITE,
+                                       (j * config.STONE_SIZE + config.GAP_SIZE//2,
+                                        i * config.STONE_SIZE + config.GAP_SIZE//2),
+                                       config.STONE_SIZE//8)
+        # --------------------------------- highlight -------------------------------- #
+        if len(self.game.log) != 0:
+            t, r, c = self.game.log[-1]
+            if r != None:
+                pygame.draw.circle(self._display, config.GRAY,
+                                   (c * config.STONE_SIZE + config.GAP_SIZE//2,
+                                    r * config.STONE_SIZE + config.GAP_SIZE//2),
+                                   config.STONE_SIZE//2, config.STONE_SIZE//8)
+            else:
+                font = pygame.font.SysFont(None, 20)
+                img = font.render(f'{"Black" if t==1 else "White"} passed', True, config.BLUE)
+                self._display.blit(img, (5, 5))
+        # ------------------------------- display time ------------------------------- #
+        font = pygame.font.SysFont(None, 24)
+        s = f"{pygame.time.get_ticks()//1000}"
+        img = font.render(s, True, config.BLUE)
+        self._display.blit(img, (config.SCREEN_RESOLUTION_WITH_GAPS[0]-font.size(s)[0]-5, 5))
+        # --------------------------------- hovering --------------------------------- #
+        if self.game.turn == config.PLAYER:
+            r, c = convertToBoardCoord(pygame.mouse.get_pos())
+            if self.game.can_play(r, c):
+                pygame.draw.circle(self._display, config.WHITE if self.game.turn == 2 else config.BLACK,
+                                   (c * config.STONE_SIZE + config.GAP_SIZE//2,
+                                    r * config.STONE_SIZE + config.GAP_SIZE//2),
+                                   config.STONE_SIZE//4)
+        # ---------------------------- bot think indicator --------------------------- #
+        if self.bot.status == True:
+            t = pygame.time.get_ticks() // 500
+            r = config.STONE_SIZE//6 + (t % 2) * 2
+            x = (config.SCREEN_RESOLUTION_WITH_GAPS[0]) // 2
+            y = config.SCREEN_RESOLUTION_WITH_GAPS[1] - r
+            pygame.draw.circle(self._display, config.GRAY, (x, y), r)
+        pygame.display.flip()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/one_player.py
+Function: on_cleanup
+Description: No description available
+Code:
+black, white = self.game.compute_scores()
+        print(f'Game finished. Black score is {black} and white score is {white}.')
+        print(f'Game took {len(self.game.log)} rounds and {pygame.time.get_ticks()/1000:.2f} seconds.')
+        pygame.quit()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/one_player.py
+Function: on_execute
+Description: No description available
+Code:
+if self.on_init() == False:
+            self._running = False
+        while(self._running):
+            for event in pygame.event.get():
+                self.on_event(event)
+            self.on_loop()
+            self.on_render()
+        self.on_cleanup()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/utility.py
+Function: convertToBoardCoord
+Description: No description available
+Code:
+x, y = x_y
+    col = (x - config.GAP_SIZE//2 + config.STONE_SIZE//2) // config.STONE_SIZE
+    row = (y - config.GAP_SIZE//2 + config.STONE_SIZE//2) // config.STONE_SIZE
+    return (row, col)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/bots/random_bot.py
+Function: play
+Description: No description available
+Code:
+self.status = True
+        if len(self.game.log) > 0:
+            t, r, c = self.game.log[-1]
+            if r == None:
+                self.game.pass_turn()
+                self.status = False
+                return
+        positions = self.get_available_positions()
+        if len(positions) <= 1:
+            self.game.pass_turn()
+        else:
+            pos = randint(0, len(positions)-1)
+            self.game.play(positions[pos])
+        self.status = False
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/go-game-master/bots/random_bot.py
+Function: get_available_positions
+Description: No description available
+Code:
+result = []
+        for i in range(self.game.rows):
+            for j in range(self.game.cols):
+                if self.game.can_play(i, j):
+                    result.append((i, j))
+        return result
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/mined_to_SEF.py
+Function: dirAtual
+Description: No description available
+Code:
+soArquivos = [arq for arq in listdir(os.getcwd()) if isfile(join(os.getcwd(), arq))]
+    soArquivos = list(filter(lambda x:x.endswith('.txt'), soArquivos))
+    return soArquivos
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/mined_to_SEF.py
+Function: preenche
+Description: No description available
+Code:
+dP = str(dadoPreenchido)
+    if(dP[len(dP)-1] == ','):
+        dP = dP+'0'
+    print(dP)
+    for i in range(len(str(dP))):
+        pyautogui.write(dP[i], interval=0.3)
+    return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/mined_to_SEF.py
+Function: automatizado
+Description: No description available
+Code:
+pyautogui.moveTo(70,170)
+    pyautogui.click() # Aperta no botao "Nova" do contexto Nota
+    pyautogui.moveTo(180,145)
+    pyautogui.click() # Aperta no Situação
+    # pyautogui.write(['0', 'tab', 'tab', 'del', data, 'tab', serie, 'tab', cupom, 'tab', 'tab', 'tab', total], interval=0.5)
+    pyautogui.write(['0', 'tab', 'tab', 'del'], interval=1.2)
+    preenche(data)
+    pyautogui.moveTo(475,235)
+    pyautogui.click()
+    preenche(serie)
+    pyautogui.press('tab')
+    preenche(nfcid)
+    pyautogui.press('tab')
+    pyautogui.press('tab')
+    pyautogui.press('tab')
+    preenche(valbt)
+    # Preenche a primeira tela (Primeiro campo 0, depois data, o id da nota e valor de ICMS)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/mined_to_SEF.py
+Function: preencherSEF
+Description: No description available
+Code:
+linhas = open(arqPath[len(arqPath)-9:len(arqPath)])
+    texto = linhas.readlines()
+    for dado in texto:
+        serie = dado[0]
+        serie = serie[len(serie)-9:len(serie)-4]
+        nfcid = dado[1]
+        nome  = dado[2]
+        ender = dado[3]
+        bairr = dado[4]
+        cep   = dado[5]
+        cidad = dado[6]
+        estad = dado[7]
+        cnpfj = dado[8]
+        valbt = dado[9]
+        val18 = dado[10]
+        data  = dado[11]
+        automatizado(serie, nfcid, nome, ender, bairr, cep, cidad, estad, cnpfj, valbt, val18, data)
+        # call(['rm', arq])
+        call(['del', arq], shell=True)
+    return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/NFCe_to_SEF.py
+Function: resetEstado
+Description: No description available
+Code:
+pyautogui.moveTo(1915,1075)
+    pyautogui.click()
+    #Abre a área de trabalhom usando atalho do inferior direito (Windows 7)
+    pyautogui.moveTo(520,1060)
+    pyautogui.click()
+    #Abre o SEF
+    return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/NFCe_to_SEF.py
+Function: preenche
+Description: No description available
+Code:
+dP = str(dadoPreenchido)
+    if(dP[len(dP)-1] == ','):
+        dP = dP+'0'
+    print(dP)
+    for i in range(len(str(dP))):
+        pyautogui.write(dP[i], interval=0.3)
+    return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/NFCe_to_SEF.py
+Function: fazNotas
+Description: No description available
+Code:
+leitor = open(path+'\\listaVendasRafel201912.txt', 'r+')
+    texto = leitor.readlines()
+    for linha in texto:
+        conteudo = linha.split()
+        data   = conteudo[0]
+        data   = data.replace('/','')
+        cupom  = conteudo[1]
+        modelo = conteudo[2]
+        serie  = conteudo[3]
+        total  = conteudo[4]
+        valor  = total.replace(',', '.')
+        valor  = float(valor)
+        print(data, cupom, modelo, serie, total)
+        dezoitoPCT = str(round((valor*0.18), 2))
+        dezoitoPCT = dezoitoPCT.replace('.', ',')
+        # Minera os dados do arquivo e calcula o valor do ICMS (18%)
+        
+        pyautogui.moveTo(70,170)
+        pyautogui.click() # Aperta no botao "Nova" do contexto Nota
+        pyautogui.moveTo(180,145)
+        pyautogui.click() # Aperta no Situação
+        # pyautogui.write(['0', 'tab', 'tab', 'del', data, 'tab', serie, 'tab', cupom, 'tab', 'tab', 'tab', total], interval=0.5)
+        pyautogui.write(['0', 'tab', 'tab', 'del'], interval=1.2)
+        preenche(data)
+        pyautogui.moveTo(475,235)
+        pyautogui.click()
+        preenche(serie)
+        pyautogui.press('tab')
+        preenche(cupom)
+        pyautogui.press('tab')
+        pyautogui.press('tab')
+        pyautogui.press('tab')
+        preenche(total)
+        # Preenche a primeira tela (Primeiro campo 0, depois data, o id da nota e valor de ICMS)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/NFCout_to_SEF.py
+Function: dirAtual
+Description: No description available
+Code:
+soArquivos = [arq for arq in listdir(os.getcwd()) if isfile(join(os.getcwd(), arq))]
+    soArquivos = filter(lambda x:x.endswith('.pdf'), soArquivos)
+    return soArquivos
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/NFCout_to_SEF.py
+Function: minerarDados
+Description: No description available
+Code:
+localArquivotxt = localArquivo[0:len(localArquivo)-3]
+    localArquivotxt = localArquivotxt+'txt'
+    
+    leitor = open(localArquivotxt, 'r', errors='ignore')
+    texto  = leitor.readlines()
+    contador = 0
+    sobrescrever = True
+    chaveAcesso, nome, endereco, bairro, cidade, cep, cpfj, uf, data, fone, valorNota = '','','','','','','','','','',''
+    for linha in texto:
+        if(  linha == 'CHAVE DE ACESSO\n' and sobrescrever):
+            chaveAcesso = texto[contador+2]
+        elif(linha == 'NOME/RAZÃO SOCIAL\n' and sobrescrever):
+            nome = texto[contador+1]
+        elif(linha == 'ENDEREÇO\n' and sobrescrever):
+            if (len(endereco) == 0):
+                endereco = texto[contador+1]
+        elif(linha == 'BAIRRO/DISTRITO\n' and sobrescrever):
+            bairro = texto[contador+1]
+        elif(linha == 'CEP\n' and sobrescrever):
+            cep = texto[contador+1]
+        elif(linha == 'CNPJ/CPF\n' and sobrescrever):
+            cpfj = texto[contador+1]
+        elif(linha == 'MUNICÍPIO\n' and sobrescrever):
+            cidade = texto[contador+1]
+        elif(linha == 'UF\n' and sobrescrever):
+            uf = texto[contador+1]
+        elif(linha == 'FONE/FAX:\n' and sobrescrever):
+            fone = texto[contador+1]
+        elif(linha == 'VALOR TOTAL DA NOTA\n' and sobrescrever):
+            valorNota = texto[contador+1]
+            if(len(valorNota) == 1):
+                valorNota = texto[contador+6]
+        elif(linha.startswith('DAT')):
+            data   = texto[contador+1]
+        elif(linha == 'FRETE POR CONTA\n' and sobrescrever):
+            sobrescrever = False
+            break
+        contador = contador + 1
+    leitor.close()
+    escritor = open(localArquivotxt, 'w')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/NFCout_to_SEF.py
+Function: impressao
+Description: No description available
+Code:
+print(dados[0]+'\n'+dados[1]+' '+dados[2]+' '+ dados[3]+' '+dados[6]+' '+dados[4]+' '+dados[10]+'\n'+dados[7]+'\n'+dados[8]+' '+dados[9]+'\n')
+    return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/pyAutoGUI-master/NFCout_to_SEF.py
+Function: cadastrarNota
+Description: No description available
+Code:
+arqAtualtxt = arqAtual[0:len(arqAtual)-3]
+    arqAtualtxt = arqAtualtxt+'txt'
+    call(['pdf2txt.py', '-o', arqAtualtxt, arqAtual])
+    dados = minerarDados(localArquivo)
+    # impressao(dados)
+    return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: __init__
+Description: No description available
+Code:
+super(Main, self).__init__()
+        # 绑定点击事件：新建脚本，打开脚本，保存脚本
+        self.create_btn.clicked.connect(self.create_project)
+        self.open_btn.clicked.connect(self.open_project)
+        self.save_btn.clicked.connect(self.save_project)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: create_project
+Description: """
+        新建脚本
+        """
+Code:
+"""
+        新建脚本
+        """
+        path, filetype = QFileDialog.getSaveFileName(self, "新建脚本", self.CurrentProject["dir"], "Directory")
+        self.callback(path)
+        if path:
+            os.makedirs(path, exist_ok=True)
+            self.CurrentProject["path"] = path
+            self.CurrentProject["status"] = "new"
+            self.update_project_att("path")
+            self.table.setRowCount(0)
+            self.table.addRowColumn()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: open_project
+Description: """
+        打开脚本
+        这个函数的第二个参数是对话框的标题，第三个参数是设置打开文件的目录。当然我们还可以增加第四个，也就是增加一个过滤器，以便仅显示与过滤器匹配的文件。 例如：
+        filename = QFileDialog.getOpenFileNames(self, '学点编程吧:打开多个文件','./',"Text files (*.txt)")
+        """
+Code:
+"""
+        打开脚本
+        这个函数的第二个参数是对话框的标题，第三个参数是设置打开文件的目录。当然我们还可以增加第四个，也就是增加一个过滤器，以便仅显示与过滤器匹配的文件。 例如：
+        filename = QFileDialog.getOpenFileNames(self, '学点编程吧:打开多个文件','./',"Text files (*.txt)")
+        """
+        try:
+            value = QFileDialog.getExistingDirectory(self, '', self.CurrentProject["dir"])
+            if value:
+                self.CurrentProject["path"] = value
+                self.update_project_att("path")
+                self.table.read_script_file(self.CurrentProject["path"] + "/cmd.xls")
+                self.table.settable_init_data(self.column_name)
+                self.CurrentProject["status"] = "old"
+                self.save_project_data()
+                self.save_btn.setDisabled(True)
+        except Exception as e:
+            self.callback(e)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: save_project
+Description: """
+        保存脚本
+        """
+Code:
+"""
+        保存脚本
+        """
+        try:
+            self.table.save_script_file(self.CurrentProject["path"] + "/cmd.xls")
+            self.CurrentProject["status"] = "saved"
+            self.save_project_data()
+            self.save_btn.setDisabled(True)
+        except Exception as e:
+            self.callback(e.__str__())
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: edit_row
+Description: """
+        增加一行
+        """
+Code:
+"""
+        增加一行
+        """
+        if opt == "add":
+            self.table.addRowColumn()
+        else:
+            self.table.removeRowColumn()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: screen_shot
+Description: """
+        截屏
+        """
+Code:
+"""
+        截屏
+        """
+        if self.hide_while_run_btn.isChecked():
+            self.setHidden(True)
+        ScreenShot.main(self.CurrentProject["path"])
+        self.setHidden(False)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: run_script
+Description: """
+        运行脚本
+        """
+Code:
+"""
+        运行脚本
+        """
+        print("msg:", msg)
+        self.hide_while_run_btn_change()
+        if self.table.changed is True:
+            answer = QMessageBox.question(self, "脚本已修改", "是否保存", QMessageBox.Yes | QMessageBox.No)
+            if answer == 16384:
+                try:
+                    self.save_project()
+                except Exception as e:
+                    print(e)
+            else:
+                pass
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: callback
+Description: """
+        信号回调
+        """
+Code:
+"""
+        信号回调
+        """
+        if "end" in msg:
+            try:
+                self.runner_status = False
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: runner_params
+Description: """
+        信号参数
+        """
+Code:
+"""
+        信号参数
+        """
+        key = int(self.retry or "1")
+        return list([self.runner_status, self.CurrentProject["path"] + "/cmd.xls", key])
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: cell_change
+Description: """
+        表格编辑变更
+        """
+Code:
+"""
+        表格编辑变更
+        """
+        self.save_btn.setDisabled(False)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/main.py
+Function: hide_while_run_btn_change
+Description: """
+        运行或截屏隐藏窗口选项
+        """
+Code:
+"""
+        运行或截屏隐藏窗口选项
+        """
+        if self.hide_while_run_btn.isChecked():
+            self.hide_while_run = "1"
+        else:
+            self.hide_while_run = "0"
+        self.retry = self.run_times_btn.text()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScriptRunner.py
+Function: mouse_click
+Description: """
+        定义鼠标事件
+        pyautogui库其他用法 https://blog.csdn.net/qingfengxd1/article/details/108270159
+        """
+Code:
+"""
+        定义鼠标事件
+        pyautogui库其他用法 https://blog.csdn.net/qingfengxd1/article/details/108270159
+        """
+        if re_try == 1:
+            while True:
+                if self.pause is False:
+                    break
+                location = pyautogui.locateCenterOnScreen(img, confidence=0.9)
+                if location is not None:
+                    pyautogui.click(location.x, location.y, clicks=click_times,
+                                    interval=0.2, duration=0.2, button=l_or_r)
+                    self.debug_print(msg)
+                    break
+                error = "未找到匹配图片,0.1秒后重试"
+                self.debug_print(error)
+                time.sleep(0.1)
+        elif re_try == -1:
+            i = 1
+            while True:
+                if self.pause is False:
+                    break
+                location = pyautogui.locateCenterOnScreen(img, confidence=0.9)
+                if location is not None:
+                    pyautogui.click(location.x, location.y, clicks=click_times,
+                                    interval=0.2, duration=0.2, button=l_or_r)
+                    self.debug_print(msg)
+                error = "死循环第%d次：未找到匹配图片" % i
+                self.debug_print(error)
+                i = i + 1
+                time.sleep(0.1)
+        elif re_try > 1:
+            i = 1
+            while i < re_try + 1:
+                if self.pause is False:
+                    break
+                location = pyautogui.locateCenterOnScreen(img, confidence=0.9)
+                if location is not None:
+                    pyautogui.click(location.x, location.y, clicks=click_times,
+                                    interval=0.2, duration=0.2, button=l_or_r)
+                self.debug_print(msg)
+                error = "重复%d次: 第%d次" % (re_try, i)
+                self.debug_print(error)
+                i += 1
+                time.sleep(0.1)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScriptRunner.py
+Function: data_check
+Description: """
+        数据检查
+        cmdType.value  1.0 左键单击    2.0 左键双击  3.0 右键单击  4.0 输入  5.0 等待  6.0 滚轮
+        ctype     空：0
+                  字符串：1
+                  数字：2
+                  日期：3
+                  布尔：4
+                  error：5
+        """
+Code:
+"""
+        数据检查
+        cmdType.value  1.0 左键单击    2.0 左键双击  3.0 右键单击  4.0 输入  5.0 等待  6.0 滚轮
+        ctype     空：0
+                  字符串：1
+                  数字：2
+                  日期：3
+                  布尔：4
+                  error：5
+        """
+        check_cmd = True
+        # 行数检查
+        if sheet.nrows < 2:
+            msg = "没数据啊哥"
+            self.debug_print(msg)
+            check_cmd = False
+            return check_cmd
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScriptRunner.py
+Function: main_work
+Description: No description available
+Code:
+i = 1
+        while i < sheet.nrows:
+            if self.pause is False:
+                self.debug_print("停止运行")
+                break
+            # 取本行指令的操作类型
+            cmd_type = sheet.row(i)[0]
+            if cmd_type.value == 1.0:
+                # 取图片名称
+                img = path + "//" + sheet.row(i)[1].value
+                re_try = 1
+                if sheet.row(i)[2].ctype == 2 and sheet.row(i)[2].value != 0:
+                    re_try = sheet.row(i)[2].value
+                msg = "左键单击：" + img
+                self.mouse_click(1, "left", img, re_try, msg)
+            # 2代表双击左键
+            elif cmd_type.value == 2.0:
+                # 取图片名称
+                img = path + "//" + sheet.row(i)[1].value
+                # 取重试次数
+                re_try = 1
+                if sheet.row(i)[2].ctype == 2 and sheet.row(i)[2].value != 0:
+                    re_try = sheet.row(i)[2].value
+                msg = "左键双击：" + img
+                self.mouse_click(2, "left", img, re_try, msg)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScriptRunner.py
+Function: debug_print
+Description: No description available
+Code:
+if self.signal is None:
+            print(msg)
+        else:
+            print(msg)
+            self.signal.emit(msg)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScriptRunner.py
+Function: main
+Description: No description available
+Code:
+try:
+            self.signal = signal
+            # 打开文件
+            f = xlrd.open_workbook(filename=file)
+            # 通过索引获取表格sheet页
+            sheet = f.sheet_by_index(0)
+            path = os.path.dirname(file)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: get_real_resolution
+Description: """获取真实的分辨率"""
+Code:
+"""获取真实的分辨率"""
+    hDC = win32gui.GetDC(0)
+    # 横向分辨率
+    w = win32print.GetDeviceCaps(hDC, win32con.DESKTOPHORZRES)
+    # 纵向分辨率
+    h = win32print.GetDeviceCaps(hDC, win32con.DESKTOPVERTRES)
+    return w, h
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: get_screen_size
+Description: """获取缩放后的分辨率"""
+Code:
+"""获取缩放后的分辨率"""
+    w = GetSystemMetrics(0)
+    h = GetSystemMetrics(1)
+    return w, h
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: __init__
+Description: No description available
+Code:
+self.start_x = None
+        self.start_y = None
+        self.end_x = None
+        self.end_y = None
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: is_none
+Description: No description available
+Code:
+return self.start_x is None or self.end_x is None
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: set_start
+Description: No description available
+Code:
+self.start_x = x
+        self.start_y = y
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: set_end
+Description: No description available
+Code:
+self.end_x = x
+        self.end_y = y
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: box
+Description: No description available
+Code:
+lt_x = min(self.start_x, self.end_x)
+        lt_y = min(self.start_y, self.end_y)
+        rb_x = max(self.start_x, self.end_x)
+        rb_y = max(self.start_y, self.end_y)
+        return lt_x, lt_y, rb_x, rb_y
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: center
+Description: No description available
+Code:
+center_x = (self.start_x + self.end_x) / 2
+        center_y = (self.start_y + self.end_y) / 2
+        return center_x, center_y
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: __init__
+Description: No description available
+Code:
+self.canvas = canvas
+        self.area_box = Box()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: empty
+Description: No description available
+Code:
+return self.area_box.is_none()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: set_start_point
+Description: No description available
+Code:
+self.canvas.delete('area', 'lt_txt', 'rb_txt')
+        self.area_box.set_start(x, y)
+        # 开始坐标文字
+        self.canvas.create_text(
+            x, y - 10, text=f'({x}, {y})', fill='red', tag='lt_txt')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: update_end_point
+Description: No description available
+Code:
+self.area_box.set_end(x, y)
+        self.canvas.delete('area', 'rb_txt')
+        box_area = self.area_box.box()
+        # 选择区域
+        self.canvas.create_rectangle(
+            *box_area, fill='black', outline='red', width=2, tags="area")
+        self.canvas.create_text(
+            x, y + 10, text=f'({x}, {y})', fill='red', tag='rb_txt')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: __init__
+Description: No description available
+Code:
+self.win = tk.Tk()
+        # self.win.tk.call('tk', 'scaling', scaling_factor)
+        self.width = self.win.winfo_screenwidth()
+        self.height = self.win.winfo_screenheight()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: exit
+Description: No description available
+Code:
+self.win.destroy()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: clear
+Description: No description available
+Code:
+self.canvas.delete('area', 'lt_txt', 'rb_txt')
+        self.win.attributes('-alpha', 0)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: capture_image
+Description: No description available
+Code:
+if self.area.empty():
+            return None
+        else:
+            box_area = [x * screen_scale_rate for x in self.area.area_box.box()]
+            self.clear()
+            print(f'Grab: {box_area}')
+            img = ImageGrab.grab(box_area)
+            return img
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: confirm_screen_shot
+Description: No description available
+Code:
+img = self.capture_image()
+        self.win.destroy()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: select_start
+Description: No description available
+Code:
+self.is_selecting = True
+        self.area.set_start_point(event.x, event.y)
+        # print('Select', event)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: change_selection_area
+Description: No description available
+Code:
+if self.is_selecting:
+            self.area.update_end_point(event.x, event.y)
+            # print(event)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: select_done
+Description: No description available
+Code:
+self.area.update_end_point(event.x, event.y)
+        self.is_selecting = False
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: main
+Description: No description available
+Code:
+ScreenShot(path)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Action/ScreenShot.py
+Function: func
+Description: No description available
+Code:
+print(event.keysym)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/ScriptThread/RunnerThread.py
+Function: __init__
+Description: No description available
+Code:
+super().__init__()
+        self.runner = ScriptRunner.ScriptRunner()
+        self.filename = filename
+        self.pause = False
+        self.key = "1"
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/ScriptThread/RunnerThread.py
+Function: run
+Description: No description available
+Code:
+# 线程启动
+        try:
+            self.runner.main(self.filename, self.signal, self.key)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/ScriptThread/RunnerThread.py
+Function: set_file
+Description: No description available
+Code:
+self.filename = filename
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Setup/ProjectData.py
+Function: __init__
+Description: No description available
+Code:
+self.config = configparser.ConfigParser()
+        self.CurrentProject = {}
+        self.column_name = []
+        self.init_fail = False
+        self.hide_while_run = "0"
+        self.retry = "1"
+        try:
+            self.read_init()
+        except Exception as e:
+            print(e)
+            self.init_fail = True
+            self.base_data()
+            self.read_init()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Setup/ProjectData.py
+Function: read_init
+Description: No description available
+Code:
+self.config.read("project.ini", encoding="utf-8")
+        self.CurrentProject["dir"] = self.config.get("CurrentProject", "CurrentProjectDir")
+        self.CurrentProject["name"] = self.config.get("CurrentProject", "CurrentProjectName")
+        self.CurrentProject["path"] = self.CurrentProject["dir"] + "\\" + self.CurrentProject["name"]
+        self.init_fail = os.path.exists(self.CurrentProject["path"])
+        self.CurrentProject["status"] = "old"
+        self.column_name = [self.config.get("ColumnName", "%d" % i) for i in range(1, 4)]
+        self.hide_while_run = self.config.get("RunArgs", "HideWhileRun")
+        self.retry = self.config.get("RunArgs", "ReTry")
+        if self.init_fail:
+            pass
+        else:
+            raise IOError("文件不存在 %s " % self.CurrentProject["path"])
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Setup/ProjectData.py
+Function: update_project_att
+Description: No description available
+Code:
+if option_type == "path":
+            self.CurrentProject["name"] = os.path.basename(self.CurrentProject["path"])
+            self.CurrentProject["dir"] = os.path.dirname(self.CurrentProject["path"])
+        elif option_type == "init":
+            self.CurrentProject["path"] = self.CurrentProject["dir"] + "\\" + self.CurrentProject["name"]
+        print(self.CurrentProject)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Setup/ProjectData.py
+Function: save_project_data
+Description: No description available
+Code:
+print(self.CurrentProject)
+        self.config.set("CurrentProject", "CurrentProjectDir", self.CurrentProject["dir"])
+        self.config.set("CurrentProject", "CurrentProjectName", self.CurrentProject["name"])
+        self.config.set("RunArgs", "HideWhileRun", self.hide_while_run)
+        self.config.set("RunArgs", "ReTry", self.retry)
+        self.config.write(open("project.ini", "w", encoding="utf-8"), )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/Setup/ProjectData.py
+Function: base_data
+Description: No description available
+Code:
+if self.init_fail:
+            data = """[CurrentProject]
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: __init__
+Description: No description available
+Code:
+super(DoubleOnlyDelegate, self).__init__(parent)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: createEditor
+Description: No description available
+Code:
+editor = QLineEdit(QWidget)
+        editor.setValidator(QDoubleValidator())
+        return editor
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: setEditorData
+Description: No description available
+Code:
+text = QModelIndex.model().data(QModelIndex, Qt.EditRole)
+        lineEdit.setText(str(text))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: updateEditorGeometry
+Description: No description available
+Code:
+QWidget.setGeometry(QStyleOptionViewItem.rect)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: setModelData
+Description: No description available
+Code:
+text = lineEditor.text()
+        QAbstractItemModel.setData(QModelIndex, text, Qt.EditRole)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: __init__
+Description: No description available
+Code:
+super(IntOnlyDelegate, self).__init__(parent)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: createEditor
+Description: No description available
+Code:
+editor = QLineEdit(QWidget)
+        editor.setValidator(QIntValidator())
+        return editor
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: setEditorData
+Description: No description available
+Code:
+text = QModelIndex.model().data(QModelIndex, Qt.EditRole)
+        lineEdit.setText(str(text))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: updateEditorGeometry
+Description: No description available
+Code:
+QWidget.setGeometry(QStyleOptionViewItem.rect)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/Delegate.py
+Function: setModelData
+Description: No description available
+Code:
+text = lineEditor.text()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/MainLayout.py
+Function: __init__
+Description: No description available
+Code:
+super(MainLayout, self).__init__()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/FloatingWin.py
+Function: __init__
+Description: No description available
+Code:
+super(FloatingWin, self).__init__()
+        self.main_win = main_win
+        self._startPos = None
+        self._wmGap = None
+        self.hidden = False
+        self.ui_alive = True
+        self.cpu_gui_x = 75
+        self.label_size = 'font: 13px'
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/FloatingWin.py
+Function: enterEvent
+Description: No description available
+Code:
+self.hide_or_show('show', event)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/FloatingWin.py
+Function: leaveEvent
+Description: No description available
+Code:
+self.hide_or_show('hide', event)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/FloatingWin.py
+Function: hide_or_show
+Description: No description available
+Code:
+# 获取窗口左上角x,y
+        pos = self.frameGeometry().topLeft()
+        if mode == 'show' and self.hidden:
+            # 窗口左上角x + 窗口宽度 大于屏幕宽度，从右侧滑出
+            if pos.x() + self.window_width >= self.screen_width:
+                # 需要留10在里边，否则边界跳动
+                self.start_animation(self.screen_width - self.window_width, pos.y())
+                event.accept()
+                self.hidden = False
+            # 窗口左上角x 小于0, 从左侧滑出
+            elif pos.x() <= 0:
+                self.start_animation(0, pos.y())
+                event.accept()
+                self.hidden = False
+            # 窗口左上角y 小于0, 从上方滑出
+            elif pos.y() <= 0:
+                self.start_animation(pos.x(), 0)
+                event.accept()
+                self.hidden = False
+        elif mode == 'hide' and (not self.hidden):
+            if pos.x() + self.window_width >= self.screen_width:
+                # 留10在外面
+                self.start_animation(self.screen_width - 10, pos.y(), mode, 'right')
+                event.accept()
+                self.hidden = True
+            elif pos.x() <= 0:
+                # 留10在外面
+                self.start_animation(10 - self.window_width, pos.y(), mode, 'left')
+                event.accept()
+                self.hidden = True
+            elif pos.y() <= 0:
+                # 留10在外面
+                self.start_animation(pos.x(), 10 - self.window_height, mode, 'up')
+                event.accept()
+                self.hidden = True
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/FloatingWin.py
+Function: start_animation
+Description: No description available
+Code:
+animation = QPropertyAnimation(self, b"geometry", self)
+        # 滑出动画时长
+        animation.setDuration(200)
+        # 隐藏时，只留10在外边，防止跨屏
+        # QRect限制其大小，防止跨屏
+        num = QApplication.desktop().screenCount()
+        if mode == 'hide':
+            if direction == 'right':
+                animation.setEndValue(QRect(x, y, 10, self.window_height))
+            elif direction == 'left':
+                # 多屏时采用不同的隐藏方法，防止跨屏
+                if num < 2:
+                    animation.setEndValue(QRect(x, y, self.window_width, self.window_height))
+                else:
+                    animation.setEndValue(QRect(0, y, 10, self.window_height))
+            else:
+                if num < 2:
+                    animation.setEndValue(QRect(x, y, self.window_width, self.window_height))
+                else:
+                    animation.setEndValue(QRect(x, 0, self.window_width, 10))
+        else:
+            animation.setEndValue(QRect(x, y, self.window_width, self.window_height))
+        animation.start()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/FloatingWin.py
+Function: stop
+Description: No description available
+Code:
+if self.main_win is not None:
+            try:
+                self.main_win.run_script("浮窗")
+            except Exception as e:
+                print(e)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/MainTable.py
+Function: __init__
+Description: No description available
+Code:
+super(MainTable, self).__init__(parent)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/MainTable.py
+Function: read_script_file
+Description: No description available
+Code:
+file_exit = os.path.exists(file)
+        if file_exit is False:
+            xls = xlwt.Workbook()
+            sheet = xls.add_sheet("sheet1")
+            xls.save(file)
+        # 打开文件
+        wb = xlrd.open_workbook(filename=file)
+        # 通过索引获取表格sheet页
+        self.sheet = wb.sheet_by_index(0)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/MainTable.py
+Function: save_script_file
+Description: No description available
+Code:
+xls = xlwt.Workbook()
+        sheet = xls.add_sheet("sheet1")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/MainTable.py
+Function: cell_change
+Description: No description available
+Code:
+self.changed = True
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/MainTable.py
+Function: addRowColumn
+Description: """当初始的行数或者列数不能满足需要的时候，
+        我们需要动态的调整表格的大小，如入动态的插入行：
+        insertColumn()动态插入列。
+        insertRow(int)、
+        insertColumn(int)，指定位置插入行或者列
+        """
+Code:
+"""当初始的行数或者列数不能满足需要的时候，
+        我们需要动态的调整表格的大小，如入动态的插入行：
+        insertColumn()动态插入列。
+        insertRow(int)、
+        insertColumn(int)，指定位置插入行或者列
+        """
+        row = self.rowCount() if self.currentRow() == -1 else self.currentRow()
+        self.insertRow(row)
+        self.setItem(row, 0, QTableWidgetItem(""))
+        self.setItem(row, 1, QTableWidgetItem(""))
+        self.setItem(row, 2, QTableWidgetItem(""))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/MainTable.py
+Function: removeRowColumn
+Description: """
+        removeColumn(int column) 移除column列及其内容。
+        removeRow(int row)移除第row行及其内容。
+        :return:
+        """
+Code:
+"""
+        removeColumn(int column) 移除column列及其内容。
+        removeRow(int row)移除第row行及其内容。
+        :return:
+        """
+        row = self.rowCount()-1 if self.currentRow() == -1 else self.currentRow()
+        self.removeRow(row)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/gui-script-editor-main/UI/MainWindows.py
+Function: __init__
+Description: No description available
+Code:
+super(MainWindows, self).__init__()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/PEG-main/peg/main.py
+Function: __init__
+Description: No description available
+Code:
+self.screenshots_dir = os.path.join(project_dir, "screenshots")
+        self.tasks_config = os.path.join(project_dir, "tasks.json")
+        screenshot_names = os.listdir(self.screenshots_dir)
+        self.screenshot_name_to_path_map = self.get_screenshot_name_to_path_map(screenshot_names)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/PEG-main/peg/main.py
+Function: get_screenshot_name_to_path_map
+Description: No description available
+Code:
+screenshot_name_to_path_map = {}
+        for screenshot_name in screenshot_names:
+            screenshot_path = os.path.join(self.screenshots_dir, screenshot_name)
+            screenshot_name_to_path_map[screenshot_name] = screenshot_path
+        return screenshot_name_to_path_map
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/PEG-main/peg/main.py
+Function: open_run_command_window
+Description: No description available
+Code:
+pyautogui.hotkey('win', 'r')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/PEG-main/peg/main.py
+Function: open_chrome
+Description: No description available
+Code:
+self.open_run_command_window()
+        pyautogui.write('chrome')
+        pyautogui.hotkey('enter', interval=3)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/PEG-main/peg/main.py
+Function: open_file_or_folder_from_run_command_window
+Description: No description available
+Code:
+# open run window
+        self.open_run_command_window()
+        # write path in run window
+        pyautogui.write(file_or_folder_path)
+        # press enter so that we go to that  path
+        pyautogui.hotkey('enter')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/PEG-main/peg/main.py
+Function: download_file_from_url_using_chrome
+Description: No description available
+Code:
+self.open_chrome()
+        # We got to enter url section
+        pyautogui.hotkey('alt', 'd')
+        # paste the given file url so that we can download the file
+        pyautogui.write(file_url)
+        # let file load first then we download
+        pyautogui.hotkey('enter', interval=3)
+        pyautogui.hotkey('ctrl', 's', interval=1)
+        # if window is there then we have to press enter button to download file
+        pyautogui.hotkey('enter')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/PEG-main/peg/__main__.py
+Function: main
+Description: No description available
+Code:
+0
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/evaluate.py
+Function: supports_ansi
+Description: """
+    Check if the terminal supports ANSI escape codes
+    """
+Code:
+"""
+    Check if the terminal supports ANSI escape codes
+    """
+    plat = platform.system()
+    supported_platform = plat != "Windows" or "ANSICON" in os.environ
+    is_a_tty = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+    return supported_platform and is_a_tty
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/evaluate.py
+Function: format_evaluation_prompt
+Description: No description available
+Code:
+prompt = EVALUATION_PROMPT.format(guideline=guideline)
+    return prompt
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/evaluate.py
+Function: parse_eval_content
+Description: No description available
+Code:
+try:
+        res = json.loads(content)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/evaluate.py
+Function: evaluate_final_screenshot
+Description: """Load the final screenshot and return True or False if it meets the given guideline."""
+Code:
+"""Load the final screenshot and return True or False if it meets the given guideline."""
+    with open(SCREENSHOT_PATH, "rb") as img_file:
+        img_base64 = base64.b64encode(img_file.read()).decode("utf-8")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/evaluate.py
+Function: run_test_case
+Description: """Returns True if the result of the test with the given prompt meets the given guideline for the given model."""
+Code:
+"""Returns True if the result of the test with the given prompt meets the given guideline for the given model."""
+    # Run `operate` with the model to evaluate and the test case prompt
+    subprocess.run(
+        ["operate", "-m", model, "--prompt", f'"{objective}"'],
+        stdout=subprocess.DEVNULL,
+    )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/evaluate.py
+Function: get_test_model
+Description: No description available
+Code:
+parser = argparse.ArgumentParser(
+        description="Run the self-operating-computer with a specified model."
+    )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/evaluate.py
+Function: main
+Description: No description available
+Code:
+load_dotenv()
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/main.py
+Function: main_entry
+Description: No description available
+Code:
+parser = argparse.ArgumentParser(
+        description="Run the self-operating-computer with a specified model."
+    )
+    parser.add_argument(
+        "-m",
+        "--model",
+        help="Specify the model to use",
+        required=False,
+        default="gpt-4-with-ocr",
+    )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/operate.py
+Function: main
+Description: No description available
+Code:
+"""
+    Main function for the Self-Operating Computer.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/operate.py
+Function: operate
+Description: No description available
+Code:
+if config.verbose:
+        print("[Self Operating Computer][operate]")
+    for operation in operations:
+        if config.verbose:
+            print("[Self Operating Computer][operate] operation", operation)
+        # wait one second
+        time.sleep(1)
+        operate_type = operation.get("operation").lower()
+        operate_thought = operation.get("thought")
+        operate_detail = ""
+        if config.verbose:
+            print("[Self Operating Computer][operate] operate_type", operate_type)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/config.py
+Function: __new__
+Description: No description available
+Code:
+if cls._instance is None:
+            cls._instance = super(Config, cls).__new__(cls)
+            # Put any initialization here
+        return cls._instance
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/config.py
+Function: __init__
+Description: No description available
+Code:
+load_dotenv()
+        self.verbose = False
+        self.openai_api_key = (
+            None  # instance variables are backups in case saving to a `.env` fails
+        )
+        self.google_api_key = (
+            None  # instance variables are backups in case saving to a `.env` fails
+        )
+        self.anthropic_api_key = (
+            None  # instance variables are backups in case saving to a `.env` fails
+        )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/config.py
+Function: initialize_openai
+Description: No description available
+Code:
+if self.verbose:
+            print("[Config][initialize_openai]")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/config.py
+Function: initialize_google
+Description: No description available
+Code:
+if self.google_api_key:
+            if self.verbose:
+                print("[Config][initialize_google] using cached google_api_key")
+            api_key = self.google_api_key
+        else:
+            if self.verbose:
+                print(
+                    "[Config][initialize_google] no cached google_api_key, try to get from env."
+                )
+            api_key = os.getenv("GOOGLE_API_KEY")
+        genai.configure(api_key=api_key, transport="rest")
+        model = genai.GenerativeModel("gemini-pro-vision")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/config.py
+Function: initialize_anthropic
+Description: No description available
+Code:
+if self.anthropic_api_key:
+            api_key = self.anthropic_api_key
+        else:
+            api_key = os.getenv("ANTHROPIC_API_KEY")
+        return anthropic.Anthropic(api_key=api_key)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/config.py
+Function: validation
+Description: """
+        Validate the input parameters for the dialog operation.
+        """
+Code:
+"""
+        Validate the input parameters for the dialog operation.
+        """
+        self.require_api_key(
+            "OPENAI_API_KEY",
+            "OpenAI API key",
+            model == "gpt-4"
+            or voice_mode
+            or model == "gpt-4-with-som"
+            or model == "gpt-4-with-ocr",
+        )
+        self.require_api_key(
+            "GOOGLE_API_KEY", "Google API key", model == "gemini-pro-vision"
+        )
+        self.require_api_key(
+            "ANTHROPIC_API_KEY", "Anthropic API key", model == "claude-3"
+        )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/config.py
+Function: require_api_key
+Description: No description available
+Code:
+key_exists = bool(os.environ.get(key_name))
+        if self.verbose:
+            print("[Config] require_api_key")
+            print("[Config] key_name", key_name)
+            print("[Config] key_description", key_description)
+            print("[Config] key_exists", key_exists)
+        if is_required and not key_exists:
+            self.prompt_and_save_api_key(key_name, key_description)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/config.py
+Function: prompt_and_save_api_key
+Description: No description available
+Code:
+key_value = input_dialog(
+            title="API Key Required", text=f"Please enter your {key_description}:"
+        ).run()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/config.py
+Function: save_api_key_to_env
+Description: No description available
+Code:
+with open(".env", "a") as file:
+            file.write(f"\n{key_name}='{key_value}'")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/exceptions.py
+Function: __init__
+Description: No description available
+Code:
+self.model = model
+        self.message = message
+        super().__init__(self.message)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: get_next_action
+Description: No description available
+Code:
+if config.verbose:
+        print("[Self-Operating Computer][get_next_action]")
+        print("[Self-Operating Computer][get_next_action] model", model)
+    if model == "gpt-4":
+        return call_gpt_4o(messages), None
+    if model == "gpt-4-with-som":
+        operation = await call_gpt_4o_labeled(messages, objective, model)
+        return operation, None
+    if model == "gpt-4-with-ocr":
+        operation = await call_gpt_4o_with_ocr(messages, objective, model)
+        return operation, None
+    if model == "agent-1":
+        return "coming soon"
+    if model == "gemini-pro-vision":
+        return call_gemini_pro_vision(messages, objective), None
+    if model == "llava":
+        operation = call_ollama_llava(messages)
+        return operation, None
+    if model == "claude-3":
+        operation = await call_claude_3_with_ocr(messages, objective, model)
+        return operation, None
+    raise ModelNotRecognizedException(model)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: call_gpt_4o
+Description: No description available
+Code:
+if config.verbose:
+        print("[call_gpt_4_v]")
+    time.sleep(1)
+    client = config.initialize_openai()
+    try:
+        screenshots_dir = "screenshots"
+        if not os.path.exists(screenshots_dir):
+            os.makedirs(screenshots_dir)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: call_gemini_pro_vision
+Description: """
+    Get the next action for Self-Operating Computer using Gemini Pro Vision
+    """
+Code:
+"""
+    Get the next action for Self-Operating Computer using Gemini Pro Vision
+    """
+    if config.verbose:
+        print(
+            "[Self Operating Computer][call_gemini_pro_vision]",
+        )
+    # sleep for a second
+    time.sleep(1)
+    try:
+        screenshots_dir = "screenshots"
+        if not os.path.exists(screenshots_dir):
+            os.makedirs(screenshots_dir)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: call_gpt_4o_with_ocr
+Description: No description available
+Code:
+if config.verbose:
+        print("[call_gpt_4o_with_ocr]")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: call_gpt_4o_labeled
+Description: No description available
+Code:
+time.sleep(1)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: call_ollama_llava
+Description: No description available
+Code:
+if config.verbose:
+        print("[call_ollama_llava]")
+    time.sleep(1)
+    try:
+        screenshots_dir = "screenshots"
+        if not os.path.exists(screenshots_dir):
+            os.makedirs(screenshots_dir)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: call_claude_3_with_ocr
+Description: No description available
+Code:
+if config.verbose:
+        print("[call_claude_3_with_ocr]")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: get_last_assistant_message
+Description: """
+    Retrieve the last message from the assistant in the messages array.
+    If the last assistant message is the first message in the array, return None.
+    """
+Code:
+"""
+    Retrieve the last message from the assistant in the messages array.
+    If the last assistant message is the first message in the array, return None.
+    """
+    for index in reversed(range(len(messages))):
+        if messages[index]["role"] == "assistant":
+            if index == 0:  # Check if the assistant message is the first in the array
+                return None
+            else:
+                return messages[index]
+    return None  # Return None if no assistant message is found
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: gpt_4_fallback
+Description: No description available
+Code:
+if config.verbose:
+        print("[gpt_4_fallback]")
+    system_prompt = get_system_prompt("gpt-4o", objective)
+    new_system_message = {"role": "system", "content": system_prompt}
+    # remove and replace the first message in `messages` with `new_system_message`
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: confirm_system_prompt
+Description: """
+    On `Exception` we default to `call_gpt_4_vision_preview` so we have this function to reassign system prompt in case of a previous failure
+    """
+Code:
+"""
+    On `Exception` we default to `call_gpt_4_vision_preview` so we have this function to reassign system prompt in case of a previous failure
+    """
+    if config.verbose:
+        print("[confirm_system_prompt] model", model)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/apis.py
+Function: clean_json
+Description: No description available
+Code:
+if config.verbose:
+        print("\n\n[clean_json] content before cleaning", content)
+    if content.startswith("```json"):
+        content = content[
+            len("```json") :
+        ].strip()  # Remove starting ```json and trim whitespace
+    elif content.startswith("```"):
+        content = content[
+            len("```") :
+        ].strip()  # Remove starting ``` and trim whitespace
+    if content.endswith("```"):
+        content = content[
+            : -len("```")
+        ].strip()  # Remove ending ``` and trim whitespace
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/prompts.py
+Function: get_system_prompt
+Description: """
+    Format the vision prompt more efficiently and print the name of the prompt used
+    """
+Code:
+"""
+    Format the vision prompt more efficiently and print the name of the prompt used
+    """
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/prompts.py
+Function: get_user_prompt
+Description: No description available
+Code:
+prompt = OPERATE_PROMPT
+    return prompt
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/models/prompts.py
+Function: get_user_first_message_prompt
+Description: No description available
+Code:
+prompt = OPERATE_FIRST_MESSAGE_PROMPT
+    return prompt
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/screenshot.py
+Function: capture_screen_with_cursor
+Description: No description available
+Code:
+user_platform = platform.system()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/style.py
+Function: supports_ansi
+Description: """
+    Check if the terminal supports ANSI escape codes
+    """
+Code:
+"""
+    Check if the terminal supports ANSI escape codes
+    """
+    plat = platform.system()
+    supported_platform = plat != "Windows" or "ANSICON" in os.environ
+    is_a_tty = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+    return supported_platform and is_a_tty
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/ocr.py
+Function: get_text_element
+Description: No description available
+Code:
+"""
+    Searches for a text element in the OCR results and returns its index. Also draws bounding boxes on the image.
+    Args:
+        result (list): The list of results returned by EasyOCR.
+        search_text (str): The text to search for in the OCR results.
+        image_path (str): Path to the original image.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/ocr.py
+Function: get_text_coordinates
+Description: No description available
+Code:
+"""
+    Gets the coordinates of the text element at the specified index as a percentage of screen width and height.
+    Args:
+        result (list): The list of results returned by EasyOCR.
+        index (int): The index of the text element in the results list.
+        image_path (str): Path to the screenshot image.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/operating_system.py
+Function: write
+Description: No description available
+Code:
+try:
+            content = content.replace("\\n", "\n")
+            for char in content:
+                pyautogui.write(char)
+        except Exception as e:
+            print("[OperatingSystem][write] error:", e)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/operating_system.py
+Function: press
+Description: No description available
+Code:
+try:
+            for key in keys:
+                pyautogui.keyDown(key)
+            time.sleep(0.1)
+            for key in keys:
+                pyautogui.keyUp(key)
+        except Exception as e:
+            print("[OperatingSystem][press] error:", e)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/operating_system.py
+Function: mouse
+Description: No description available
+Code:
+try:
+            x = convert_percent_to_decimal(click_detail.get("x"))
+            y = convert_percent_to_decimal(click_detail.get("y"))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/misc.py
+Function: convert_percent_to_decimal
+Description: No description available
+Code:
+try:
+        # Remove the '%' sign and convert to float
+        decimal_value = float(percent)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/misc.py
+Function: parse_operations
+Description: No description available
+Code:
+if response == "DONE":
+        return {"type": "DONE", "data": None}
+    elif response.startswith("CLICK"):
+        # Adjust the regex to match the correct format
+        click_data = re.search(r"CLICK \{ (.+) \}", response).group(1)
+        click_data_json = json.loads(f"{{{click_data}}}")
+        return {"type": "CLICK", "data": click_data_json}
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/label.py
+Function: validate_and_extract_image_data
+Description: No description available
+Code:
+if not data or "messages" not in data:
+        raise ValueError("Invalid request, no messages found")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/label.py
+Function: get_label_coordinates
+Description: No description available
+Code:
+"""
+    Retrieves the coordinates for a given label.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/label.py
+Function: is_overlapping
+Description: No description available
+Code:
+x1_box1, y1_box1, x2_box1, y2_box1 = box1
+    x1_box2, y1_box2, x2_box2, y2_box2 = box2
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/label.py
+Function: add_labels
+Description: No description available
+Code:
+image_bytes = base64.b64decode(base64_data)
+    image_labeled = Image.open(io.BytesIO(image_bytes))  # Corrected this line
+    image_debug = image_labeled.copy()  # Create a copy for the debug image
+    image_original = (
+        image_labeled.copy()
+    )  # Copy of the original image for base64 return
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/self-operating-computer-main(1)/self-operating-computer-main/operate/utils/label.py
+Function: get_click_position_in_percent
+Description: No description available
+Code:
+"""
+    Calculates the click position at the center of the bounding box and converts it to percentages.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main(1)/SkipYTAds-main/point.py
+Function: __init__
+Description: """ Create a new point at the origin """
+Code:
+""" Create a new point at the origin """
+        self.x = x if x is not None else 0
+        self.y = y if y is not None else 0
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main(1)/SkipYTAds-main/skip_ads.py
+Function: on_press
+Description: No description available
+Code:
+if key == keyboard.Key.pause:
+        global is_enabled
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main(1)/SkipYTAds-main/skip_ads.py
+Function: on_release
+Description: No description available
+Code:
+pass
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main(1)/SkipYTAds-main/skip_ads.py
+Function: run
+Description: No description available
+Code:
+with keyboard.Listener(on_press=on_press,
+                               on_release=on_release) as listener:
+            listener.join()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main(1)/SkipYTAds-main/skip_ads.py
+Function: search
+Description: No description available
+Code:
+if VERBOSE == 'a':
+        print("Searching")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main(1)/SkipYTAds-main/skip_ads.py
+Function: run
+Description: No description available
+Code:
+global is_enabled
+        while is_enabled:
+            search()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main(1)/SkipYTAds-main/opt_vertify_corner_pos.py
+Function: on_press
+Description: No description available
+Code:
+if key == keyboard.Key.space:
+        pos = pyautogui.position()
+        print("Cursor position: ", pos[0], pos[1])
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/SkipYTAds-main(1)/SkipYTAds-main/opt_vertify_corner_pos.py
+Function: on_release
+Description: No description available
+Code:
+pass
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/auto-script-prototype-main/testing.py
+Function: testingAutoPyGui
+Description: No description available
+Code:
+firstnames = [
+        "Ha", "Nguyen", "TRAN", "Le", "Pham", "Vu", "Ho", "Do",
+        "Thi", "Anh", "Khai", "Quang", "Duy", "Tung", "Minh", "Hieu",
+        "Tuan", "Tam", "Lu", "Viet", "Long", "Bao", "Nam", "Huy",
+        "Thanh", "Tu", "Manh", "Hung", "Cuong", "Dang", "Khoa", "Son"
+    ]
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/auto-script-prototype-main/Timer.py
+Function: countdown_timer
+Description: No description available
+Code:
+print(f"Starting countdown for {duration} seconds...")
+    for t in range(duration, 0, -1):
+        print(f"Countdown in {t}")
+        time.sleep(1)  # Wait for 1 second
+    print("...Finished!")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/auto-script-prototype-main/AutoRegister.py
+Function: register
+Description: No description available
+Code:
+# todo: a list to key in first name and last name in facebook.
+    global firstnamesPos
+    firstnames = [
+        "Ha", "Nguyen", "TRAN", "Le", "Pham", "Vu", "Ho", "Do",
+        "Thi", "Anh", "Khai", "Quang", "Duy", "Tung", "Minh", "Hieu",
+        "Tuan", "Tam", "Lu", "Viet", "Long", "Bao", "Nam", "Huy",
+        "Thanh", "Tu", "Manh", "Hung", "Cuong", "Dang", "Khoa", "Son"
+    ]
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/auto-script-prototype-main/ScreenShot.py
+Function: screenShot
+Description: No description available
+Code:
+webbrowser.open_new('https://www.facebook.com/register')
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/mouse-and-keyboard-recorder-main/record.py
+Function: on_press
+Description: No description available
+Code:
+try:
+        json_object = {
+            'action':'pressed_key', 
+            'key':key.char, 
+            '_time': time.time()
+        }
+    except AttributeError:
+        if key == keyboard.Key.esc:
+            print("Keyboard recording ended.")
+            return False
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/mouse-and-keyboard-recorder-main/record.py
+Function: on_release
+Description: No description available
+Code:
+try:
+        json_object = {
+            'action':'released_key', 
+            'key':key.char, 
+            '_time': time.time()
+        }
+    except AttributeError:
+        json_object = {
+            'action':'released_key', 
+            'key':str(key), 
+            '_time': time.time()
+        }
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/mouse-and-keyboard-recorder-main/record.py
+Function: on_move
+Description: No description available
+Code:
+if len(recording) >= 1:
+        if (recording[-1]['action'] == "pressed" and \
+            recording[-1]['button'] == 'Button.left') or \
+            (recording[-1]['action'] == "moved" and \
+            time.time() - recording[-1]['_time'] > 0.02):
+            json_object = {
+                'action':'moved', 
+                'x':x, 
+                'y':y, 
+                '_time':time.time()
+            }
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/mouse-and-keyboard-recorder-main/record.py
+Function: on_click
+Description: No description available
+Code:
+json_object = {
+        'action':'clicked' if pressed else 'unclicked', 
+        'button':str(button), 
+        'x':x, 
+        'y':y, 
+        '_time':time.time()
+    }
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/mouse-and-keyboard-recorder-main/record.py
+Function: on_scroll
+Description: No description available
+Code:
+json_object = {
+        'action': 'scroll', 
+        'vertical_direction': int(dy), 
+        'horizontal_direction': int(dx), 
+        'x':x, 
+        'y':y, 
+        '_time': time.time()
+    }
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/mouse-and-keyboard-recorder-main/record.py
+Function: start_recording
+Description: No description available
+Code:
+keyboard_listener = keyboard.Listener(
+        on_press=on_press,
+        on_release=on_release)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/mouse-and-keyboard-recorder-main/convert.py
+Function: read_json_file
+Description: No description available
+Code:
+"""
+    Takes the JSON output 'recording.json'
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/mouse-and-keyboard-recorder-main/convert.py
+Function: excluded_actions
+Description: No description available
+Code:
+return "released" not in object["action"] and \
+               "scroll" not in object["action"]
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/mouse-and-keyboard-recorder-main/convert.py
+Function: convert_to_pyautogui_script
+Description: No description available
+Code:
+"""
+    Converts to a Python template script 'play.py' to 
+    use with PyAutoGUI.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/zigzag_cipher.py
+Function: fence
+Description: No description available
+Code:
+fence = [[None] * len(width) for n in range(numrails)]
+    rails = range(numrails - 1) + range(numrails - 1, 0, -1)
+    for n, x in enumerate(width):
+        fence[rails[n % len(rails)]][n] = x
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/zigzag_cipher.py
+Function: encode
+Description: No description available
+Code:
+return ''.join(fence(text, n))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/zigzag_cipher.py
+Function: decode
+Description: No description available
+Code:
+rng = range(len(text))
+    pos = fence(rng, n)
+    return ''.join(text[pos.index(n)] for n in rng)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/Dictionary_Attack.py
+Function: extract
+Description: No description available
+Code:
+try:
+        zFile.extractall(pwd=passw)
+        return passw
+    except:
+        pass
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/Dictionary_Attack.py
+Function: main
+Description: No description available
+Code:
+start_time = time.time()
+    zFile = zipfile.ZipFile("crack.zip")
+    with open("password-list.txt",'r')  as f:
+        for line in f:
+            passw = line.strip('\n')
+            t = Thread(target=extract, args=(zFile,passw))
+            t.start()
+            #ans = extract(zFile,passw)                                #without threading {without lock it generates bizzare result}
+        if passw:                                                      #ans 
+            print("Password :"+passw+'\n')                             #+ans+ 
+            print("--- %s seconds ---" % (time.time() - start_time))
+            exit(0)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/Python_bot.py
+Function: ppong
+Description: No description available
+Code:
+while 1:
+        text=b""
+        text=irc.recv(8000)
+        print(text)
+        if text.find(b"PING") !=-1:
+            irc.send(b"PONG "+text.split()[1]+b"\r\n")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/Python_bot.py
+Function: reply
+Description: No description available
+Code:
+irc.send(b"PRIVMSG "+target+ b":!Your Mssg\r\n") #send private message to your target
+    while 1:
+        text=b""
+        text=irc.recv(8000)
+        print(text)
+        if text.find(b"/")>-1:                     
+            try:
+               text=text[(text[1:].find(b":"))+2:]  # to slice string message from (:){excluding} to next 2 numbers/text...
+                text=text[:text.find(b".")]         # to slice from start to end exluding everything
+                print(text)                              
+                break
+            except:
+                print(b"Waiting for quextion....")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/Teams_Auto_gui.py
+Function: drag_square
+Description: No description available
+Code:
+pyautogui.drag(distance, 0, duration=0.5)   # move right
+    pyautogui.drag(0, distance, duration=0.5)   # move down
+    pyautogui.drag(-distance, 0, duration=0.5)  # move left
+    pyautogui.drag(0, -distance, duration=0.5)  # move up
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/ROT13.py
+Function: rot13
+Description: No description available
+Code:
+def lookup(v):
+        o, c = ord(v), v.lower()
+        if 'a' <= c <= 'm':
+            return chr(o + 13)
+        if 'n' <= c <= 'z':
+            return chr(o - 13)
+        return v
+    return ''.join(map(lookup, s)) # map lookup with our text = s and join without spaces
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/Shift(Caesar).py
+Function: decrypt
+Description: No description available
+Code:
+plaintext = ''
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/Shift(Caesar).py
+Function: main
+Description: No description available
+Code:
+c = open("c://xxx.bin","rb")             //to read fron deasktop file (bin/txt)..
+            cipher = c.read()                        //for string: cipher = raw_input("your string")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/Misc-Scripts...-master/Xored.py
+Function: crypt_message
+Description: No description available
+Code:
+count = 0
+    cryptmessage = ""
+    for i in range(0,len(message)):
+        cryptmessage += chr(ord(message[count]) ^ ord(key[count % len(key)]))
+        count += 1
+    return cryptmessage
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/main.py
+Function: draw_figure
+Description: No description available
+Code:
+figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
+    figure_canvas_agg.draw()
+    figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
+    return figure_canvas_agg
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/main.py
+Function: setup_interactions
+Description: No description available
+Code:
+def notify_mouse_move(event):
+        if event.xdata is not None and event.ydata is not None and int(event.ydata) < dft.shape[0]:
+            coords = f"{frames_to_time(event.xdata, sr, values):.4f} s  {bin_to_freq(int(event.ydata), sr, values):.2f} Hz"
+            window['-COORDS-'].update(coords)
+            window['-VALUE-'].update(f"{dft[int(event.ydata)][int(event.xdata)]:.2f} dB")
+    figure.canvas.mpl_connect('motion_notify_event', notify_mouse_move)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/main.py
+Function: event_loop
+Description: No description available
+Code:
+try:
+        # Load the audio file
+        y, sr = morse.load_file(filename)
+        window['-SR-'].update(f"{sr} Hz")
+        dft = morse.get_dft(y, sr, DEFAULTS)
+        bin_size = get_bin_size(sr, DEFAULTS)
+        window['-BINSIZE-'].update(f"{bin_size:.2f} Hz")
+        # Plot the spectrogram
+        fig, ax = plot(dft, sr, DEFAULTS)
+        fig_canvas_agg = draw_figure(window['-CANVAS-'].TKCanvas, fig)
+        setup_interactions(fig, dft, sr, DEFAULTS, window)
+        # Wait for the user interaction
+        while True:
+            event, values = window.read()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/gui.py
+Function: create_window
+Description: No description available
+Code:
+layout = generate_layout(filename)
+    window = sg.Window('Morse Analyzer', layout, grab_anywhere=True, finalize=True, location=(0, 0), resizable=False,
+                       font=APPFONT)
+    return window
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/gui.py
+Function: show_about
+Description: No description available
+Code:
+sg.popup_ok(ABOUT_TEXT, title='About', icon='info', keep_on_top=True, grab_anywhere=True, font=APPFONT)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/gui.py
+Function: get_filename
+Description: No description available
+Code:
+# Get the filename from the user
+    filename = sg.popup_get_file('Choose an audio file', keep_on_top=True, grab_anywhere=True, location=(0, 0),
+                                 font=APPFONT, file_types=(("Audio Files", "*.wav"),))
+    if filename is None:
+        return
+    while not os.path.exists(filename):
+        sg.popup_error('Please select a file!', keep_on_top=True)
+        filename = sg.popup_get_file('Choose an audio file', keep_on_top=True, grab_anywhere=True, location=(0, 0),
+                                     font=APPFONT)
+        if filename is None:
+            return
+    return filename
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/gui.py
+Function: generate_layout
+Description: No description available
+Code:
+plotting_frame = sg.Frame('Plotting', layout=[[
+        sg.Column(layout=[
+            [
+                sg.T('Time window limits:', s=25),
+                sg.Input(k='plot_time_min', s=10, default_text=DEFAULTS['plot_time_min']),
+                sg.T('-'),
+                sg.Input(k='plot_time_max', s=10, default_text=DEFAULTS['plot_time_max'])
+            ],
+            [
+                sg.T('Frequency window limits:', s=25),
+                sg.Input(k='plot_freq_min', s=10, default_text=DEFAULTS['plot_freq_min']),
+                sg.T('-'),
+                sg.Input(k='plot_freq_max', s=10, default_text=DEFAULTS['plot_freq_max'])
+            ],
+            [sg.CB('Show Grids', default=DEFAULTS['plot_grids'], k='plot_grids')]
+        ]),
+        sg.Column(layout=[
+            [sg.T('', k='-COORDS-', s=20, justification='center')],
+            [sg.T('', k='-VALUE-', s=20, justification='center')],
+            [sg.Button('Plot', k='-PLOT-', expand_x=True)]
+        ])
+    ]])
+    output_layout = [
+        [sg.Canvas(k='-CANVAS-')],
+        [sg.Column([[plotting_frame]], expand_x=True, element_justification='center', p=((5, 5), (20, 10)))]
+    ]
+    shortened = filename if len(filename) < 40 else '...' + filename[-37:]
+    input_layout = [
+        # ------------------------------------------ Filename And SR Display ----------------------------------------- #
+        [sg.Frame(title='File', expand_x=True, pad=((5, 5), (0, 20)), layout=[
+            [sg.T(shortened, s=40, justification='center', tooltip=filename)],
+            [
+                sg.T('Sample rate:'),
+                sg.T('', k='-SR-', expand_x=True, justification='end')
+            ]
+        ])],
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/morse.py
+Function: load_file
+Description: No description available
+Code:
+sr, y = scipy.io.wavfile.read(filename)
+    if y.ndim > 1:
+        y = np.mean(y, axis=1).flatten()
+    y = np.interp(y, (y.min(), y.max()), (-1, 1))
+    return y, sr
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/morse.py
+Function: get_dft
+Description: No description available
+Code:
+# get stft
+    n_fft = int(values['n_fft'])
+    win_length = int(values['win_length'])
+    hop_length = int(values['hop_length'])
+    f,t, stft = scipy.signal.stft(y, sr, window='hann', nperseg=win_length, noverlap=win_length-hop_length, nfft=n_fft)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/morse.py
+Function: tweak_dft
+Description: No description available
+Code:
+# apply threshold db filter
+    if(values['apply_threshold_db']):
+        threshold_db = -80 if values['threshold_db'] == '' else float(values['threshold_db'])
+        dft = np.where(dft > threshold_db, dft, -80).astype(np.int8)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/morse.py
+Function: solve
+Description: No description available
+Code:
+interp = np.interp(dft, [np.amin(dft), np.amax(dft)], [0, 1])  # map to [0, 1]
+    status = []
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/morse.py
+Function: decode
+Description: No description available
+Code:
+code = encoded.strip()
+    if code == '':
+        return ''
+    words = code.split('/')
+    decoded = []
+    for word in words:
+        letters = word.split(' ')
+        for letter in letters:
+            decoded.append(MORSE[letter] if letter in MORSE else '¿')
+        decoded.append(' ')
+    return ''.join(decoded)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/plotting.py
+Function: plot
+Description: No description available
+Code:
+fig, ax = plt.subplots()
+    img = ax.imshow(dft, aspect='auto', origin='lower', interpolation="none")
+    fig.colorbar(img, ax=ax, format="%+2.f dB")
+    ax.set_title('Spectrogram')
+    ax.grid(values['plot_grids'])
+    plt.subplots_adjust(left=0.1, right=1.05, top=0.95, bottom=0.15)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: frames_to_samples
+Description: No description available
+Code:
+offset = int(int(values['n_fft']) // 2)
+    return (np.asanyarray(f) * int(values['hop_length']) + offset).astype(int)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: samples_to_frames
+Description: No description available
+Code:
+offset = int(int(values['n_fft']) // 2)
+    return np.floor((np.asanyarray(s) - offset) // int(values['hop_length'])).astype(int)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: samples_to_time
+Description: No description available
+Code:
+return np.asanyarray(s) / float(sr)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: time_to_samples
+Description: No description available
+Code:
+return (np.asanyarray(t) * sr).astype(int)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: frames_to_time
+Description: No description available
+Code:
+samples = frames_to_samples(f, values)
+    return samples_to_time(samples, sr)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: time_to_frames
+Description: No description available
+Code:
+samples = time_to_samples(t, sr)
+    return samples_to_frames(samples, values)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: fft_frequencies
+Description: No description available
+Code:
+return np.fft.rfftfreq(n=int(values['n_fft']), d=1.0 / sr)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: freq_to_bin
+Description: No description available
+Code:
+return int(f / get_bin_size(sr, values))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: get_bin_size
+Description: No description available
+Code:
+return sr / int(values['n_fft'])
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: bin_to_freq
+Description: No description available
+Code:
+return f * get_bin_size(sr, values)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/morse-analyzer-master/util.py
+Function: get_domains
+Description: No description available
+Code:
+# time domain
+    if boundaries[0] == '':
+        time_min = 0
+    else:
+        in_time_min = float(boundaries[0])
+        time_min = max(0, time_to_frames(in_time_min, sr, values))
+    if boundaries[1] == '':
+        time_max = shape[1]
+    else:
+        in_time_max = float(boundaries[1])
+        time_max = min(shape[1], time_to_frames(in_time_max, sr, values))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/PyAutoGUI-main/extractData_2ndyreval.py
+Function: click_by_img
+Description: No description available
+Code:
+btn_search_loc = pyautogui.locateOnScreen(img_path)
+    if btn_search_loc:
+        btn_search_loc = pyautogui.center(btn_search_loc)
+        x,y = btn_search_loc
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/utils.py
+Function: get_embeddings
+Description: No description available
+Code:
+if "instructor" in EMBEDDING_MODEL_NAME:
+        return HuggingFaceInstructEmbeddings(
+            model_name=EMBEDDING_MODEL_NAME,
+            model_kwargs={"device": device_type},
+            embed_instruction="Represent the document for retrieval:",
+            query_instruction="Represent the question for retrieving supporting documents:",
+        )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/run_localGPT.py
+Function: load_model
+Description: No description available
+Code:
+"""
+    Select a model for text generation using the HuggingFace library.
+    If you are running this for the first time, it will download a model for you.
+    subsequent runs will use the model from the disk.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/run_localGPT.py
+Function: retrieval_qa_pipline
+Description: No description available
+Code:
+"""
+    Initializes and returns a retrieval-based Question Answering (QA) pipeline.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/run_localGPT.py
+Function: main
+Description: No description available
+Code:
+"""
+    Implements the main information retrieval task for a localGPT.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/load_models.py
+Function: load_quantized_model_gguf_ggml
+Description: No description available
+Code:
+"""
+    Load a GGUF/GGML quantized model using LlamaCpp.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/load_models.py
+Function: load_quantized_model_qptq
+Description: No description available
+Code:
+"""
+    Load a GPTQ quantized model using AutoGPTQForCausalLM.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/load_models.py
+Function: load_full_model
+Description: No description available
+Code:
+"""
+    Load a full model using either LlamaTokenizer or AutoModelForCausalLM.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/load_models.py
+Function: load_quantized_model_awq
+Description: No description available
+Code:
+"""
+    Load a AWQ quantized model using AutoModelForCausalLM.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/crawl.py
+Function: main
+Description: No description available
+Code:
+paths = []
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/localGPT_UI.py
+Function: model_memory
+Description: No description available
+Code:
+# Adding history to the model.
+    template = """Use the following pieces of context to answer the question at the end. If you don't know the answer,\
+    just say that you don't know, don't try to make up an answer.
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/ingest.py
+Function: file_log
+Description: No description available
+Code:
+file1 = open("file_ingest.log", "a")
+    file1.write(logentry + "\n")
+    file1.close()
+    print(logentry + "\n")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/ingest.py
+Function: load_document_batch
+Description: No description available
+Code:
+logging.info("Loading document batch")
+    # create a thread pool
+    with ThreadPoolExecutor(len(filepaths)) as exe:
+        # load files
+        futures = [exe.submit(load_single_document, name) for name in filepaths]
+        # collect data
+        if futures is None:
+            file_log(name + " failed to submit")
+            return None
+        else:
+            data_list = [future.result() for future in futures]
+            # return data and file paths
+            return (data_list, filepaths)
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/ingest.py
+Function: main
+Description: No description available
+Code:
+# Load documents and split in chunks
+    logging.info(f"Loading documents from {SOURCE_DIRECTORY}")
+    documents = load_documents(SOURCE_DIRECTORY)
+    text_documents, python_documents = split_documents(documents)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    python_splitter = RecursiveCharacterTextSplitter.from_language(
+        language=Language.PYTHON, chunk_size=880, chunk_overlap=200
+    )
+    texts = text_splitter.split_documents(text_documents)
+    texts.extend(python_splitter.split_documents(python_documents))
+    logging.info(f"Loaded {len(documents)} documents from {SOURCE_DIRECTORY}")
+    logging.info(f"Split into {len(texts)} chunks of text")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/run_localGPT_API.py
+Function: delete_source_route
+Description: No description available
+Code:
+folder_name = "SOURCE_DOCUMENTS"
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/run_localGPT_API.py
+Function: save_document_route
+Description: No description available
+Code:
+if "document" not in request.files:
+        return "No document part", 400
+    file = request.files["document"]
+    if file.filename == "":
+        return "No selected file", 400
+    if file:
+        filename = secure_filename(file.filename)
+        folder_path = "SOURCE_DOCUMENTS"
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+        file_path = os.path.join(folder_path, filename)
+        file.save(file_path)
+        return "File saved successfully", 200
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/run_localGPT_API.py
+Function: run_ingest_route
+Description: No description available
+Code:
+global DB
+    global RETRIEVER
+    global QA
+    try:
+        if os.path.exists(PERSIST_DIRECTORY):
+            try:
+                shutil.rmtree(PERSIST_DIRECTORY)
+            except OSError as e:
+                print(f"Error: {e.filename} - {e.strerror}.")
+        else:
+            print("The directory does not exist")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/run_localGPT_API.py
+Function: prompt_route
+Description: No description available
+Code:
+global QA
+    user_prompt = request.form.get("user_prompt")
+    if user_prompt:
+        # print(f'User Prompt: {user_prompt}')
+        # Get the answer from the chain
+        res = QA(user_prompt)
+        answer, docs = res["result"], res["source_documents"]
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/prompt_template_utils.py
+Function: get_prompt_template
+Description: """
+            Context: {history} \n {context}
+            User: {question}"""
+Code:
+if promptTemplate_type == "llama":
+        B_INST, E_INST = "[INST]", "[/INST]"
+        B_SYS, E_SYS = "<<SYS>>\n", "\n<</SYS>>\n\n"
+        SYSTEM_PROMPT = B_SYS + system_prompt + E_SYS
+        if history:
+            instruction = """
+            Context: {history} \n {context}
+            User: {question}"""
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/localGPT-main/localGPTUI/localGPTUI.py
+Function: home_page
+Description: No description available
+Code:
+if request.method == "POST":
+        if "user_prompt" in request.form:
+            user_prompt = request.form["user_prompt"]
+            print(f"User Prompt: {user_prompt}")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/IntruderShield-main/src/main.py
+Function: get_location
+Description: No description available
+Code:
+try:
+        response = requests.get('https://ipinfo.io')
+        if response.status_code == 200:
+            data = response.json()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/IntruderShield-main/src/main.py
+Function: send_sms
+Description: No description available
+Code:
+client.messages.create(
+        from_=os.getenv("TWILIO_PHN_2"),
+        to=os.getenv("MY_PHN"),
+        body=get_location(),
+    )
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/IntruderShield-main/src/main.py
+Function: click_picture
+Description: No description available
+Code:
+camera = cv2.VideoCapture(0)
+    for i in range(1):
+        return_value, image = camera.read()
+        cv2.imwrite(f'./data/intruder/{time_stamp}.png', image)
+    del camera
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/IntruderShield-main/src/main.py
+Function: lock_screen
+Description: No description available
+Code:
+pyautogui.hotkey("ctrl", "win", "d")
+    pyautogui.hotkey("alt", "f4")
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/IntruderShield-main/src/probe.py
+Function: play_siren
+Description: No description available
+Code:
+pygame.mixer.init()
+    pygame.mixer.music.load("assets/aud.ogg")
+    pygame.mixer.music.play()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/IntruderShield-main/src/probe.py
+Function: dir_count
+Description: No description available
+Code:
+return str(len([entry for entry in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, entry))]))
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/IntruderShield-main/src/probe.py
+Function: open_image
+Description: No description available
+Code:
+im = Image.open(f"{dir_path}/{file_name}")
+    im.show()
+----------------------------------------
+
+File: /home/jh/Downloads/pyautogui_scripts/BeeSpammer.py-main/beespammer/spammer.py
+Function: main
+Description: No description available
+Code:
+print("Starting in 5 seconds...")
+    time.sleep(5)
+----------------------------------------

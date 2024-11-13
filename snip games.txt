@@ -1,0 +1,5014 @@
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/MP3_to_OGG.py
+Name: MP3toOGGConverter
+Type: Class
+Description: No description available
+Code:
+class MP3toOGGConverter:
+    def __init__(self):
+        self.window = Tk()
+        self.window.title("MP3 to OGG Converter")
+        self.window.geometry("400x200")
+        self.window.resizable(False, False)
+
+        self.progress = StringVar()
+        
+        self.setup_gui()
+
+    def setup_gui(self):
+        Label(self.window, text="Select a directory to convert MP3 to OGG", font=("Arial", 12)).pack(pady=10)
+
+        self.progress_label = Label(self.window, textvariable=self.progress, font=("Arial", 10))
+        self.progress_label.pack(pady=5)
+
+        self.progress_bar = ttk.Progressbar(self.window, orient="horizontal", length=300, mode="determinate")
+        self.progress_bar.pack(pady=10)
+
+        browse_button = Button(self.window, text="Browse", command=self.browse_directory, width=20)
+        browse_button.pack(pady=10)
+
+    def convert_to_ogg(self, input_file, output_file, current, total):
+        try:
+            audio = AudioSegment.from_mp3(input_file)
+            audio.export(output_file, format='ogg')
+            self.progress.set(f"Converted {current}/{total}: {os.path.basename(input_file)}")
+        except Exception as e:
+            self.progress.set(f"Failed to convert: {os.path.basename(input_file)}")
+
+    def recursive_convert_mp3_to_ogg(self, directory):
+        mp3_files = []
+        for root, _, files in os.walk(directory):
+            for file in files:
+                if file.lower().endswith('.mp3'):
+                    mp3_files.append(os.path.join(root, file))
+
+        total_files = len(mp3_files)
+        if total_files == 0:
+            messagebox.showinfo("No MP3 Files", "No MP3 files found in the selected directory.")
+            return
+
+        self.progress_bar["maximum"] = total_files
+        for i, mp3_file in enumerate(mp3_files, start=1):
+            ogg_file = os.path.splitext(mp3_file)[0] + '.ogg'
+            if not os.path.exists(ogg_file):  # Skip if OGG already exists
+                self.convert_to_ogg(mp3_file, ogg_file, i, total_files)
+            self.progress_bar["value"] = i
+            self.window.update_idletasks()
+
+        messagebox.showinfo("Conversion Complete", f"Converted {total_files} MP3 files to OGG!")
+
+    def browse_directory(self):
+        directory = filedialog.askdirectory()
+        if directory:
+            threading.Thread(target=self.recursive_convert_mp3_to_ogg, args=(directory,)).start()
+
+    def run(self):
+        self.window.mainloop()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/MP3_to_OGG.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self):
+        self.window = Tk()
+        self.window.title("MP3 to OGG Converter")
+        self.window.geometry("400x200")
+        self.window.resizable(False, False)
+
+        self.progress = StringVar()
+        
+        self.setup_gui()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/MP3_to_OGG.py
+Name: setup_gui
+Type: Function
+Description: No description available
+Code:
+    def setup_gui(self):
+        Label(self.window, text="Select a directory to convert MP3 to OGG", font=("Arial", 12)).pack(pady=10)
+
+        self.progress_label = Label(self.window, textvariable=self.progress, font=("Arial", 10))
+        self.progress_label.pack(pady=5)
+
+        self.progress_bar = ttk.Progressbar(self.window, orient="horizontal", length=300, mode="determinate")
+        self.progress_bar.pack(pady=10)
+
+        browse_button = Button(self.window, text="Browse", command=self.browse_directory, width=20)
+        browse_button.pack(pady=10)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/MP3_to_OGG.py
+Name: convert_to_ogg
+Type: Function
+Description: No description available
+Code:
+    def convert_to_ogg(self, input_file, output_file, current, total):
+        try:
+            audio = AudioSegment.from_mp3(input_file)
+            audio.export(output_file, format='ogg')
+            self.progress.set(f"Converted {current}/{total}: {os.path.basename(input_file)}")
+        except Exception as e:
+            self.progress.set(f"Failed to convert: {os.path.basename(input_file)}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/MP3_to_OGG.py
+Name: recursive_convert_mp3_to_ogg
+Type: Function
+Description: No description available
+Code:
+    def recursive_convert_mp3_to_ogg(self, directory):
+        mp3_files = []
+        for root, _, files in os.walk(directory):
+            for file in files:
+                if file.lower().endswith('.mp3'):
+                    mp3_files.append(os.path.join(root, file))
+
+        total_files = len(mp3_files)
+        if total_files == 0:
+            messagebox.showinfo("No MP3 Files", "No MP3 files found in the selected directory.")
+            return
+
+        self.progress_bar["maximum"] = total_files
+        for i, mp3_file in enumerate(mp3_files, start=1):
+            ogg_file = os.path.splitext(mp3_file)[0] + '.ogg'
+            if not os.path.exists(ogg_file):  # Skip if OGG already exists
+                self.convert_to_ogg(mp3_file, ogg_file, i, total_files)
+            self.progress_bar["value"] = i
+            self.window.update_idletasks()
+
+        messagebox.showinfo("Conversion Complete", f"Converted {total_files} MP3 files to OGG!")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/MP3_to_OGG.py
+Name: browse_directory
+Type: Function
+Description: No description available
+Code:
+    def browse_directory(self):
+        directory = filedialog.askdirectory()
+        if directory:
+            threading.Thread(target=self.recursive_convert_mp3_to_ogg, args=(directory,)).start()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/MP3_to_OGG.py
+Name: run
+Type: Function
+Description: No description available
+Code:
+    def run(self):
+        self.window.mainloop()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/player.py
+Name: Player
+Type: Class
+Description: No description available
+Code:
+class Player:
+    def __init__(self, x, y, width, height, velocity):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.velocity = velocity
+        self.color = (0, 0, 255)  # Blue for the player
+    
+    def move(self, keys):
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= self.velocity
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += self.velocity
+        if keys[pygame.K_UP]:
+            self.rect.y -= self.velocity
+        if keys[pygame.K_DOWN]:
+            self.rect.y += self.velocity
+    
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/player.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, x, y, width, height, velocity):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.velocity = velocity
+        self.color = (0, 0, 255)  # Blue for the player
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/player.py
+Name: move
+Type: Function
+Description: No description available
+Code:
+    def move(self, keys):
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= self.velocity
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += self.velocity
+        if keys[pygame.K_UP]:
+            self.rect.y -= self.velocity
+        if keys[pygame.K_DOWN]:
+            self.rect.y += self.velocity
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/player.py
+Name: draw
+Type: Function
+Description: No description available
+Code:
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: draw_board
+Type: Function
+Description: No description available
+Code:
+def draw_board():
+    for i in range(32):
+        column = i % 4
+        row = i // 4
+        if row % 2 == 0:
+            pygame.draw.rect(screen, 'light gray', [
+                             600 - (column * 200), row * 100, 100, 100])
+        else:
+            pygame.draw.rect(screen, 'light gray', [
+                             700 - (column * 200), row * 100, 100, 100])
+        pygame.draw.rect(screen, 'gray', [0, 800, WIDTH, 100])
+        pygame.draw.rect(screen, 'gold', [0, 800, WIDTH, 100], 5)
+        pygame.draw.rect(screen, 'gold', [800, 0, 200, HEIGHT], 5)
+        status_text = ['White: Select a Piece to Move!', 'White: Select a Destination!',
+                       'Black: Select a Piece to Move!', 'Black: Select a Destination!']
+        screen.blit(big_font.render(
+            status_text[turn_step], True, 'black'), (20, 820))
+        for i in range(9):
+            pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)
+            pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
+        screen.blit(medium_font.render('FORFEIT', True, 'black'), (810, 830))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: draw_pieces
+Type: Function
+Description: No description available
+Code:
+def draw_pieces():
+    for i in range(len(white_pieces)):
+        index = piece_list.index(white_pieces[i])
+        if white_pieces[i] == 'pawn':
+            screen.blit(
+                white_pawn, (white_locations[i][0] * 100 + 22, white_locations[i][1] * 100 + 30))
+        else:
+            screen.blit(white_images[index], (white_locations[i]
+                        [0] * 100 + 10, white_locations[i][1] * 100 + 10))
+        if turn_step < 2:
+            if selection == i:
+                pygame.draw.rect(screen, 'red', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 100 + 1,
+                                                 100, 100], 2)
+
+    for i in range(len(black_pieces)):
+        index = piece_list.index(black_pieces[i])
+        if black_pieces[i] == 'pawn':
+            screen.blit(
+                black_pawn, (black_locations[i][0] * 100 + 22, black_locations[i][1] * 100 + 30))
+        else:
+            screen.blit(black_images[index], (black_locations[i]
+                        [0] * 100 + 10, black_locations[i][1] * 100 + 10))
+        if turn_step >= 2:
+            if selection == i:
+                pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1,
+                                                  100, 100], 2)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: check_options
+Type: Function
+Description: No description available
+Code:
+def check_options(pieces, locations, turn):
+    moves_list = []
+    all_moves_list = []
+    for i in range((len(pieces))):
+        location = locations[i]
+        piece = pieces[i]
+        if piece == 'pawn':
+            moves_list = check_pawn(location, turn)
+        elif piece == 'rook':
+            moves_list = check_rook(location, turn)
+        elif piece == 'knight':
+            moves_list = check_knight(location, turn)
+        elif piece == 'bishop':
+            moves_list = check_bishop(location, turn)
+        elif piece == 'queen':
+            moves_list = check_queen(location, turn)
+        elif piece == 'king':
+            moves_list = check_king(location, turn)
+        all_moves_list.append(moves_list)
+    return all_moves_list
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: check_king
+Type: Function
+Description: No description available
+Code:
+def check_king(position, color):
+    moves_list = []
+    if color == 'white':
+        enemies_list = black_locations
+        friends_list = white_locations
+    else:
+        friends_list = black_locations
+        enemies_list = white_locations
+    # 8 squares to check for kings, they can go one square any direction
+    targets = [(1, 0), (1, 1), (1, -1), (-1, 0),
+               (-1, 1), (-1, -1), (0, 1), (0, -1)]
+    for i in range(8):
+        target = (position[0] + targets[i][0], position[1] + targets[i][1])
+        if target not in friends_list and 0 <= target[0] <= 7 and 0 <= target[1] <= 7:
+            moves_list.append(target)
+    return moves_list
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: check_queen
+Type: Function
+Description: No description available
+Code:
+def check_queen(position, color):
+    moves_list = check_bishop(position, color)
+    second_list = check_rook(position, color)
+    for i in range(len(second_list)):
+        moves_list.append(second_list[i])
+    return moves_list
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: check_bishop
+Type: Function
+Description: No description available
+Code:
+def check_bishop(position, color):
+    moves_list = []
+    if color == 'white':
+        enemies_list = black_locations
+        friends_list = white_locations
+    else:
+        friends_list = black_locations
+        enemies_list = white_locations
+    for i in range(4):  # up-right, up-left, down-right, down-left
+        path = True
+        chain = 1
+        if i == 0:
+            x = 1
+            y = -1
+        elif i == 1:
+            x = -1
+            y = -1
+        elif i == 2:
+            x = 1
+            y = 1
+        else:
+            x = -1
+            y = 1
+        while path:
+            if (position[0] + (chain * x), position[1] + (chain * y)) not in friends_list and \
+                    0 <= position[0] + (chain * x) <= 7 and 0 <= position[1] + (chain * y) <= 7:
+                moves_list.append(
+                    (position[0] + (chain * x), position[1] + (chain * y)))
+                if (position[0] + (chain * x), position[1] + (chain * y)) in enemies_list:
+                    path = False
+                chain += 1
+            else:
+                path = False
+    return moves_list
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: check_rook
+Type: Function
+Description: No description available
+Code:
+def check_rook(position, color):
+    moves_list = []
+    if color == 'white':
+        enemies_list = black_locations
+        friends_list = white_locations
+    else:
+        friends_list = black_locations
+        enemies_list = white_locations
+    for i in range(4):  # down, up, right, left
+        path = True
+        chain = 1
+        if i == 0:
+            x = 0
+            y = 1
+        elif i == 1:
+            x = 0
+            y = -1
+        elif i == 2:
+            x = 1
+            y = 0
+        else:
+            x = -1
+            y = 0
+        while path:
+            if (position[0] + (chain * x), position[1] + (chain * y)) not in friends_list and \
+                    0 <= position[0] + (chain * x) <= 7 and 0 <= position[1] + (chain * y) <= 7:
+                moves_list.append(
+                    (position[0] + (chain * x), position[1] + (chain * y)))
+                if (position[0] + (chain * x), position[1] + (chain * y)) in enemies_list:
+                    path = False
+                chain += 1
+            else:
+                path = False
+    return moves_list
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: check_pawn
+Type: Function
+Description: No description available
+Code:
+def check_pawn(position, color):
+    moves_list = []
+    if color == 'white':
+        if (position[0], position[1] + 1) not in white_locations and \
+                (position[0], position[1] + 1) not in black_locations and position[1] < 7:
+            moves_list.append((position[0], position[1] + 1))
+        if (position[0], position[1] + 2) not in white_locations and \
+                (position[0], position[1] + 2) not in black_locations and position[1] == 1:
+            moves_list.append((position[0], position[1] + 2))
+        if (position[0] + 1, position[1] + 1) in black_locations:
+            moves_list.append((position[0] + 1, position[1] + 1))
+        if (position[0] - 1, position[1] + 1) in black_locations:
+            moves_list.append((position[0] - 1, position[1] + 1))
+    else:
+        if (position[0], position[1] - 1) not in white_locations and \
+                (position[0], position[1] - 1) not in black_locations and position[1] > 0:
+            moves_list.append((position[0], position[1] - 1))
+        if (position[0], position[1] - 2) not in white_locations and \
+                (position[0], position[1] - 2) not in black_locations and position[1] == 6:
+            moves_list.append((position[0], position[1] - 2))
+        if (position[0] + 1, position[1] - 1) in white_locations:
+            moves_list.append((position[0] + 1, position[1] - 1))
+        if (position[0] - 1, position[1] - 1) in white_locations:
+            moves_list.append((position[0] - 1, position[1] - 1))
+    return moves_list
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: check_knight
+Type: Function
+Description: No description available
+Code:
+def check_knight(position, color):
+    moves_list = []
+    if color == 'white':
+        enemies_list = black_locations
+        friends_list = white_locations
+    else:
+        friends_list = black_locations
+        enemies_list = white_locations
+    # 8 squares to check for knights, they can go two squares in one direction and one in another
+    targets = [(1, 2), (1, -2), (2, 1), (2, -1),
+               (-1, 2), (-1, -2), (-2, 1), (-2, -1)]
+    for i in range(8):
+        target = (position[0] + targets[i][0], position[1] + targets[i][1])
+        if target not in friends_list and 0 <= target[0] <= 7 and 0 <= target[1] <= 7:
+            moves_list.append(target)
+    return moves_list
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: check_valid_moves
+Type: Function
+Description: No description available
+Code:
+def check_valid_moves():
+    if turn_step < 2:
+        options_list = white_options
+    else:
+        options_list = black_options
+    valid_options = options_list[selection]
+    return valid_options
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: draw_valid
+Type: Function
+Description: No description available
+Code:
+def draw_valid(moves):
+    if turn_step < 2:
+        color = 'red'
+    else:
+        color = 'blue'
+    for i in range(len(moves)):
+        pygame.draw.circle(
+            screen, color, (moves[i][0] * 100 + 50, moves[i][1] * 100 + 50), 5)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: draw_captured
+Type: Function
+Description: No description available
+Code:
+def draw_captured():
+    for i in range(len(captured_pieces_white)):
+        captured_piece = captured_pieces_white[i]
+        index = piece_list.index(captured_piece)
+        screen.blit(small_black_images[index], (825, 5 + 50 * i))
+    for i in range(len(captured_pieces_black)):
+        captured_piece = captured_pieces_black[i]
+        index = piece_list.index(captured_piece)
+        screen.blit(small_white_images[index], (925, 5 + 50 * i))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: draw_check
+Type: Function
+Description: No description available
+Code:
+def draw_check():
+    if turn_step < 2:
+        if 'king' in white_pieces:
+            king_index = white_pieces.index('king')
+            king_location = white_locations[king_index]
+            for i in range(len(black_options)):
+                if king_location in black_options[i]:
+                    if counter < 15:
+                        pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
+                                                              white_locations[king_index][1] * 100 + 1, 100, 100], 5)
+    else:
+        if 'king' in black_pieces:
+            king_index = black_pieces.index('king')
+            king_location = black_locations[king_index]
+            for i in range(len(white_options)):
+                if king_location in white_options[i]:
+                    if counter < 15:
+                        pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
+                                                               black_locations[king_index][1] * 100 + 1, 100, 100], 5)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/main___chess.py
+Name: draw_game_over
+Type: Function
+Description: No description available
+Code:
+def draw_game_over():
+    pygame.draw.rect(screen, 'black', [200, 200, 400, 70])
+    screen.blit(font.render(
+        f'{winner} won the game!', True, 'white'), (210, 210))
+    screen.blit(font.render(f'Press ENTER to Restart!',
+                True, 'white'), (210, 240))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/mapgenerator.py
+Name: create_map
+Type: Function
+Description: No description available
+Code:
+def create_map(width, height):
+    map_grid = []
+    for _ in range(height):
+        map_grid.append([" "] * width)
+    map_grid[0] = ["w"] * width
+    map_grid[-1] = ["w"] * width
+    for i in range(1, height - 1):
+        map_grid[i][0] = "w"
+        map_grid[i][-1] = "w"
+    return map_grid
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/mapgenerator.py
+Name: display_map
+Type: Function
+Description: No description available
+Code:
+def display_map(map_grid):
+    for row in map_grid:
+        print("".join(row))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/mapgenerator.py
+Name: modify_map
+Type: Function
+Description: No description available
+Code:
+def modify_map(map_grid, x, y, tile):
+    if 0 <= y < len(map_grid) and 0 <= x < len(map_grid[0]):
+        map_grid[y][x] = tile
+    else:
+        print("Invalid position")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/mapgenerator.py
+Name: generate_pygame_code
+Type: Function
+Description: No description available
+Code:
+def generate_pygame_code(map_grid):
+    map_str = "\n".join(["".join(row) for row in map_grid])
+    code_template = f'''
+import pygame
+from pygame.locals import *
+
+def map_to_list(map_str):
+    map_lines = map_str.splitlines()
+    return [list(line) for line in map_lines]
+
+map_str = """{map_str}"""
+game_map = map_to_list(map_str)
+
+def display_tiles(screen, game_map, tile_size=32):
+    colors = {{
+        "w": (255, 0, 0),  # Red for walls
+        " ": (0, 255, 0),  # Green for empty space
+        "s": (0, 0, 255),  # Blue for special tiles
+    }}
+    for y, row in enumerate(game_map):
+        for x, tile in enumerate(row):
+            color = colors.get(tile, (0, 0, 0))
+            pygame.draw.rect(screen, color, (x * tile_size, y * tile_size, tile_size, tile_size))
+
+pygame.init()
+screen = pygame.display.set_mode((len(game_map[0]) * 32, len(game_map) * 32))
+pygame.display.set_caption("Map Display")
+
+clock = pygame.time.Clock()
+running = True
+while running:
+    screen.fill((0, 0, 0))
+    display_tiles(screen, game_map)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            running = False
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
+'''
+    return code_template
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: place_player_and_enemy
+Type: Function
+Description: Place the player and enemy randomly in the map
+Code:
+def place_player_and_enemy(map_data, player_symbol='P', enemy_symbol='E'):
+    """Place the player and enemy randomly in the map"""
+    empty_tiles = [(x, y) for y, row in enumerate(map_data) for x, tile in enumerate(row) if tile == '.']
+    
+    if len(empty_tiles) < 2:
+        raise ValueError("Not enough empty tiles to place player and enemy.")
+    
+    # Randomly select a position for the player and enemy
+    player_position = random.choice(empty_tiles)
+    empty_tiles.remove(player_position)
+    enemy_position = random.choice(empty_tiles)
+    
+    # Place them on the map
+    map_data[player_position[1]][player_position[0]] = player_symbol
+    map_data[enemy_position[1]][enemy_position[0]] = enemy_symbol
+    
+    return map_data
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: load_map_from_string
+Type: Function
+Description: Load the map from a string representation
+Code:
+def load_map_from_string(map_string):
+    """Load the map from a string representation"""
+    return [list(line) for line in map_string.strip().split('\n')]
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: load_map_from_file
+Type: Function
+Description: Load the map from a text file
+Code:
+def load_map_from_file(filename='generated_map.txt'):
+    """Load the map from a text file"""
+    with open(filename, 'r') as f:
+        return [list(line.strip()) for line in f]
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: draw_map
+Type: Function
+Description: Draw the map on the screen using Pygame
+Code:
+def draw_map(screen, map_data, tile_size):
+    """Draw the map on the screen using Pygame"""
+    for y, row in enumerate(map_data):
+        for x, cell in enumerate(row):
+            if cell == 'W':  # Wall
+                pygame.draw.rect(screen, (0, 0, 255), (x * tile_size, y * tile_size, tile_size, tile_size))
+            elif cell == 'E':  # Enemy
+                pygame.draw.rect(screen, (255, 0, 0), (x * tile_size, y * tile_size, tile_size, tile_size))
+            else:  # Floor
+                pygame.draw.rect(screen, (200, 200, 200), (x * tile_size, y * tile_size, tile_size, tile_size))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: generate_map
+Type: Function
+Description: Generate a simple random map with walls (W), floors (.) and enemies (E)
+Code:
+def generate_map(width, height):
+    """Generate a simple random map with walls (W), floors (.) and enemies (E)"""
+    map_data = []
+    for y in range(height):
+        row = []
+        for x in range(width):
+            cell = random.choice(['.', 'W', 'E'])  # Randomly pick floor, wall, or enemy
+            row.append(cell)
+        map_data.append(row)
+    return map_data
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: save_map_to_file
+Type: Function
+Description: Save the generated map to a text file
+Code:
+def save_map_to_file(map_data, filename='generated_map.txt'):
+    """Save the generated map to a text file"""
+    with open(filename, 'w') as f:
+        for row in map_data:
+            f.write(''.join(row) + '\n')
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: Enemy
+Type: Class
+Description: No description available
+Code:
+class Enemy:
+    def __init__(self, x, y, width, height, velocity):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.velocity = velocity
+        self.color = (255, 0, 0)  # Red for the enemy
+    
+    def move_towards_player(self, player_rect):
+        # Basic AI to move towards the player
+        if self.rect.x < player_rect.x:
+            self.rect.x += self.velocity
+        if self.rect.x > player_rect.x:
+            self.rect.x -= self.velocity
+        if self.rect.y < player_rect.y:
+            self.rect.y += self.velocity
+        if self.rect.y > player_rect.y:
+            self.rect.y -= self.velocity
+    
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: Player
+Type: Class
+Description: No description available
+Code:
+class Player:
+    def __init__(self, x, y, width, height, velocity):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.velocity = velocity
+        self.color = (0, 0, 255)  # Blue for the player
+    
+    def move(self, keys):
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= self.velocity
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += self.velocity
+        if keys[pygame.K_UP]:
+            self.rect.y -= self.velocity
+        if keys[pygame.K_DOWN]:
+            self.rect.y += self.velocity
+    
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: MapEditor
+Type: Class
+Description: No description available
+Code:
+class MapEditor:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Map Editor")
+        
+        # Ask for map dimensions
+        self.map_width = simpledialog.askinteger("Map Width", "Enter the width of the map:", minvalue=5, maxvalue=50)
+        self.map_height = simpledialog.askinteger("Map Height", "Enter the height of the map:", minvalue=5, maxvalue=50)
+        
+        # Create initial map and display it
+        self.initial_map = self.create_map(self.map_width, self.map_height)
+        
+        # Create Text widget for editing map
+        self.map_text = tk.Text(self.root, width=self.map_width, height=self.map_height, font=("Courier", 12), wrap="none")
+        self.map_text.pack()
+        self.map_text.insert("1.0", self.initial_map)
+        
+        # Buttons for saving, loading, generating random map, and clearing
+        self.create_buttons()
+    
+    def create_buttons(self):
+        # Save and generate Pygame code
+        save_button = tk.Button(self.root, text="Save Map and Generate Code", command=self.save_map_and_code)
+        save_button.pack(pady=5)
+        
+        # Load saved map
+        load_button = tk.Button(self.root, text="Load Saved Map", command=self.load_map)
+        load_button.pack(pady=5)
+        
+        # Generate random map
+        random_button = tk.Button(self.root, text="Generate Random Map", command=self.generate_random_map)
+        random_button.pack(pady=5)
+        
+        # Clear the map editor
+        clear_button = tk.Button(self.root, text="Clear Map", command=self.clear_map)
+        clear_button.pack(pady=5)
+    
+    def create_map(self, width, height):
+        """Create a simple initial map with walls."""
+        map_grid = []
+        for _ in range(height):
+            map_grid.append(" " * width)
+        map_grid[0] = "w" * width
+        map_grid[-1] = "w" * width
+        for i in range(1, height - 1):
+            map_grid[i] = "w" + " " * (width - 2) + "w"
+        return "\n".join(map_grid)
+    
+    def generate_random_map(self):
+        """Generate a random map with 'w', 's', and ' '."""
+        random_map = []
+        for y in range(self.map_height):
+            row = []
+            for x in range(self.map_width):
+                if y == 0 or y == self.map_height - 1 or x == 0 or x == self.map_width - 1:
+                    row.append("w")  # Walls around the border
+                else:
+                    row.append(random.choice(["w", "s", " "]))  # Random wall, space, or special tile
+            random_map.append("".join(row))
+        self.map_text.delete("1.0", tk.END)
+        self.map_text.insert("1.0", "\n".join(random_map))
+    
+    def clear_map(self):
+        """Clear the map in the Text widget."""
+        self.map_text.delete("1.0", tk.END)
+    
+    def save_map_and_code(self):
+        """Save the map and generate Pygame code."""
+        map_str = self.map_text.get("1.0", tk.END).strip()
+        pygame_code = self.generate_pygame_code(map_str)
+        
+        # Save the map to a file
+        with open("saved_map.txt", "w") as f:
+            f.write(map_str)
+        
+        # Save the generated Pygame code
+        with open("generated_map_code.py", "w") as f:
+            f.write(pygame_code)
+        
+        messagebox.showinfo("Saved", "Map and Pygame code saved successfully!")
+    
+    def load_map(self):
+        """Load the saved map into the Text widget."""
+        try:
+            with open("saved_map.txt", "r") as f:
+                map_str = f.read()
+            self.map_text.delete("1.0", tk.END)
+            self.map_text.insert("1.0", map_str)
+        except FileNotFoundError:
+            messagebox.showwarning("Error", "No saved map found!")
+    
+    def generate_pygame_code(self, map_str):
+        """Generate the Pygame code based on the map."""
+        code_template = f'''
+import pygame
+from pygame.locals import *
+
+def map_to_list(map_str):
+    map_lines = map_str.splitlines()
+    return [list(line) for line in map_lines]
+
+map_str = """{map_str}"""
+game_map = map_to_list(map_str)
+
+def display_tiles(screen, game_map, tile_size=32):
+    colors = {{
+        "w": (255, 0, 0),  # Red for walls
+        " ": (0, 255, 0),  # Green for empty space
+        "s": (0, 0, 255),  # Blue for special tiles
+    }}
+    for y, row in enumerate(game_map):
+        for x, tile in enumerate(row):
+            color = colors.get(tile, (0, 0, 0))
+            pygame.draw.rect(screen, color, (x * tile_size, y * tile_size, tile_size, tile_size))
+
+pygame.init()
+screen = pygame.display.set_mode((len(game_map[0]) * 32, len(game_map) * 32))
+pygame.display.set_caption("Map Display")
+
+clock = pygame.time.Clock()
+running = True
+while running:
+    screen.fill((0, 0, 0))
+    display_tiles(screen, game_map)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            running = False
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
+'''
+        return code_template
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: map_to_list
+Type: Function
+Description: No description available
+Code:
+def map_to_list(map_str):
+    map_lines = map_str.splitlines()
+    return [list(line) for line in map_lines]
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: display_tiles
+Type: Function
+Description: No description available
+Code:
+def display_tiles(screen, game_map, tile_size=32):
+    colors = {
+        "w": (255, 0, 0),  # Red for walls
+        " ": (0, 255, 0),  # Green for empty space
+        "s": (0, 0, 255),  # Blue for special tiles
+    }
+    for y, row in enumerate(game_map):
+        for x, tile in enumerate(row):
+            color = colors.get(tile, (0, 0, 0))
+            pygame.draw.rect(screen, color, (x * tile_size, y * tile_size, tile_size, tile_size))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, x, y, width, height, velocity):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.velocity = velocity
+        self.color = (255, 0, 0)  # Red for the enemy
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: move_towards_player
+Type: Function
+Description: No description available
+Code:
+    def move_towards_player(self, player_rect):
+        # Basic AI to move towards the player
+        if self.rect.x < player_rect.x:
+            self.rect.x += self.velocity
+        if self.rect.x > player_rect.x:
+            self.rect.x -= self.velocity
+        if self.rect.y < player_rect.y:
+            self.rect.y += self.velocity
+        if self.rect.y > player_rect.y:
+            self.rect.y -= self.velocity
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: draw
+Type: Function
+Description: No description available
+Code:
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, x, y, width, height, velocity):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.velocity = velocity
+        self.color = (0, 0, 255)  # Blue for the player
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: move
+Type: Function
+Description: No description available
+Code:
+    def move(self, keys):
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= self.velocity
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += self.velocity
+        if keys[pygame.K_UP]:
+            self.rect.y -= self.velocity
+        if keys[pygame.K_DOWN]:
+            self.rect.y += self.velocity
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: draw
+Type: Function
+Description: No description available
+Code:
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Map Editor")
+        
+        # Ask for map dimensions
+        self.map_width = simpledialog.askinteger("Map Width", "Enter the width of the map:", minvalue=5, maxvalue=50)
+        self.map_height = simpledialog.askinteger("Map Height", "Enter the height of the map:", minvalue=5, maxvalue=50)
+        
+        # Create initial map and display it
+        self.initial_map = self.create_map(self.map_width, self.map_height)
+        
+        # Create Text widget for editing map
+        self.map_text = tk.Text(self.root, width=self.map_width, height=self.map_height, font=("Courier", 12), wrap="none")
+        self.map_text.pack()
+        self.map_text.insert("1.0", self.initial_map)
+        
+        # Buttons for saving, loading, generating random map, and clearing
+        self.create_buttons()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: create_buttons
+Type: Function
+Description: No description available
+Code:
+    def create_buttons(self):
+        # Save and generate Pygame code
+        save_button = tk.Button(self.root, text="Save Map and Generate Code", command=self.save_map_and_code)
+        save_button.pack(pady=5)
+        
+        # Load saved map
+        load_button = tk.Button(self.root, text="Load Saved Map", command=self.load_map)
+        load_button.pack(pady=5)
+        
+        # Generate random map
+        random_button = tk.Button(self.root, text="Generate Random Map", command=self.generate_random_map)
+        random_button.pack(pady=5)
+        
+        # Clear the map editor
+        clear_button = tk.Button(self.root, text="Clear Map", command=self.clear_map)
+        clear_button.pack(pady=5)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: create_map
+Type: Function
+Description: Create a simple initial map with walls.
+Code:
+    def create_map(self, width, height):
+        """Create a simple initial map with walls."""
+        map_grid = []
+        for _ in range(height):
+            map_grid.append(" " * width)
+        map_grid[0] = "w" * width
+        map_grid[-1] = "w" * width
+        for i in range(1, height - 1):
+            map_grid[i] = "w" + " " * (width - 2) + "w"
+        return "\n".join(map_grid)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: generate_random_map
+Type: Function
+Description: Generate a random map with 'w', 's', and ' '.
+Code:
+    def generate_random_map(self):
+        """Generate a random map with 'w', 's', and ' '."""
+        random_map = []
+        for y in range(self.map_height):
+            row = []
+            for x in range(self.map_width):
+                if y == 0 or y == self.map_height - 1 or x == 0 or x == self.map_width - 1:
+                    row.append("w")  # Walls around the border
+                else:
+                    row.append(random.choice(["w", "s", " "]))  # Random wall, space, or special tile
+            random_map.append("".join(row))
+        self.map_text.delete("1.0", tk.END)
+        self.map_text.insert("1.0", "\n".join(random_map))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: clear_map
+Type: Function
+Description: Clear the map in the Text widget.
+Code:
+    def clear_map(self):
+        """Clear the map in the Text widget."""
+        self.map_text.delete("1.0", tk.END)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: save_map_and_code
+Type: Function
+Description: Save the map and generate Pygame code.
+Code:
+    def save_map_and_code(self):
+        """Save the map and generate Pygame code."""
+        map_str = self.map_text.get("1.0", tk.END).strip()
+        pygame_code = self.generate_pygame_code(map_str)
+        
+        # Save the map to a file
+        with open("saved_map.txt", "w") as f:
+            f.write(map_str)
+        
+        # Save the generated Pygame code
+        with open("generated_map_code.py", "w") as f:
+            f.write(pygame_code)
+        
+        messagebox.showinfo("Saved", "Map and Pygame code saved successfully!")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: load_map
+Type: Function
+Description: Load the saved map into the Text widget.
+Code:
+    def load_map(self):
+        """Load the saved map into the Text widget."""
+        try:
+            with open("saved_map.txt", "r") as f:
+                map_str = f.read()
+            self.map_text.delete("1.0", tk.END)
+            self.map_text.insert("1.0", map_str)
+        except FileNotFoundError:
+            messagebox.showwarning("Error", "No saved map found!")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_snips1.py
+Name: generate_pygame_code
+Type: Function
+Description: Generate the Pygame code based on the map.
+Code:
+    def generate_pygame_code(self, map_str):
+        """Generate the Pygame code based on the map."""
+        code_template = f'''
+import pygame
+from pygame.locals import *
+
+def map_to_list(map_str):
+    map_lines = map_str.splitlines()
+    return [list(line) for line in map_lines]
+
+map_str = """{map_str}"""
+game_map = map_to_list(map_str)
+
+def display_tiles(screen, game_map, tile_size=32):
+    colors = {{
+        "w": (255, 0, 0),  # Red for walls
+        " ": (0, 255, 0),  # Green for empty space
+        "s": (0, 0, 255),  # Blue for special tiles
+    }}
+    for y, row in enumerate(game_map):
+        for x, tile in enumerate(row):
+            color = colors.get(tile, (0, 0, 0))
+            pygame.draw.rect(screen, color, (x * tile_size, y * tile_size, tile_size, tile_size))
+
+pygame.init()
+screen = pygame.display.set_mode((len(game_map[0]) * 32, len(game_map) * 32))
+pygame.display.set_caption("Map Display")
+
+clock = pygame.time.Clock()
+running = True
+while running:
+    screen.fill((0, 0, 0))
+    display_tiles(screen, game_map)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            running = False
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
+'''
+        return code_template
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/generated_map_code.py
+Name: map_to_list
+Type: Function
+Description: No description available
+Code:
+def map_to_list(map_str):
+    map_lines = map_str.splitlines()
+    return [list(line) for line in map_lines]
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/generated_map_code.py
+Name: display_tiles
+Type: Function
+Description: No description available
+Code:
+def display_tiles(screen, game_map, tile_size=32):
+    colors = {
+        "w": (255, 0, 0),  # Red for walls
+        " ": (0, 255, 0),  # Green for empty space
+        "s": (0, 0, 255),  # Blue for special tiles
+    }
+    for y, row in enumerate(game_map):
+        for x, tile in enumerate(row):
+            color = colors.get(tile, (0, 0, 0))
+            pygame.draw.rect(screen, color, (x * tile_size, y * tile_size, tile_size, tile_size))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_mapgeneratot2.py
+Name: MapEditor
+Type: Class
+Description: No description available
+Code:
+class MapEditor:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Map Editor")
+        
+        # Ask for map dimensions
+        self.map_width = simpledialog.askinteger("Map Width", "Enter the width of the map:", minvalue=5, maxvalue=50)
+        self.map_height = simpledialog.askinteger("Map Height", "Enter the height of the map:", minvalue=5, maxvalue=50)
+        
+        # Create initial map and display it
+        self.initial_map = self.create_map(self.map_width, self.map_height)
+        
+        # Create Text widget for editing map
+        self.map_text = tk.Text(self.root, width=self.map_width, height=self.map_height, font=("Courier", 12), wrap="none")
+        self.map_text.pack()
+        self.map_text.insert("1.0", self.initial_map)
+        
+        # Buttons for saving, loading, generating random map, and clearing
+        self.create_buttons()
+    
+    def create_buttons(self):
+        # Save and generate Pygame code
+        save_button = tk.Button(self.root, text="Save Map and Generate Code", command=self.save_map_and_code)
+        save_button.pack(pady=5)
+        
+        # Load saved map
+        load_button = tk.Button(self.root, text="Load Saved Map", command=self.load_map)
+        load_button.pack(pady=5)
+        
+        # Generate random map
+        random_button = tk.Button(self.root, text="Generate Random Map", command=self.generate_random_map)
+        random_button.pack(pady=5)
+        
+        # Clear the map editor
+        clear_button = tk.Button(self.root, text="Clear Map", command=self.clear_map)
+        clear_button.pack(pady=5)
+    
+    def create_map(self, width, height):
+        """Create a simple initial map with walls."""
+        map_grid = []
+        for _ in range(height):
+            map_grid.append(" " * width)
+        map_grid[0] = "w" * width
+        map_grid[-1] = "w" * width
+        for i in range(1, height - 1):
+            map_grid[i] = "w" + " " * (width - 2) + "w"
+        return "\n".join(map_grid)
+    
+    def generate_random_map(self):
+        """Generate a random map with 'w', 's', and ' '."""
+        random_map = []
+        for y in range(self.map_height):
+            row = []
+            for x in range(self.map_width):
+                if y == 0 or y == self.map_height - 1 or x == 0 or x == self.map_width - 1:
+                    row.append("w")  # Walls around the border
+                else:
+                    row.append(random.choice(["w", "s", " "]))  # Random wall, space, or special tile
+            random_map.append("".join(row))
+        self.map_text.delete("1.0", tk.END)
+        self.map_text.insert("1.0", "\n".join(random_map))
+    
+    def clear_map(self):
+        """Clear the map in the Text widget."""
+        self.map_text.delete("1.0", tk.END)
+    
+    def save_map_and_code(self):
+        """Save the map and generate Pygame code."""
+        map_str = self.map_text.get("1.0", tk.END).strip()
+        pygame_code = self.generate_pygame_code(map_str)
+        
+        # Save the map to a file
+        with open("saved_map.txt", "w") as f:
+            f.write(map_str)
+        
+        # Save the generated Pygame code
+        with open("generated_map_code.py", "w") as f:
+            f.write(pygame_code)
+        
+        messagebox.showinfo("Saved", "Map and Pygame code saved successfully!")
+    
+    def load_map(self):
+        """Load the saved map into the Text widget."""
+        try:
+            with open("saved_map.txt", "r") as f:
+                map_str = f.read()
+            self.map_text.delete("1.0", tk.END)
+            self.map_text.insert("1.0", map_str)
+        except FileNotFoundError:
+            messagebox.showwarning("Error", "No saved map found!")
+    
+    def generate_pygame_code(self, map_str):
+        """Generate the Pygame code based on the map."""
+        code_template = f'''
+import pygame
+from pygame.locals import *
+
+def map_to_list(map_str):
+    map_lines = map_str.splitlines()
+    return [list(line) for line in map_lines]
+
+map_str = """{map_str}"""
+game_map = map_to_list(map_str)
+
+def display_tiles(screen, game_map, tile_size=32):
+    colors = {{
+        "w": (255, 0, 0),  # Red for walls
+        " ": (0, 255, 0),  # Green for empty space
+        "s": (0, 0, 255),  # Blue for special tiles
+    }}
+    for y, row in enumerate(game_map):
+        for x, tile in enumerate(row):
+            color = colors.get(tile, (0, 0, 0))
+            pygame.draw.rect(screen, color, (x * tile_size, y * tile_size, tile_size, tile_size))
+
+pygame.init()
+screen = pygame.display.set_mode((len(game_map[0]) * 32, len(game_map) * 32))
+pygame.display.set_caption("Map Display")
+
+clock = pygame.time.Clock()
+running = True
+while running:
+    screen.fill((0, 0, 0))
+    display_tiles(screen, game_map)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            running = False
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
+'''
+        return code_template
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_mapgeneratot2.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Map Editor")
+        
+        # Ask for map dimensions
+        self.map_width = simpledialog.askinteger("Map Width", "Enter the width of the map:", minvalue=5, maxvalue=50)
+        self.map_height = simpledialog.askinteger("Map Height", "Enter the height of the map:", minvalue=5, maxvalue=50)
+        
+        # Create initial map and display it
+        self.initial_map = self.create_map(self.map_width, self.map_height)
+        
+        # Create Text widget for editing map
+        self.map_text = tk.Text(self.root, width=self.map_width, height=self.map_height, font=("Courier", 12), wrap="none")
+        self.map_text.pack()
+        self.map_text.insert("1.0", self.initial_map)
+        
+        # Buttons for saving, loading, generating random map, and clearing
+        self.create_buttons()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_mapgeneratot2.py
+Name: create_buttons
+Type: Function
+Description: No description available
+Code:
+    def create_buttons(self):
+        # Save and generate Pygame code
+        save_button = tk.Button(self.root, text="Save Map and Generate Code", command=self.save_map_and_code)
+        save_button.pack(pady=5)
+        
+        # Load saved map
+        load_button = tk.Button(self.root, text="Load Saved Map", command=self.load_map)
+        load_button.pack(pady=5)
+        
+        # Generate random map
+        random_button = tk.Button(self.root, text="Generate Random Map", command=self.generate_random_map)
+        random_button.pack(pady=5)
+        
+        # Clear the map editor
+        clear_button = tk.Button(self.root, text="Clear Map", command=self.clear_map)
+        clear_button.pack(pady=5)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_mapgeneratot2.py
+Name: create_map
+Type: Function
+Description: Create a simple initial map with walls.
+Code:
+    def create_map(self, width, height):
+        """Create a simple initial map with walls."""
+        map_grid = []
+        for _ in range(height):
+            map_grid.append(" " * width)
+        map_grid[0] = "w" * width
+        map_grid[-1] = "w" * width
+        for i in range(1, height - 1):
+            map_grid[i] = "w" + " " * (width - 2) + "w"
+        return "\n".join(map_grid)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_mapgeneratot2.py
+Name: generate_random_map
+Type: Function
+Description: Generate a random map with 'w', 's', and ' '.
+Code:
+    def generate_random_map(self):
+        """Generate a random map with 'w', 's', and ' '."""
+        random_map = []
+        for y in range(self.map_height):
+            row = []
+            for x in range(self.map_width):
+                if y == 0 or y == self.map_height - 1 or x == 0 or x == self.map_width - 1:
+                    row.append("w")  # Walls around the border
+                else:
+                    row.append(random.choice(["w", "s", " "]))  # Random wall, space, or special tile
+            random_map.append("".join(row))
+        self.map_text.delete("1.0", tk.END)
+        self.map_text.insert("1.0", "\n".join(random_map))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_mapgeneratot2.py
+Name: clear_map
+Type: Function
+Description: Clear the map in the Text widget.
+Code:
+    def clear_map(self):
+        """Clear the map in the Text widget."""
+        self.map_text.delete("1.0", tk.END)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_mapgeneratot2.py
+Name: save_map_and_code
+Type: Function
+Description: Save the map and generate Pygame code.
+Code:
+    def save_map_and_code(self):
+        """Save the map and generate Pygame code."""
+        map_str = self.map_text.get("1.0", tk.END).strip()
+        pygame_code = self.generate_pygame_code(map_str)
+        
+        # Save the map to a file
+        with open("saved_map.txt", "w") as f:
+            f.write(map_str)
+        
+        # Save the generated Pygame code
+        with open("generated_map_code.py", "w") as f:
+            f.write(pygame_code)
+        
+        messagebox.showinfo("Saved", "Map and Pygame code saved successfully!")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_mapgeneratot2.py
+Name: load_map
+Type: Function
+Description: Load the saved map into the Text widget.
+Code:
+    def load_map(self):
+        """Load the saved map into the Text widget."""
+        try:
+            with open("saved_map.txt", "r") as f:
+                map_str = f.read()
+            self.map_text.delete("1.0", tk.END)
+            self.map_text.insert("1.0", map_str)
+        except FileNotFoundError:
+            messagebox.showwarning("Error", "No saved map found!")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/pygame_mapgeneratot2.py
+Name: generate_pygame_code
+Type: Function
+Description: Generate the Pygame code based on the map.
+Code:
+    def generate_pygame_code(self, map_str):
+        """Generate the Pygame code based on the map."""
+        code_template = f'''
+import pygame
+from pygame.locals import *
+
+def map_to_list(map_str):
+    map_lines = map_str.splitlines()
+    return [list(line) for line in map_lines]
+
+map_str = """{map_str}"""
+game_map = map_to_list(map_str)
+
+def display_tiles(screen, game_map, tile_size=32):
+    colors = {{
+        "w": (255, 0, 0),  # Red for walls
+        " ": (0, 255, 0),  # Green for empty space
+        "s": (0, 0, 255),  # Blue for special tiles
+    }}
+    for y, row in enumerate(game_map):
+        for x, tile in enumerate(row):
+            color = colors.get(tile, (0, 0, 0))
+            pygame.draw.rect(screen, color, (x * tile_size, y * tile_size, tile_size, tile_size))
+
+pygame.init()
+screen = pygame.display.set_mode((len(game_map[0]) * 32, len(game_map) * 32))
+pygame.display.set_caption("Map Display")
+
+clock = pygame.time.Clock()
+running = True
+while running:
+    screen.fill((0, 0, 0))
+    display_tiles(screen, game_map)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            running = False
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
+'''
+        return code_template
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/block_game.py
+Name: generate_grid
+Type: Function
+Description: No description available
+Code:
+def generate_grid(size):
+    return [[random.choice(COLORS) for _ in range(size)] for _ in range(size)]
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/block_game.py
+Name: draw_grid
+Type: Function
+Description: No description available
+Code:
+def draw_grid(grid):
+    for row in range(len(grid)):
+        for col in range(len(grid[row])):
+            pygame.draw.rect(screen, grid[row][col], (col * BLOCK_SIZE, row * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/block_game.py
+Name: check_for_matches
+Type: Function
+Description: No description available
+Code:
+def check_for_matches(grid):
+    # Check for any horizontal, vertical, or diagonal matches of 3 or more
+    pass  # Add your matching logic here
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/block_game.py
+Name: expand_grid
+Type: Function
+Description: No description available
+Code:
+def expand_grid(grid):
+    # Expand grid size by adding more rows/columns
+    new_row = [random.choice(COLORS) for _ in range(len(grid) + 1)]
+    for row in grid:
+        row.append(random.choice(COLORS))  # Add a new column to each row
+    grid.append(new_row)  # Add a new row at the bottom
+    return grid
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/block_game.py
+Name: get_block_at_pos
+Type: Function
+Description: Returns the row, col of the block based on mouse position. 
+Code:
+def get_block_at_pos(pos):
+    """ Returns the row, col of the block based on mouse position. """
+    x, y = pos
+    col = x // BLOCK_SIZE
+    row = y // BLOCK_SIZE
+    if row < GRID_SIZE and col < GRID_SIZE:
+        return row, col
+    return None, None
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/block_game.py
+Name: move_block
+Type: Function
+Description: Move the block to a new position and swap the positions in the grid. 
+Code:
+def move_block(grid, start_pos, end_pos):
+    """ Move the block to a new position and swap the positions in the grid. """
+    if start_pos and end_pos:
+        start_row, start_col = start_pos
+        end_row, end_col = end_pos
+        grid[start_row][start_col], grid[end_row][end_col] = grid[end_row][end_col], grid[start_row][start_col]
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: map_to_list
+Type: Function
+Description: No description available
+Code:
+def map_to_list(map1=map1):
+    if map1 == "":
+        start = "w"*29
+        map1 = "w" + " " * 27 + "w\n"
+        map1 = start + map1 * 14 + start
+    map1 = map1.splitlines()
+    map2 = []
+    for n, line in enumerate(map1):
+        map2.append(list(map1[n]))
+    return map2
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: screen_init
+Type: Function
+Description: Creates globals for screen and map
+Code:
+def screen_init():
+    "Creates globals for screen and map"
+    global game_map, WINDOW_SIZE
+    game_map = map1
+    WINDOW_SIZE = (29 * 32, 16 * 32)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: music_init
+Type: Function
+Description: Initialize sounds avoiding delay
+Code:
+def music_init():
+    "Initialize sounds avoiding delay"
+    pygame.mixer.pre_init(44100, -16, 1, 512)
+    pygame.init()
+    pygame.mixer.quit()
+    pygame.mixer.init(22050, -16, 2, 512)
+    pygame.mixer.set_num_channels(32)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: game_sounds
+Type: Function
+Description: Loads the sounds for the game
+Code:
+def game_sounds():
+    "Loads the sounds for the game"
+    sounds_list = "jump", "grass_0"
+    sound_dic = {}
+    for sound in sounds_list:
+        sound_path = f"data/audio/{sound}.wav"
+        sound_dic[sound] = pygame.mixer.Sound(sound_path)
+    return sound_dic
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: soundtrack
+Type: Function
+Description: Call this to put a soundtrack in the game
+Code:
+def soundtrack():
+    "Call this to put a soundtrack in the game"
+    pygame.mixer.music.load('data/audio/dawn.mp3')
+    pygame.mixer.music.play(-1)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: load_tiles
+Type: Function
+Description: No description available
+Code:
+def load_tiles():
+    #symbols and relative image
+    symb_img = [
+                # ("o", "dirt"),
+                # ("x", "grass"),
+                # ("<", "grassr"),
+                # (">", "grassl"),
+                (" ", "space"),
+                # ("d", "door"),
+                ("w", "brick2_16"),
+                ("s", "brick2_16")]
+    dr = "imgs\\"
+    tl = {}
+    for i in symb_img:
+        tl[i[0]] = pygame.image.load(f'{dr}{i[1]}.png')
+    return tl
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: collision_test
+Type: Function
+Description: Returns the Rect of the tile with which the player collides
+Code:
+def collision_test(rect, tiles):
+    "Returns the Rect of the tile with which the player collides"
+    global stamina
+
+    hit_list = []
+    for tile in tiles:
+        if rect.colliderect(tile):
+            hit_list.append(tile)
+    if rect.colliderect(health_rect):
+        if stamina < 100:
+            stamina += 10
+            print("Recovering")
+    return hit_list
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: move
+Type: Function
+Description: No description available
+Code:
+def move(rect, movement, tiles):
+    global player_img
+    global air_timer, gravity, collision_types, moving_right, moving_left
+    global goingright
+    global stamina
+    global player_altitude
+    global starting_pos
+
+
+    player_altitude = player_rect.y
+    collision_types = {
+        'top': False, 'bottom': False, 'right': False, 'left': False}
+
+    rect.x += movement[0]
+    tile = collision_test(rect, tiles)
+    if tile != []:
+        tile = tile[0]
+        # ===================> MOVE RIGHT
+        if moving_right:
+            rect.right = tile.left
+            collision_types['right'] = True
+            goingright = 1
+            gravity = -1
+            player_img = player_climb
+            stamina -= 0.02
+            starting_pos = rect.y
+        # ====================> MOVE LEFT
+        elif moving_left:
+            goingright = 0
+            rect.left = tile.right
+            collision_types['left'] = True
+            gravity = -1
+            player_img = player_climbl
+            stamina -=0.02
+            starting_pos = rect.y
+    rect.y += movement[1]
+    hit_list = collision_test(rect, tiles)
+    for tile in hit_list:
+
+        #              === DOWN: falls? ===
+
+        if movement[1] > 0:
+            # If it was falling down
+            if not moving_left and not moving_right and gravity > 0:
+                player_img = player_stand
+            if (rect.bottom - starting_pos) > 50:
+                stamina -= 30
+                pygame.mixer.Sound.play(sound_dic['grass_0'])
+                player_img = player_jump
+                
+
+            starting_pos = rect.bottom
+            rect.bottom = tile.top
+            collision_types['bottom'] = True
+        elif movement[1] < 0:
+            player_img = player_jump
+            gravity = -3 # = -1 it attaches to the wall
+            attached = rect.top = tile.bottom
+            stamina -= 0.03
+            #collision_types['top'] = False
+
+    if collision_types['bottom']:
+        air_timer = 0
+        gravity = 0
+
+    else:
+        air_timer += 1
+    return rect
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: display_tiles
+Type: Function
+Description: Makes the Rects for the 'physics'
+Code:
+def display_tiles():
+    "Makes the Rects for the 'physics'"
+    tile_rects = []
+    y = 0
+    for line_of_symbols in game_map:
+        x = 0
+        for symbol in line_of_symbols:
+            display.blit(tl[symbol], (x * 16, y* 16))
+            x += 1
+        y += 1
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: create_tile_rects
+Type: Function
+Description: Makes the Rects for the 'physics'
+Code:
+def create_tile_rects(game_map):
+    "Makes the Rects for the 'physics'"
+    tile_rects = []
+    y = 0
+    for line_of_symbols in game_map:
+        x = 0
+        for symbol in line_of_symbols:
+            if symbol != " ":
+                tile_rects.append(pygame.Rect(x * 16, y * 16, 16, 15))
+            x += 1
+        y += 1
+    return tile_rects
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: display_player
+Type: Function
+Description: No description available
+Code:
+def display_player(pim):
+    global player_rect
+    global starting_pos
+    #player_img = p_right if stay_right else p_left
+    display.blit(health, (150, 225))
+    display.blit(pim, (player_rect.x, player_rect.y))
+    h = str(player_rect.bottom - starting_pos) 
+    highness = font3.render(h, 0, pygame.Color("blue"))
+    display.blit(highness, (player_rect.x, player_rect.y-10))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: display_stamina
+Type: Function
+Description: No description available
+Code:
+def display_stamina():
+    #player_img = p_right if stay_right else p_left
+    print("health")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: display_bg
+Type: Function
+Description: Displays the background
+Code:
+def display_bg():
+    "Displays the background"
+    global WINDOW_SIZE
+    display.blit(bg, (0, 0))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: _display
+Type: Function
+Description: No description available
+Code:
+def _display(fnt, what, color, where):
+    text_to_show = font.render(what, 0, pygame.Color(color))
+    display.blit(text_to_show, where)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: display_text
+Type: Function
+Description: No description available
+Code:
+def display_text():
+    # fps
+
+    _display(
+            font,
+            what = str(int(clock.get_fps())),
+            color = "white",
+            where = (0,0)),
+    
+    _display(font2,
+            what = "Wall climber",
+            color = 'blue',
+            where = (100,0))
+
+    _display(font3,
+            what = "Stamina: " + str(int(stamina)),
+            color = 'coral',
+            where = (300,0))
+
+
+    _display(font3,
+            what = "altitude: " + str(int(player_altitude)),
+            color = 'blue',
+            where = (300, 15))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: clear_screen
+Type: Function
+Description: No description available
+Code:
+def clear_screen():
+    display.fill((73, 184, 250))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: jump
+Type: Function
+Description: No description available
+Code:
+def jump():
+    # MOVES THE PLAYER WHEN GOES RIGHT OR LEFT
+    global moving_right, moving_left, gravity, stamina
+
+    player_movement = [0, 0]
+    if moving_right:
+        player_movement[0] += VELOCITY
+        stamina += 0.005
+    if moving_left:
+        player_movement[0] -= VELOCITY
+        stamina += 0.005
+    player_movement[1] += gravity
+    return player_movement
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: check_life
+Type: Function
+Description: No description available
+Code:
+def check_life():
+    global stamina, player_rect
+    if stamina < 0:
+        player_rect.x, player_rect.y = 100, 100
+        stamina = 100
+        root = Tk()
+        root.overrideredirect(1)
+        root.withdraw()
+        messagebox.showinfo("Showinfo", "So many windows!")
+        root.destroy()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: move_player
+Type: Function
+Description: No description available
+Code:
+def move_player():
+    global loop, player_rect, moving_right, air_timer, moving_left, gravity, collision_types, player_img, stamina
+    global tile_rects
+    check_life()
+    player_movement = jump()
+
+    gravity += 0.3
+    if gravity > 3:
+        gravity = 3
+
+    player_rect = move(player_rect, player_movement, tile_rects)
+
+    # ============ Keyboard pressing detection
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            loop = 0
+        if event.type == KEYDOWN:
+            if event.key == K_RIGHT:
+                player_img = p_right
+                moving_right = True
+            if event.key == K_LEFT:
+                player_img = p_left
+                moving_left = True
+            # ========
+            #  JUMP
+            # ========
+            if event.key == K_UP:
+                if air_timer < 6:
+                    gravity = -5
+                    stamina -= 3
+                    pygame.mixer.Sound.play(sound_dic['jump'])
+            # ==========
+            #  DOWN
+            # ==========
+            if event.key == K_DOWN:
+                if air_timer == 0:
+                    player_img = player_jump
+                gravity = +1
+
+
+        elif event.type == KEYUP:
+            if event.key == K_RIGHT:
+                moving_right = False
+            if event.key == K_LEFT:
+                moving_left = False
+
+        if pygame.mouse.get_pressed()[0]:
+            mx, my = pygame.mouse.get_pos()
+            mx, my = int(mx / 32), int(my / 32)
+            row, col = my, mx            
+            map1[row][col] = "w"
+            tile_rects = create_tile_rects(map1)
+        if pygame.mouse.get_pressed()[2]:
+            mx, my = pygame.mouse.get_pos()
+            mx, my = int(mx / 32), int(my / 32)
+            row, col = my, mx 
+            map1[row][col] = " "
+            tile_rects = create_tile_rects(map1)
+
+    return player_img
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/co0des snipts select all\.py
+Name: scale_screen
+Type: Function
+Description: No description available
+Code:
+def scale_screen():
+    screen.blit(pygame.transform.scale(display, WINDOW_SIZE), (0, 0))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: ScrollableNotebook
+Type: Class
+Description: No description available
+Code:
+class ScrollableNotebook(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.geometry("1000x800")
+        self.title("Pygame Tools Suite")
+        self.current_path = tk.StringVar(value=os.getcwd())
+
+        # Create a frame for the notebook and scrollbar
+        notebook_frame = tk.Frame(self, width=600, height=600)
+        notebook_frame.grid(row=0, column=0, rowspan=4, columnspan=4, sticky="nsew")
+
+        # Configure the grid to expand the frame
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
+        self.canvas = tk.Canvas(notebook_frame, width=600, height=600)
+        self.canvas.grid(row=0, column=0, sticky="nsew")
+
+        # Add a scrollbar to the frame
+        scrollbar = ttk.Scrollbar(notebook_frame, orient="horizontal", command=self.canvas.xview)
+        scrollbar.grid(row=1, column=0, sticky="ew")
+        self.canvas.configure(xscrollcommand=scrollbar.set)
+
+        # Configure the notebook frame grid
+        notebook_frame.grid_rowconfigure(0, weight=1)
+        notebook_frame.grid_columnconfigure(0, weight=1)
+
+        # Create a frame inside the canvas to hold the notebook
+        notebook_frame_inside = tk.Frame(self.canvas)
+        self.canvas.create_window((0, 0), window=notebook_frame_inside, anchor='nw')
+
+        # Create the notebook
+        self.notebook = ttk.Notebook(notebook_frame_inside)
+        self.notebook.grid(row=0, column=0, sticky="nsew")
+        notebook_frame_inside.bind('<Configure>', self.on_configure)
+
+        # Create the path entry and button on the first tab
+        self.f0 = self.add_tab("Title Page")
+        ttk.Label(self.f0, text="A Suite of Pygame Tools").grid(row=0, column=0, pady=10)
+        ttk.Label(self.f0, text="Directory Path:").grid(row=1, column=0, sticky=tk.W, padx=10)
+        self.path_entry = ttk.Entry(self.f0, textvariable=self.current_path, width=50)
+        self.path_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), padx=10)
+        self.browse_button = ttk.Button(self.f0, text="Browse", command=self.select_directory)
+        self.browse_button.grid(row=1, column=2, padx=10)
+
+    def on_configure(self, event):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
+    def add_tab(self, title, **kwargs):
+        frame = ttk.Frame(self.notebook, **kwargs)
+        self.notebook.add(frame, text=title)
+        return frame
+
+    def select_directory(self):
+        directory = filedialog.askdirectory()
+        if directory:
+            self.current_path.set(directory)
+
+    def get_current_path(self):
+        return self.current_path.get()
+
+    def select_file(self, filetypes=[("All Files", "*.*")]):
+        return filedialog.askopenfilename(filetypes=filetypes)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: CommonFileDialogMixin
+Type: Class
+Description: No description available
+Code:
+class CommonFileDialogMixin:
+    def __init__(self, notebook):
+        self.notebook = notebook
+
+    def select_file(self, filetypes=[("All Files", "*.*")]):
+        return self.notebook.select_file(filetypes=filetypes)
+
+    def select_directory(self):
+        return self.notebook.select_directory()
+
+    def get_current_path(self):
+        return self.notebook.get_current_path()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: ImageBrowser
+Type: Class
+Description: No description available
+Code:
+class ImageBrowser(CommonFileDialogMixin):
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        self.area = (700, 500)
+        self.path = self.get_current_path()
+
+        self.btfrm = tk.Frame(self.parent)
+        self.btfrm.grid(row=0, column=0)
+
+        self.treefrm = tk.Frame(self.parent)
+        self.treefrm.grid(row=3, column=0)
+
+        self.tree = ttk.Treeview(self.treefrm, columns=("Size", "Type", "Modified"))
+        self.tree.heading("#0", text="File Name", command=lambda: self.treeview_sort_column("#0", False))
+        self.tree.heading("Size", text="Size (KB)", command=lambda: self.treeview_sort_column("Size", False))
+        self.tree.heading("Type", text="Type", command=lambda: self.treeview_sort_column("Type", False))
+        self.tree.heading("Modified", text="Last Resampling.LANCZOSModified", command=lambda: self.treeview_sort_column("Modified", False))
+
+        self.tree.grid(row=0, column=0, rowspan=15, sticky="nswe")
+        self.tree.bind('<<TreeviewSelect>>', self.on_select)
+
+        self.sc = ttk.Scrollbar(self.treefrm, orient=tk.VERTICAL, command=self.tree.yview)
+        self.sc.grid(row=0, rowspan=15, column=1, sticky='ns')
+        self.tree.configure(yscrollcommand=self.sc.set)
+
+        self.canfrm = tk.Frame(self.parent)
+        self.canfrm.grid(row=3, column=2)
+
+        self.canvas = tk.Canvas(self.canfrm, height=self.area[1], width=self.area[0], bg="black", bd=10, relief="ridge")
+        self.canvas.grid(row=2, column=1)
+        txt = """
+        0                             !
+                    No Image
+        """
+        self.wt = self.canvas.create_text(self.area[0] / 2 - 270, self.area[1] / 2, text=txt, font=("", 30), fill="white")
+        self.new_dir = tk.Button(self.btfrm, text="new dir", bd=2, bg="lavender", command=self.newdirlist)
+        self.new_dir.grid(row=1, column=1)
+        self.relist = tk.Button(self.btfrm, text="relist", bd=2, bg="lavender", command=self.list_files)
+        self.relist.grid(row=1, column=2)
+        btn_open = tk.Button(self.btfrm, text="Open New Image", bd=2, command=self.make_image)
+        btn_open.grid(row=1, column=3)
+        self.status = tk.Label(self.canfrm, text="Image Browser    Current Image: None")
+        self.status.grid(row=0, column=1)
+
+        self.list_files()
+
+    def treeview_sort_column(self, col, reverse):
+        l = [(self.tree.set(k, col), k) for k in self.tree.get_children('')]
+        l.sort(reverse=reverse)
+
+        for index, (val, k) in enumerate(l):
+            self.tree.move(k, '', index)
+
+        self.tree.heading(col, command=lambda: self.treeview_sort_column(col, not reverse))
+
+    def get_current_image(self):
+        if self.loaded_img:
+            return self.loaded_img.copy()
+        return None
+
+    def list_files(self):
+        self.path = self.get_current_path()
+        for item in self.tree.get_children():
+            self.tree.Scrollbardelete(item)
+
+        image_extensions = ['*.*']
+
+        for file in os.listdir(self.path):
+            if file.endswith(tuple(image_extensions)):
+                file_path = os.path.join(self.path, file)
+                file_size = os.path.getsize(file_path) // 1024
+                file_type = 'Image' if any(file.endswith(ext) for ext in image_extensions) else 'Other'
+                modified_time = time.ctime(os.path.getmtime(file_path))
+                self.tree.insert('', 'end', text=file, values=(file_size, file_type, modified_time))
+
+        self.canvas.delete('all')
+        self.status["text"] = "Image Browser    Current Image: None"
+
+    def showcontent(self, event):
+        selected_item = self.tree.selection()
+        if selected_item:
+            file_name = self.tree.item(selected_item[0], 'text')
+            full_path = os.path.join(self.path, file_name)
+            if os.path.isfile(full_path):
+                try:
+                    self.loaded_img = Image.open(full_path)
+                    re = self.loaded_img.resize((700, 500), Image.Resampling.LANCZOS)
+                    self.img = ImageTk.PhotoImage(re)
+                    self.canvas.delete('all')
+                    self.canvas.create_image(self.area[0] / 2 + 10, self.area[1] / 2 + 10, anchor='center', image=self.img)
+                    self.status["text"] = "Image Browser   Current Image: " + full_path
+                except Exception as e:
+                    messagebox.showerror("Error", f"Error loading image: {e}")
+                    seScrollbarlf.status["text"] = "Error loading image"
+            else:
+                messagebox.showinfo("Information", "Selected item is not an image file")
+                self.status["text"] = "Selected item is not an image file"
+
+    def newdirlist(self):
+        new_path = self.select_directory()
+        if new_path:
+            try:
+                self.path = new_path
+                os.chdir(self.path)
+                
+                self.status["text"] = f"Directory changed to {self.path}"
+                   
+            except Exception as e:
+                messagebox.showerror("Error", f"Error accessing directory: {e}")
+        
+        self.list_files()                
+
+    def on_select(self, event):
+        self.showcontent(event)
+
+    def make_image(self):
+        try:
+            filetypes = [('All files', '*.*')]
+            self.file = self.select_file(filetypes)
+            if self.file:
+                self.loaded_img = Image.open(self.file)
+                re = self.loaded_img.resize((700, 500), Image.Resampling.LANCZOS)
+                self.img = ImageTk.PhotoImage(re)
+                self.cScrollbaranvas.delete('all')
+                self.canvas.create_image(self.area[0] / 2 + 10, self.area[1] / 2 + 10, anchor='center', image=self.img)
+                self.status["text"] = "Image Browser Current Image: " + self.file
+        except Exception as e:
+            print(f"Error loading image: {e}")
+            self.status["text"] = "Error loading image"
+
+    def copy_to_edit_tab(self):
+        if self.loaded_img:
+            photo = ImageTk.PhotoImage(self.loaded_img)
+            img.can.create_image(800, 800, image=photo)
+            img.can.image = photo
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: ImageTileSplitter
+Type: Class
+Description: No description available
+Code:
+class ImageTileSplitter(CommonFileDialogMixin):
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        self.auto_create_dir = tk.BooleanVar()
+        tk.Label(self.parent, text="Image Path:").grid(row=0, column=0)
+        self.entry_image_path = tk.Entry(self.parent, width=50)
+        self.entry_image_path.grid(row=0, column=1)
+        tk.Button(self.parent, text="Browse", command=self.select_image).grid(row=0, column=2)
+        tk.Label(self.parent, text="Tile Width:").grid(row=1, column=0)
+        self.entry_tile_width = tk.Entry(self.parent)
+        self.entry_tile_width.grid(row=1, column=1)
+        tk.Label(self.parent, text="Tile Height:").grid(row=2, column=0)
+        self.entry_tile_height = tk.Entry(self.parent)
+        self.entry_tile_height.grid(row=2, column=1)
+        tk.Label(self.parent, text="Output Directory:").grid(row=3, column=0)
+        self.entry_output_dir = tk.Entry(self.parent, width=50)
+        self.entry_output_dir.grid(row=3, column=1)
+        tk.Button(self.parent, text="Browse", command=self.outputdir)
+        tk.Checkbutton(self.parent, text="Auto-create Output Directory", variable=self.auto_create_dir).grid(row=4, column=0)
+        tk.Button(self.parent, text="Split Image", command=self.split_image).grid(row=4, column=1)
+
+
+    def outputdir(self):
+            
+        path = filedialog.askopendirectory()
+        
+        self.entry_output_dir.insert(0, path)
+    def select_image(self):
+        file_path = self.select_file()
+        if file_path:
+            self.entry_image_path.delete(0, tk.END)
+            self.entry_image_path.insert(0, file_path)
+
+    def split_image(self):
+        image_path = self.entry_image_path.get()
+        tile_width = int(self.entry_tile_width.get())
+        tile_height = int(self.entry_tile_height.get())
+        output_dir = self.entry_output_dir.get()
+
+        # Ensure all inputs are provided
+        if not (image_Scrollbarpath and tile_width and tile_height and output_dir) and not self.auto_create_dir.get():
+            messagebox.showerror("Error", "All fields are required")
+            return
+
+        try:
+            image = Image.open(image_path)
+            img_width, img_height = image.size
+
+            if self.auto_create_dir.get():
+                output_dir = os.path.join("output_tiles", datetime.now().strftime("%Y%m%d_%H%M%S"))
+                os.makedirs(output_dir, exist_ok=True)
+            else:
+                if not os.path.exists(output_dir):
+                    os.makedirs(output_dir)
+
+            tile_number = 0
+            for i in range(0, img_width, tile_width):
+                for j in range(0, img_height, tile_height):
+                    box = (i, j, i + tile_width, j + tile_height)
+                    tile = image.crop(box)
+                    tile_filename = f'tile_{tile_number}.png'
+                    tile.save(os.path.join(output_dir, tile_filename))
+                    tile_number += 1
+
+            messagebox.showinfo("Success", f"Image split into {tile_number} tiles successfully!")
+
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: ShapeTerrainGenerator
+Type: Class
+Description: No description available
+Code:
+class ShapeTerrainGenerator(CommonFileDialogMixin):
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+
+        self.main_frame = ttk.Frame(self.parent, padding="10")
+        self.main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        # Number of shapes
+        ttk.Label(self.main_frame, text="Number of shapes:").grid(row=0, column=0, sticky=tk.W)
+        self.num_shapes_entry = ttk.Entry(self.main_frame)
+        self.num_shapes_entry.grid(row=0, column=1, sticky=(tk.W, tk.E))
+
+        # R variation
+        ttk.Label(self.main_frame, text="R variation:").grid(row=1, column=0, sticky=tk.W)
+        self.r_variation_entry = ttk.Entry(self.main_frame)
+        self.r_variation_entry.grid(row=1, column=1, sticky=(tk.W, tk.E))
+
+        # G variation
+        ttk.Label(self.main_frame, text="G variation:").grid(row=2, column=0, sticky=tk.W)
+        self.g_variation_entry = ttk.Entry(self.main_frame)
+        self.g_variation_entry.grid(row=2, column=1, sticky=(tk.W, tk.E))
+
+        # B variation
+        ttk.Label(self.main_frame, text="B variation:").grid(row=3, column=0, sticky=tk.W)
+        self.b_variation_entry = ttk.Entry(self.main_frame)
+        self.b_variation_entry.grid(row=3, column=1, sticky=(tk.W, tk.E))
+
+        # Buttons for code generation, open/save, clear, copy/paste
+        self.generate_button = ttk.Button(self.main_frame, text="Generate Code", command=self.generate_code)
+        self.generate_button.grid(row=4, column=0, columnspan=2)
+
+        self.code_text = scrolledtext.ScrolledText(self.main_frame, width=80, height=20)
+        self.code_text.grid(row=5, column=0, columnspan=2)
+
+        # Button frame for extra options
+        button_frame = ttk.Frame(self.main_frame)
+        button_frame.grid(row=6, column=0, columnspan=2, pady=10)
+
+        # Add buttons for Clear, Copy, Paste, Open, Save
+        ttk.Button(button_frame, text="Clear", command=self.clear_text).grid(row=0, column=0, padx=5)
+        ttk.Button(button_frame, text="Copy", command=self.copy_text).grid(row=0, column=1, padx=5)
+        ttk.Button(button_frame, text="Paste", command=self.paste_text).grid(row=0, column=2, padx=5)
+        ttk.Button(button_frame, text="Open", command=self.open_file).grid(row=0, column=3, padx=5)
+        ttk.Button(button_frame, text="Save", command=self.save_file).grid(row=0, column=4, padx=5)
+
+    def generate_code(self):
+        try:
+            num_shapes = int(self.num_shapes_entry.get())
+            r_variation = int(self.r_variation_entry.get())
+            g_variation = int(self.g_variation_entry.get())
+            b_variation = int(self.b_variation_entry.get())
+        except ValueError:
+            self.code_text.insert(tk.END, "Please enter valid numbers.\n")
+            return
+
+        code = f"""
+import pygame
+import random
+
+# Initialize Pygame
+pygame.init()
+
+# Screen dimensions
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# Colors
+base_color = (100, 150, 200)
+
+def random_color():
+    r = max(0, min(255, base_color[0] + random.randint(-{r_variation}, {r_variation})))
+    g = max(0, min(255, base_color[1] + random.randint(-{g_variation}, {g_variation})))
+    b = max(0, min(255, base_color[2] + random.randint(-{b_variation}, {b_variation})))
+    return (r, g, b)
+
+def draw_shapes():
+    screen.fill((255, 255, 255))
+    for _ in range({num_shapes}):
+        color = random_color()
+        shape = random.choice(['circle', 'square', 'ellipse', 'triangle', 'polygon'])
+        if shape == 'circle':
+            pygame.draw.circle(screen, color, (random.randint(0, screen_width), random.randint(0, screen_height)), 20)
+        elif shape == 'square':
+            rect = pygame.Rect(random.randint(0, screen_width), random.randint(0, screen_height), 40, 40)
+            pygame.draw.rect(screen, color, rect)
+        elif shape == 'ellipse':
+            rect = pygame.Rect(random.randint(0, screen_width), random.randint(0, screen_height), 60, 40)
+            pygame.draw.ellipse(screen, color, rect)
+        elif shape == 'triangle':
+            point1 = (random.randint(0, screen_width), random.randint(0, screen_height))
+            point2 = (random.randint(0, screen_width), random.randint(0, screen_height))
+            point3 = (random.randint(0, screen_width), random.randint(0, screen_height))
+            pygame.draw.polygon(screen, color, [point1, point2, point3])
+        elif shape == 'polygon':
+            points = [(random.randint(0, screen_width), random.randint(0, screen_height)) for _ in range(6)]
+            pygame.draw.polygon(screen, color, points)
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    draw_shapes()
+    pygame.display.flip()
+
+pygame.quit()
+"""
+        self.code_text.delete(1.0, tk.END)
+        self.code_text.insert(tk.END, code)
+
+    def clear_text(self):
+        """Clears the text from the ScrolledText widget."""
+        self.code_text.delete(1.0, tk.END)
+
+    def copy_text(self):
+        """Copies the selected text from the ScrolledText widget."""
+        selected_text = self.code_text.selection_get()
+        pyperclip.copy(selected_text)
+
+    def paste_text(self):
+        """Pastes the clipboard text into the ScrolledText widget."""
+        clipboard_text = pyperclip.paste()
+        self.code_text.insert(tk.INSERT, clipboard_text)
+
+    def open_file(self):
+        """Opens a .py file and loads its content into the ScrolledText widget."""
+        file_path = filedialog.askopenfilename(defaultextension=".py",
+                                               filetypes=[("Python Files", "*.py"), ("All Files", "*.*")])
+        if file_path:
+            with open(file_path, "r") as file:
+                content = file.read()
+                self.code_text.delete(1.0, tk.END)
+                self.code_text.insert(tk.END, content)
+
+    def save_file(self):
+        """Saves the content of the ScrolledText widget to a .py file."""
+        file_path = filedialog.asksaveasfilename(defaultextension=".py",
+                                                 filetypes=[("Python Files", "*.py"), ("All Files", "*.*")])
+        if file_path:
+            with open(file_path, "w") as file:
+                content = self.code_text.get(1.0, tk.END)
+                file.write(content)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: AnimationGenerator
+Type: Class
+Description: No description available
+Code:
+class AnimationGenerator(CommonFileDialogMixin):
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        self.main_frame = ttk.Frame(self.parent, padding="10")
+        self.main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        ttk.Label(self.main_frame, text="Number of frames:").grid(row=0, column=0, sticky=tk.W)
+        self.num_frames_entry = ttk.Entry(self.main_frame)
+        self.num_frames_entry.grid(row=0, column=1, sticky=(tk.W, tk.E))
+
+        ttk.Label(self.main_frame, text="Select Images:").grid(row=1, column=0, sticky=tk.W)
+        self.images_listbox = tk.Listbox(self.main_frame, selectmode=tk.MULTIPLE, height=5)
+        self.images_listbox.grid(row=1, column=1, sticky=(tk.W, tk.E))
+        self.load_images_button = ttk.Button(self.main_frame, text="Load Images", command=self.load_images)
+        self.load_images_button.grid(row=2, column=1, sticky=(tk.W, tk.E))
+
+        self.generate_button = ttk.Button(self.main_frame, text="Generate Code", command=self.generate_code)
+        self.generate_button.grid(row=3, column=0, columnspan=2)
+
+        self.code_text = scrolledtext.ScrolledText(self.main_frame, width=80, height=20)
+        self.code_text.grid(row=4, column=0, columnspan=2)
+
+        self.image_paths = []
+
+    def load_images(self):
+        filepaths = filedialog.askopenfilenames(filetypes=[("All Files", "*.*")])
+        for filepath in filepaths:
+            self.image_paths.append(filepath)
+            self.images_listbox.insert(tk.END, os.path.basename(filepath))
+
+    def generate_code(self):
+        try:
+            num_frames = int(self.num_frames_entry.get())
+        except ValueError:
+            self.code_text.insert(tk.END, "Please enter a valid number of frames.\n")
+            return
+
+        if not self.image_paths:
+            self.code_text.insert(tk.END, "Please load at least one image.\n")
+            return
+
+        image_loads = "\n".join([f'images.append(pygame.image.load("{path}"))' for path in self.image_paths])
+        code = f"""
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Screen dimensions
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# Load images
+images = []
+{image_loads}
+
+# Animation settings
+num_frames = {num_frames}
+frame_duration = 100  # milliseconds per frame
+clock = pygame.time.Clock()
+
+def main():
+    running = True
+    frame = 0
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        screen.fill((255, 255, 255))
+        screen.blit(images[frame % len(images)], (100, 100))
+        pygame.display.flip()
+        
+        frame += 1
+        clock.tick(1000 // frame_duration)
+
+    pygame.quit()
+    sys.exit()
+
+if __name__ == "__main__":
+    main()
+"""
+        self.code_text.delete("1.0", tk.END)
+        self.code_text.insert(tk.END, code)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: ImageMerger
+Type: Class
+Description: No description available
+Code:
+class ImageMerger(CommonFileDialogMixin):
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        
+        self.path_entry = tk.Entry(self.parent, bd=7, width=50)
+        self.path_entry.grid(row=0, column=0, padx=10, pady=10, columnspan=2)
+       
+        self.update_button = tk.Button(self.parent, bd=3, text="Update Directory", command=self.update_directory)
+        self.update_button.grid(row=0, column=2, padx=10, pady=10)
+        self.file_listbox = tk.Listbox(self.parent, bd=5, selectmode=tk.MULTIPLE, width=50, height=15)
+        self.file_listbox.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+        self.add_image_button = tk.Button(self.parent, bd=4, text="Add Selected Images", command=self.add_selected_images)
+        self.add_image_button.grid(row=2, column=0, padx=10, pady=10)
+        self.merge_button = tk.Button(self.parent, bd=6, text="Merge Images", command=self.merge_images)
+        self.merge_button.grid(row=2, column=1, padx=10, pady=10)
+        self.save_button = tk.Button(self.parent, text="Save Merged Image", command=self.save_merged_image)
+        self.save_button.grid(row=2, column=2, padx=10, pady=10)
+        self.browse_button = tk.Button(self.parent, bd=5, bg="light blue", text="Browse/Change Directory", command=self.browse_directories)
+        self.browse_button.grid(row=0, column=3, padx=10, pady=10)
+        self.canvas = tk.Canvas(self.parent, width=800, height=600)
+        self.canvas.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
+        self.images = []
+        self.merged_image = None
+        self.path = os.getcwd()
+        self.path_entry.insert(0, self.path)
+        self.update_file_list()
+    def update_directory(self):
+        self.path = self.path_entry.get()
+        if os.path.isdir(self.path):
+            self.update_file_list()
+        else:
+            messagebox.showerror("Error", "Invalid directory path.")
+
+    def update_file_list(self):
+        self.file_listbox.delete(0, tk.END)
+        files = os.listdir(self.path_entry.get())
+        for file in files:
+            if file.lower().endswith(('.jpg', '.jpeg', '.png')):
+                self.file_listbox.insert(tk.END, file)
+
+    def browse_directories(self):
+        self.path = filedialog.askdirectory()
+        self.file_listbox.delete(0, tk.END)
+        self.path_entry.delete(0, tk.END)
+        self.path_entry.insert(tk.END, self.path)
+        os.listdir(self.path)
+        for file in self.path:
+            print(self.path)
+            self.update_directory()
+            
+                
+
+    def add_selected_images(self):
+        selected_files = [self.file_listbox.get(i) for i in self.file_listbox.curselection()]
+        for file in selected_files:
+            file_path = os.path.join(self.path_entry.get(), file)
+            image = Image.open(file_path)
+            self.images.append(image)
+            self.display_image(image)
+
+    def display_image(self, image):
+        tk_image = ImageTk.PhotoImage(image.resize((200, 200)))
+        self.canvas.create_image(10 + len(self.images) * 210, 10, anchor=tk.NW, image=tk_image)
+        self.canvas.image = tk_image  # Keep a reference to avoid garbage collection
+
+    def merge_images(self):
+        if len(self.images) < 2:
+            messagebox.showerror("Error", "Please add at least two images to merge.")
+            return
+
+        widths, heights = zip(*(i.size for i in self.images))
+        total_width = sum(widths)
+        max_height = max(heights)
+
+        self.merged_image = Image.new('RGB', (total_width, max_height))
+
+        x_offset = 0
+        for image in self.images:
+            self.merged_image.paste(image, (x_offset, 0))
+            x_offset += image.width
+
+        self.display_merged_image(self.merged_image)
+
+    def display_merged_image(self, image):
+        image = image.resize((800, 600))
+        tk_image = ImageTk.PhotoImage(image)
+        self.canvas.create_image(0, 0, anchor=tk.NW, image=tk_image)
+        self.canvas.image = tk_image  # Keep a reference to avoid garbage collection
+
+    def save_merged_image(self):
+        if self.merged_image:
+            file_path = filedialog.asksaveasfilename(defaultextension=".jpg", filetypes=[("JPEG files", "*.jpg"), ("PNG files", "*.png")])
+            if file_path:
+                self.merged_image.save(file_path)
+                messagebox.showinfo("Success", "Image saved successfully!")
+        else:
+            messagebox.showerror("Error", "No merged image to save.")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: SpritesheetAnimationGenerator
+Type: Class
+Description: No description available
+Code:
+class SpritesheetAnimationGenerator(CommonFileDialogMixin):
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        tk.Label(self.parent, text="Width:").grid(row=0, column=0, padx=10, pady=5)
+        self.entry_width = tk.Entry(self.parent)
+        self.entry_width.grid(row=0, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Height:").grid(row=1, column=0, padx=10, pady=5)
+        self.entry_height = tk.Entry(self.parent)
+        self.entry_height.grid(row=1, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Sheet Width:").grid(row=2, column=0, padx=10, pady=5)
+        self.entry_sheet_width = tk.Entry(self.parent)
+        self.entry_sheet_width.grid(row=2, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Sheet Height:").grid(row=3, column=0, padx=10, pady=5)
+        self.entry_sheet_height = tk.Entry(self.parent)
+        self.entry_sheet_height.grid(row=3, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Number of Frames:").grid(row=4, column=0, padx=10, pady=5)
+        self.entry_num_frames = tk.Entry(self.parent)
+        self.entry_num_frames.grid(row=4, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Spritesheet File:").grid(row=5, column=0, padx=10, pady=5)
+        self.entry_file_path = tk.Entry(self.parent, width=50)
+        self.entry_file_path.grid(row=5, column=1, padx=10, pady=5)
+        self.button_file_path = tk.Button(self.parent, text="Browse", command=self.select_file_path)
+        self.button_file_path.grid(row=5, column=2, padx=10, pady=5)
+
+        # Create and place the button to generate the code
+        self.button_generate = tk.Button(self.parent, text="Generate Code", command=self.generate_code)
+        self.button_generate.grid(row=6, columnspan=3, pady=10)
+
+        # Create a Text widget to display the generated code
+        self.text_output = tk.Text(self.parent, width=80, height=20)
+        self.text_output.grid(row=7, columnspan=3, padx=10, pady=10)
+
+    def select_file_path(self):
+        file_path = self.select_file([("Image files", "*.png;*.jpg;*.jpeg")])
+        self.entry_file_path.delete(0, tk.END)
+        self.entry_file_path.insert(0, file_path)
+
+    def generate_code(self):
+        width = int(self.entry_width.get())
+        height = int(self.entry_height.get())
+        sheet_width = int(self.entry_sheet_width.get())
+        sheet_height = int(self.entry_sheet_height.get())
+        num_frames = int(self.entry_num_frames.get())
+        file_path = self.entry_file_path.get()
+
+        pygame_code = f"""
+import pygame
+import sys
+
+pygame.init()
+
+# Screen dimensions
+width, height = {width}, {height}
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption('Spritesheet Animation')
+
+# Load spritesheet
+spritesheet = pygame.image.load(r'{file_path}').convert_alpha()
+
+# Frame dimensions
+frame_width = {sheet_width} // {num_frames}
+
+# Animation settings
+frame_index = 0
+clock = pygame.time.Clock()
+animation_speed = 10  # Adjust as needed
+
+def get_frame(index):
+    x = index * frame_width
+    return spritesheet.subsurface(pygame.Rect(x, 0, frame_width, {sheet_height}))
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    frame_index = (frame_index + 1) % {num_frames}
+    frame = get_frame(frame_index)
+
+    screen.fill((0, 0, 0))
+    screen.blit(frame, (0, 0))
+
+    pygame.display.flip()
+    clock.tick(animation_speed)
+
+pygame.quit()
+sys.exit()
+"""
+        self.text_output.delete("1.0", tk.END)
+        self.text_output.insert(tk.END, pygame_code)
+
+        # Save the generated code to a filede
+        epoch_time = int(time.time())
+        file_name = f"pygame_code_{epoch_time}.py"
+        with open(file_name, "w") as file:
+            file.write(pygame_code)
+        messagebox.showinfo("Saved", f"Pygame code saved as {file_name}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: ImageResizerApp
+Type: Class
+Description: No description available
+Code:
+class ImageResizerApp:
+    def __init__(self, parent, notebook):
+        self.parent = parent
+        self.notebook = notebook
+        self.select_button = tk.Button(self.parent, text="Select Folder and Resize Images", command=self.select_folder)
+        self.select_button.grid(row=5,column=5)
+    def select_folder(self):
+        folder_selected = filedialog.askdirectory()
+        if folder_selected:
+            resize_factor = simpledialog.askfloat("Resize Factor", "Enter resize factor (e.g., 0.8 for 80%):", minvalue=0.1, maxvalue=1.0)
+            if resize_factor:
+                self.resize_images(folder_selected, resize_factor)
+
+    def resize_images(self, input_folder, resize_factor):
+        epoch_time = str(int(time.time()))
+        output_folder = os.path.join(input_folder, f'resized_output_{epoch_time}')
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+
+        for file in os.listdir(input_folder):
+            if file.lower().endswith(('.png', '.jpg', '.jpeg')):
+                img_path = os.path.join(input_folder, file)
+                try:
+                    with Image.open(img_path) as img:
+                        # Resizing the image
+                        new_size = tuple(int(dim * resize_factor) for dim in img.size)
+                        resized_img = img.resize(new_size, Image.Resampling.LANCZOS)
+                        # Saving the resized image
+                        resized_img.save(os.path.join(output_folder, file))
+                        print(f"Resized and saved: {file}")
+                except Exception as e:
+                    print(f"Error processing {file}: {e}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: SpriteSheetBuilder
+Type: Class
+Description: No description available
+Code:
+class SpriteSheetBuilder:
+    def __init__(self, parent):
+        self.parent = parent
+             # Frames
+        self.main_frame = ttk.Frame(self.parent, padding="10")
+        self.main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        # Widgets
+        ttk.Label(self.main_frame, text="Select images to create a sprite sheet:").grid(row=0, column=0, columnspan=2)
+
+        self.select_button = ttk.Button(self.main_frame, text="Select Images", command=self.select_images)
+        self.select_button.grid(row=1, column=0, columnspan=2, pady=10)
+
+        self.grid_size_label = ttk.Label(self.main_frame, text="Grid Size (Columns x Rows):")
+        self.grid_size_label.grid(row=2, column=0, sticky=tk.W)
+
+        self.columns_entry = ttk.Entry(self.main_frame, width=5)
+        self.columns_entry.grid(row=2, column=1, sticky=tk.W)
+        self.columns_entry.insert(0, "3")  # Default 3 columns
+
+        self.build_button = ttk.Button(self.main_frame, text="Build Sprite Sheet", command=self.build_sprite_sheet)
+        self.build_button.grid(row=3, column=0, columnspan=2, pady=10)
+
+        self.save_button = ttk.Button(self.main_frame, text="Save Sprite Sheet", command=self.save_sprite_sheet)
+        self.save_button.grid(row=4, column=0, columnspan=2, pady=10)
+        self.save_button.config(state=tk.DISABLED)
+
+        self.preview_button = ttk.Button(self.main_frame, text="Preview Sprite Sheet", command=self.preview_sprite_sheet)
+        self.preview_button.grid(row=5, column=0, columnspan=2, pady=10)
+        self.preview_button.config(state=tk.DISABLED)
+
+        # Canvas for preview with scrollbars
+        self.canvas_frame = ttk.Frame(self.parent)
+        self.canvas_frame.grid(row=6, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        self.canvas = tk.Canvas(self.canvas_frame)
+        self.canvas.grid(row=0, column=0, sticky=tk.NSEW)
+
+        # Add scrollbars
+        self.scroll_x = ttk.Scrollbar(self.canvas_frame, orient="horizontal", command=self.canvas.xview)
+        self.scroll_x.grid(row=1, column=0, sticky=tk.EW)
+
+        self.scroll_y = ttk.Scrollbar(self.canvas_frame, orient="vertical", command=self.canvas.yview)
+        self.scroll_y.grid(row=0, column=1, sticky=tk.NS)
+
+        self.canvas.configure(xscrollcommand=self.scroll_x.set, yscrollcommand=self.scroll_y.set)
+
+        # Zoom buttons
+        self.zoom_in_button = ttk.Button(self.main_frame, text="Zoom In", command=lambda: self.zoom(1.2))
+        self.zoom_in_button.grid(row=7, column=0)
+
+        self.zoom_out_button = ttk.Button(self.main_frame, text="Zoom Out", command=lambda: self.zoom(0.8))
+        self.zoom_out_button.grid(row=7, column=1)
+
+        self.images = []
+        self.sprite_sheet = None
+        self.preview_image = None  # To hold the preview image
+        self.zoom_level = 1.0  # Track the zoom level
+
+    def select_images(self):
+        """Opens a file dialog to select multiple image files."""
+        file_paths = filedialog.askopenfilenames(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp"),("All Files", "*.*")])
+
+        if not file_paths:
+            return  # No images selected
+
+        # Load the selected images
+        self.images = [Image.open(img_path) for img_path in file_paths]
+        messagebox.showinfo("Images Selected", f"{len(self.images)} images selected.")
+
+    def build_sprite_sheet(self):
+        """Creates a sprite sheet from the selected images."""
+        if not self.images:
+            messagebox.showerror("No Images", "Please select images before building the sprite sheet.")
+            return
+
+        try:
+            columns = int(self.columns_entry.get())
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter a valid number for columns.")
+            return
+
+        # Determine rows based on the number of images and columns
+        rows = (len(self.images) + columns - 1) // columns
+
+        # Get the size of the first image to determine the size of each cell in the grid
+        img_width, img_height = self.images[0].size
+
+        # Create a new image (sprite sheet) large enough to hold all selected images in the grid
+        sprite_width = img_width * columns
+        sprite_height = img_height * rows
+        self.sprite_sheet = Image.new('RGBA', (sprite_width, sprite_height))
+
+        # Paste each image into the appropriate location in the sprite sheet
+        for index, img in enumerate(self.images):
+            row, col = divmod(index, columns)
+            self.sprite_sheet.paste(img, (col * img_width, row * img_height))
+
+        # Display a success message and enable the save and preview buttons
+        messagebox.showinfo("Sprite Sheet Built", "Sprite sheet built successfully.")
+        self.save_button.config(state=tk.NORMAL)
+        self.preview_button.config(state=tk.NORMAL)
+
+    def save_sprite_sheet(self):
+        """Saves the generated sprite sheet to a file."""
+        if self.sprite_sheet is None:
+            messagebox.showerror("No Sprite Sheet", "Please build a sprite sheet first.")
+            return
+
+        save_path = filedialog.asksaveasfilename(defaultextension=".png",
+                                                 filetypes=[("PNG Image", "*.png"), ("All Files", "*.*")])
+
+        if save_path:
+            self.sprite_sheet.save(save_path)
+            messagebox.showinfo("Save Successful", f"Sprite sheet saved as {save_path}")
+
+    def preview_sprite_sheet(self):
+        """Displays a preview of the generated sprite sheet on the canvas."""
+        if self.sprite_sheet is None:
+            messagebox.showerror("No Sprite Sheet", "Please build a sprite sheet first.")
+            return
+
+        self.update_preview(self.sprite_sheet)
+
+    def update_preview(self, image):
+        """Updates the canvas with the provided image."""
+        self.preview_image = ImageTk.PhotoImage(image)
+        self.canvas.create_image(0, 0, image=self.preview_image, anchor="nw")
+        self.canvas.config(scrollregion=self.canvas.bbox(tk.ALL))  # Update scroll region
+
+    def zoom(self, scale_factor):
+        """Zooms in or out the sprite sheet by adjusting the zoom level."""
+        if self.sprite_sheet is None:
+            messagebox.showerror("No Sprite Sheet", "Please build a sprite sheet first.")
+            return
+
+        # Update the zoom level
+        self.zoom_level *= scale_factor
+
+        # Resize the image according to the new zoom level
+        new_width = int(self.sprite_sheet.width * self.zoom_level)
+        new_height = int(self.sprite_sheet.height * self.zoom_level)
+        resized_sprite_sheet = self.sprite_sheet.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+        # Update the preview
+        self.update_preview(resized_sprite_sheet)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: Standard_Pygame_Code
+Type: Class
+Description: No description available
+Code:
+class Standard_Pygame_Code:
+    def __init__(self, parent):
+        self.parent = parent
+        self.snippet_frame = tk.Frame(self.parent)
+        self.snippet_frame.grid(row=0, column=0, padx=10, pady=10)
+        
+        # Add multiple snippet buttons
+        tk.Button(self.snippet_frame, text="Basic Pygame Setup", command=self.insert_basic_setup).grid(row=0, column=0, padx=5, pady=5)
+        tk.Button(self.snippet_frame, text="Event Handling", command=self.insert_event_handling).grid(row=0, column=1, padx=5, pady=5)
+        tk.Button(self.snippet_frame, text="Drawing Shapes", command=self.insert_drawing_shapes).grid(row=0, column=2, padx=5, pady=5)
+        
+        # Add ScrolledText for displaying code
+        self.txtwidget = scrolledtext.ScrolledText(self.parent, width=80, height=40, font=("Courier", 10))
+        self.txtwidget.grid(row=1, column=0, columnspan=3)
+        
+        # Add buttons to clear, copy, and save the snippet
+        button_frame = tk.Frame(self.parent)
+        button_frame.grid(row=2, column=0, columnspan=3, pady=10)
+        tk.Button(button_frame, text="Clear", command=self.clear_text).grid(row=0, column=0, padx=5)
+        tk.Button(button_frame, text="Copy", command=self.copy_text).grid(row=0, column=1, padx=5)
+        tk.Button(button_frame, text="Save", command=self.save_snippet).grid(row=0, column=2, padx=5)
+        tk.Button(self.snippet_frame, text="sacred_pygame", command=self.insert_event_handling2).grid(row=0, column=4, padx=5, pady=5)
+
+        self.basic_setup_code = '''import pygame
+
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption("Basic Setup")
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        screen.fill((0, 0, 0))
+        pygame.display.flip()
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()'''
+
+    def insert_basic_setup(self):
+        self.txtwidget.insert(tk.END, self.basic_setup_code + "\n\n")
+
+    def insert_event_handling(self):
+        event_handling_code = '''for event in pygame.event.get():
+    if event.type == pygame.KEYDOWN:
+    if event.key == pygame.K_SPACE:
+        print("Spacebar pressed")'''
+        self.txtwidget.insert(tk.END, event_handling_code + "\n\n")
+    def insert_event_handling2(self):
+        event_handling_code2 = '''for event in pygame.event.get():
+if event.type == pg.QUIT:
+    done = True
+if event.type == pygame.K_ESCAPE:
+    done=False
+        if event.key == pygame.K_SPACE:
+            print("Spacebar pressed")'''
+        self.txtwidget.insert(tk.END, event_handling_code2 + "\n\n")
+       
+    def insert_drawing_shapes(self):
+        drawing_shapes_code = '''pygame.draw.rect(screen, (255, 0, 0), (50, 50, 100, 100))
+pygame.draw.circle(screen, (0, 255, 0), (400, 300), 50)'''
+        self.txtwidget.insert(tk.END, drawing_shapes_code + "\n\n")
+
+    def clear_text(self):
+        self.txtwidget.delete(1.0, tk.END)
+
+    def copy_text(self):
+        self.parent.clipboard_clear()
+        self.parent.clipboard_append(self.txtwidget.get(1.0, tk.END))
+
+    def save_snippet(self):
+        file_path = filedialog.asksaveasfilename(defaultextension=".py", filetypes=[("Python Files", "*.py")])
+        if file_path:
+            with open(file_path, "w") as file:
+                file.write(self.txtwidget.get(1.0, tk.END))
+            messagebox.showinfo("Saved", "Code snippet saved successfully!")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: TabFrame
+Type: Class
+Description: No description available
+Code:
+class TabFrame:
+    def __init__(self, notebook):
+        self.f0 = notebook.add_tab("Title Page")
+        ttk.Label(self.f0, text="A Suite of Pygame Tools").grid(row=1, column=1)
+        self.f1 = notebook.add_tab("Image Split")
+        ImageTileSplitter(self.f1, notebook)
+        self.f2 = notebook.add_tab("Create Shapes")
+        ShapeTerrainGenerator(self.f2, notebook)
+        self.f3 = notebook.add_tab("Animation")
+        AnimationGenerator(self.f3, notebook)
+        self.f4 = notebook.add_tab("Image Merger")
+        ImageMerger(self.f4, notebook)
+        self.f5 = notebook.add_tab("Sprite Animator")
+        SpritesheetAnimationGenerator(self.f5, notebook)
+        self.f6 = notebook.add_tab("Image Browser")
+        ImageBrowser(self.f6, notebook)
+        self.f7 = notebook.add_tab("Multi Image Resizer")
+        ImageResizerApp(self.f7, notebook)
+        self.f8 = notebook.add_tab("Spritesheet Builder")
+        SpriteSheetBuilder(self.f8)
+        
+        self.f9 = notebook.add_tab("Code_Snips")
+        Standard_Pygame_Code(self.f9)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self):
+        super().__init__()
+        self.geometry("1000x800")
+        self.title("Pygame Tools Suite")
+        self.current_path = tk.StringVar(value=os.getcwd())
+
+        # Create a frame for the notebook and scrollbar
+        notebook_frame = tk.Frame(self, width=600, height=600)
+        notebook_frame.grid(row=0, column=0, rowspan=4, columnspan=4, sticky="nsew")
+
+        # Configure the grid to expand the frame
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
+        self.canvas = tk.Canvas(notebook_frame, width=600, height=600)
+        self.canvas.grid(row=0, column=0, sticky="nsew")
+
+        # Add a scrollbar to the frame
+        scrollbar = ttk.Scrollbar(notebook_frame, orient="horizontal", command=self.canvas.xview)
+        scrollbar.grid(row=1, column=0, sticky="ew")
+        self.canvas.configure(xscrollcommand=scrollbar.set)
+
+        # Configure the notebook frame grid
+        notebook_frame.grid_rowconfigure(0, weight=1)
+        notebook_frame.grid_columnconfigure(0, weight=1)
+
+        # Create a frame inside the canvas to hold the notebook
+        notebook_frame_inside = tk.Frame(self.canvas)
+        self.canvas.create_window((0, 0), window=notebook_frame_inside, anchor='nw')
+
+        # Create the notebook
+        self.notebook = ttk.Notebook(notebook_frame_inside)
+        self.notebook.grid(row=0, column=0, sticky="nsew")
+        notebook_frame_inside.bind('<Configure>', self.on_configure)
+
+        # Create the path entry and button on the first tab
+        self.f0 = self.add_tab("Title Page")
+        ttk.Label(self.f0, text="A Suite of Pygame Tools").grid(row=0, column=0, pady=10)
+        ttk.Label(self.f0, text="Directory Path:").grid(row=1, column=0, sticky=tk.W, padx=10)
+        self.path_entry = ttk.Entry(self.f0, textvariable=self.current_path, width=50)
+        self.path_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), padx=10)
+        self.browse_button = ttk.Button(self.f0, text="Browse", command=self.select_directory)
+        self.browse_button.grid(row=1, column=2, padx=10)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: on_configure
+Type: Function
+Description: No description available
+Code:
+    def on_configure(self, event):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: add_tab
+Type: Function
+Description: No description available
+Code:
+    def add_tab(self, title, **kwargs):
+        frame = ttk.Frame(self.notebook, **kwargs)
+        self.notebook.add(frame, text=title)
+        return frame
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: select_directory
+Type: Function
+Description: No description available
+Code:
+    def select_directory(self):
+        directory = filedialog.askdirectory()
+        if directory:
+            self.current_path.set(directory)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: get_current_path
+Type: Function
+Description: No description available
+Code:
+    def get_current_path(self):
+        return self.current_path.get()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: select_file
+Type: Function
+Description: No description available
+Code:
+    def select_file(self, filetypes=[("All Files", "*.*")]):
+        return filedialog.askopenfilename(filetypes=filetypes)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, notebook):
+        self.notebook = notebook
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: select_file
+Type: Function
+Description: No description available
+Code:
+    def select_file(self, filetypes=[("All Files", "*.*")]):
+        return self.notebook.select_file(filetypes=filetypes)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: select_directory
+Type: Function
+Description: No description available
+Code:
+    def select_directory(self):
+        return self.notebook.select_directory()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: get_current_path
+Type: Function
+Description: No description available
+Code:
+    def get_current_path(self):
+        return self.notebook.get_current_path()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        self.area = (700, 500)
+        self.path = self.get_current_path()
+
+        self.btfrm = tk.Frame(self.parent)
+        self.btfrm.grid(row=0, column=0)
+
+        self.treefrm = tk.Frame(self.parent)
+        self.treefrm.grid(row=3, column=0)
+
+        self.tree = ttk.Treeview(self.treefrm, columns=("Size", "Type", "Modified"))
+        self.tree.heading("#0", text="File Name", command=lambda: self.treeview_sort_column("#0", False))
+        self.tree.heading("Size", text="Size (KB)", command=lambda: self.treeview_sort_column("Size", False))
+        self.tree.heading("Type", text="Type", command=lambda: self.treeview_sort_column("Type", False))
+        self.tree.heading("Modified", text="Last Resampling.LANCZOSModified", command=lambda: self.treeview_sort_column("Modified", False))
+
+        self.tree.grid(row=0, column=0, rowspan=15, sticky="nswe")
+        self.tree.bind('<<TreeviewSelect>>', self.on_select)
+
+        self.sc = ttk.Scrollbar(self.treefrm, orient=tk.VERTICAL, command=self.tree.yview)
+        self.sc.grid(row=0, rowspan=15, column=1, sticky='ns')
+        self.tree.configure(yscrollcommand=self.sc.set)
+
+        self.canfrm = tk.Frame(self.parent)
+        self.canfrm.grid(row=3, column=2)
+
+        self.canvas = tk.Canvas(self.canfrm, height=self.area[1], width=self.area[0], bg="black", bd=10, relief="ridge")
+        self.canvas.grid(row=2, column=1)
+        txt = """
+        0                             !
+                    No Image
+        """
+        self.wt = self.canvas.create_text(self.area[0] / 2 - 270, self.area[1] / 2, text=txt, font=("", 30), fill="white")
+        self.new_dir = tk.Button(self.btfrm, text="new dir", bd=2, bg="lavender", command=self.newdirlist)
+        self.new_dir.grid(row=1, column=1)
+        self.relist = tk.Button(self.btfrm, text="relist", bd=2, bg="lavender", command=self.list_files)
+        self.relist.grid(row=1, column=2)
+        btn_open = tk.Button(self.btfrm, text="Open New Image", bd=2, command=self.make_image)
+        btn_open.grid(row=1, column=3)
+        self.status = tk.Label(self.canfrm, text="Image Browser    Current Image: None")
+        self.status.grid(row=0, column=1)
+
+        self.list_files()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: treeview_sort_column
+Type: Function
+Description: No description available
+Code:
+    def treeview_sort_column(self, col, reverse):
+        l = [(self.tree.set(k, col), k) for k in self.tree.get_children('')]
+        l.sort(reverse=reverse)
+
+        for index, (val, k) in enumerate(l):
+            self.tree.move(k, '', index)
+
+        self.tree.heading(col, command=lambda: self.treeview_sort_column(col, not reverse))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: get_current_image
+Type: Function
+Description: No description available
+Code:
+    def get_current_image(self):
+        if self.loaded_img:
+            return self.loaded_img.copy()
+        return None
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: list_files
+Type: Function
+Description: No description available
+Code:
+    def list_files(self):
+        self.path = self.get_current_path()
+        for item in self.tree.get_children():
+            self.tree.Scrollbardelete(item)
+
+        image_extensions = ['*.*']
+
+        for file in os.listdir(self.path):
+            if file.endswith(tuple(image_extensions)):
+                file_path = os.path.join(self.path, file)
+                file_size = os.path.getsize(file_path) // 1024
+                file_type = 'Image' if any(file.endswith(ext) for ext in image_extensions) else 'Other'
+                modified_time = time.ctime(os.path.getmtime(file_path))
+                self.tree.insert('', 'end', text=file, values=(file_size, file_type, modified_time))
+
+        self.canvas.delete('all')
+        self.status["text"] = "Image Browser    Current Image: None"
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: showcontent
+Type: Function
+Description: No description available
+Code:
+    def showcontent(self, event):
+        selected_item = self.tree.selection()
+        if selected_item:
+            file_name = self.tree.item(selected_item[0], 'text')
+            full_path = os.path.join(self.path, file_name)
+            if os.path.isfile(full_path):
+                try:
+                    self.loaded_img = Image.open(full_path)
+                    re = self.loaded_img.resize((700, 500), Image.Resampling.LANCZOS)
+                    self.img = ImageTk.PhotoImage(re)
+                    self.canvas.delete('all')
+                    self.canvas.create_image(self.area[0] / 2 + 10, self.area[1] / 2 + 10, anchor='center', image=self.img)
+                    self.status["text"] = "Image Browser   Current Image: " + full_path
+                except Exception as e:
+                    messagebox.showerror("Error", f"Error loading image: {e}")
+                    seScrollbarlf.status["text"] = "Error loading image"
+            else:
+                messagebox.showinfo("Information", "Selected item is not an image file")
+                self.status["text"] = "Selected item is not an image file"
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: newdirlist
+Type: Function
+Description: No description available
+Code:
+    def newdirlist(self):
+        new_path = self.select_directory()
+        if new_path:
+            try:
+                self.path = new_path
+                os.chdir(self.path)
+                
+                self.status["text"] = f"Directory changed to {self.path}"
+                   
+            except Exception as e:
+                messagebox.showerror("Error", f"Error accessing directory: {e}")
+        
+        self.list_files()                
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: on_select
+Type: Function
+Description: No description available
+Code:
+    def on_select(self, event):
+        self.showcontent(event)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: make_image
+Type: Function
+Description: No description available
+Code:
+    def make_image(self):
+        try:
+            filetypes = [('All files', '*.*')]
+            self.file = self.select_file(filetypes)
+            if self.file:
+                self.loaded_img = Image.open(self.file)
+                re = self.loaded_img.resize((700, 500), Image.Resampling.LANCZOS)
+                self.img = ImageTk.PhotoImage(re)
+                self.cScrollbaranvas.delete('all')
+                self.canvas.create_image(self.area[0] / 2 + 10, self.area[1] / 2 + 10, anchor='center', image=self.img)
+                self.status["text"] = "Image Browser Current Image: " + self.file
+        except Exception as e:
+            print(f"Error loading image: {e}")
+            self.status["text"] = "Error loading image"
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: copy_to_edit_tab
+Type: Function
+Description: No description available
+Code:
+    def copy_to_edit_tab(self):
+        if self.loaded_img:
+            photo = ImageTk.PhotoImage(self.loaded_img)
+            img.can.create_image(800, 800, image=photo)
+            img.can.image = photo
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        self.auto_create_dir = tk.BooleanVar()
+        tk.Label(self.parent, text="Image Path:").grid(row=0, column=0)
+        self.entry_image_path = tk.Entry(self.parent, width=50)
+        self.entry_image_path.grid(row=0, column=1)
+        tk.Button(self.parent, text="Browse", command=self.select_image).grid(row=0, column=2)
+        tk.Label(self.parent, text="Tile Width:").grid(row=1, column=0)
+        self.entry_tile_width = tk.Entry(self.parent)
+        self.entry_tile_width.grid(row=1, column=1)
+        tk.Label(self.parent, text="Tile Height:").grid(row=2, column=0)
+        self.entry_tile_height = tk.Entry(self.parent)
+        self.entry_tile_height.grid(row=2, column=1)
+        tk.Label(self.parent, text="Output Directory:").grid(row=3, column=0)
+        self.entry_output_dir = tk.Entry(self.parent, width=50)
+        self.entry_output_dir.grid(row=3, column=1)
+        tk.Button(self.parent, text="Browse", command=self.outputdir)
+        tk.Checkbutton(self.parent, text="Auto-create Output Directory", variable=self.auto_create_dir).grid(row=4, column=0)
+        tk.Button(self.parent, text="Split Image", command=self.split_image).grid(row=4, column=1)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: outputdir
+Type: Function
+Description: No description available
+Code:
+    def outputdir(self):
+            
+        path = filedialog.askopendirectory()
+        
+        self.entry_output_dir.insert(0, path)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: select_image
+Type: Function
+Description: No description available
+Code:
+    def select_image(self):
+        file_path = self.select_file()
+        if file_path:
+            self.entry_image_path.delete(0, tk.END)
+            self.entry_image_path.insert(0, file_path)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: split_image
+Type: Function
+Description: No description available
+Code:
+    def split_image(self):
+        image_path = self.entry_image_path.get()
+        tile_width = int(self.entry_tile_width.get())
+        tile_height = int(self.entry_tile_height.get())
+        output_dir = self.entry_output_dir.get()
+
+        # Ensure all inputs are provided
+        if not (image_Scrollbarpath and tile_width and tile_height and output_dir) and not self.auto_create_dir.get():
+            messagebox.showerror("Error", "All fields are required")
+            return
+
+        try:
+            image = Image.open(image_path)
+            img_width, img_height = image.size
+
+            if self.auto_create_dir.get():
+                output_dir = os.path.join("output_tiles", datetime.now().strftime("%Y%m%d_%H%M%S"))
+                os.makedirs(output_dir, exist_ok=True)
+            else:
+                if not os.path.exists(output_dir):
+                    os.makedirs(output_dir)
+
+            tile_number = 0
+            for i in range(0, img_width, tile_width):
+                for j in range(0, img_height, tile_height):
+                    box = (i, j, i + tile_width, j + tile_height)
+                    tile = image.crop(box)
+                    tile_filename = f'tile_{tile_number}.png'
+                    tile.save(os.path.join(output_dir, tile_filename))
+                    tile_number += 1
+
+            messagebox.showinfo("Success", f"Image split into {tile_number} tiles successfully!")
+
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+
+        self.main_frame = ttk.Frame(self.parent, padding="10")
+        self.main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        # Number of shapes
+        ttk.Label(self.main_frame, text="Number of shapes:").grid(row=0, column=0, sticky=tk.W)
+        self.num_shapes_entry = ttk.Entry(self.main_frame)
+        self.num_shapes_entry.grid(row=0, column=1, sticky=(tk.W, tk.E))
+
+        # R variation
+        ttk.Label(self.main_frame, text="R variation:").grid(row=1, column=0, sticky=tk.W)
+        self.r_variation_entry = ttk.Entry(self.main_frame)
+        self.r_variation_entry.grid(row=1, column=1, sticky=(tk.W, tk.E))
+
+        # G variation
+        ttk.Label(self.main_frame, text="G variation:").grid(row=2, column=0, sticky=tk.W)
+        self.g_variation_entry = ttk.Entry(self.main_frame)
+        self.g_variation_entry.grid(row=2, column=1, sticky=(tk.W, tk.E))
+
+        # B variation
+        ttk.Label(self.main_frame, text="B variation:").grid(row=3, column=0, sticky=tk.W)
+        self.b_variation_entry = ttk.Entry(self.main_frame)
+        self.b_variation_entry.grid(row=3, column=1, sticky=(tk.W, tk.E))
+
+        # Buttons for code generation, open/save, clear, copy/paste
+        self.generate_button = ttk.Button(self.main_frame, text="Generate Code", command=self.generate_code)
+        self.generate_button.grid(row=4, column=0, columnspan=2)
+
+        self.code_text = scrolledtext.ScrolledText(self.main_frame, width=80, height=20)
+        self.code_text.grid(row=5, column=0, columnspan=2)
+
+        # Button frame for extra options
+        button_frame = ttk.Frame(self.main_frame)
+        button_frame.grid(row=6, column=0, columnspan=2, pady=10)
+
+        # Add buttons for Clear, Copy, Paste, Open, Save
+        ttk.Button(button_frame, text="Clear", command=self.clear_text).grid(row=0, column=0, padx=5)
+        ttk.Button(button_frame, text="Copy", command=self.copy_text).grid(row=0, column=1, padx=5)
+        ttk.Button(button_frame, text="Paste", command=self.paste_text).grid(row=0, column=2, padx=5)
+        ttk.Button(button_frame, text="Open", command=self.open_file).grid(row=0, column=3, padx=5)
+        ttk.Button(button_frame, text="Save", command=self.save_file).grid(row=0, column=4, padx=5)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: generate_code
+Type: Function
+Description: No description available
+Code:
+    def generate_code(self):
+        try:
+            num_shapes = int(self.num_shapes_entry.get())
+            r_variation = int(self.r_variation_entry.get())
+            g_variation = int(self.g_variation_entry.get())
+            b_variation = int(self.b_variation_entry.get())
+        except ValueError:
+            self.code_text.insert(tk.END, "Please enter valid numbers.\n")
+            return
+
+        code = f"""
+import pygame
+import random
+
+# Initialize Pygame
+pygame.init()
+
+# Screen dimensions
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# Colors
+base_color = (100, 150, 200)
+
+def random_color():
+    r = max(0, min(255, base_color[0] + random.randint(-{r_variation}, {r_variation})))
+    g = max(0, min(255, base_color[1] + random.randint(-{g_variation}, {g_variation})))
+    b = max(0, min(255, base_color[2] + random.randint(-{b_variation}, {b_variation})))
+    return (r, g, b)
+
+def draw_shapes():
+    screen.fill((255, 255, 255))
+    for _ in range({num_shapes}):
+        color = random_color()
+        shape = random.choice(['circle', 'square', 'ellipse', 'triangle', 'polygon'])
+        if shape == 'circle':
+            pygame.draw.circle(screen, color, (random.randint(0, screen_width), random.randint(0, screen_height)), 20)
+        elif shape == 'square':
+            rect = pygame.Rect(random.randint(0, screen_width), random.randint(0, screen_height), 40, 40)
+            pygame.draw.rect(screen, color, rect)
+        elif shape == 'ellipse':
+            rect = pygame.Rect(random.randint(0, screen_width), random.randint(0, screen_height), 60, 40)
+            pygame.draw.ellipse(screen, color, rect)
+        elif shape == 'triangle':
+            point1 = (random.randint(0, screen_width), random.randint(0, screen_height))
+            point2 = (random.randint(0, screen_width), random.randint(0, screen_height))
+            point3 = (random.randint(0, screen_width), random.randint(0, screen_height))
+            pygame.draw.polygon(screen, color, [point1, point2, point3])
+        elif shape == 'polygon':
+            points = [(random.randint(0, screen_width), random.randint(0, screen_height)) for _ in range(6)]
+            pygame.draw.polygon(screen, color, points)
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    draw_shapes()
+    pygame.display.flip()
+
+pygame.quit()
+"""
+        self.code_text.delete(1.0, tk.END)
+        self.code_text.insert(tk.END, code)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: clear_text
+Type: Function
+Description: Clears the text from the ScrolledText widget.
+Code:
+    def clear_text(self):
+        """Clears the text from the ScrolledText widget."""
+        self.code_text.delete(1.0, tk.END)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: copy_text
+Type: Function
+Description: Copies the selected text from the ScrolledText widget.
+Code:
+    def copy_text(self):
+        """Copies the selected text from the ScrolledText widget."""
+        selected_text = self.code_text.selection_get()
+        pyperclip.copy(selected_text)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: paste_text
+Type: Function
+Description: Pastes the clipboard text into the ScrolledText widget.
+Code:
+    def paste_text(self):
+        """Pastes the clipboard text into the ScrolledText widget."""
+        clipboard_text = pyperclip.paste()
+        self.code_text.insert(tk.INSERT, clipboard_text)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: open_file
+Type: Function
+Description: Opens a .py file and loads its content into the ScrolledText widget.
+Code:
+    def open_file(self):
+        """Opens a .py file and loads its content into the ScrolledText widget."""
+        file_path = filedialog.askopenfilename(defaultextension=".py",
+                                               filetypes=[("Python Files", "*.py"), ("All Files", "*.*")])
+        if file_path:
+            with open(file_path, "r") as file:
+                content = file.read()
+                self.code_text.delete(1.0, tk.END)
+                self.code_text.insert(tk.END, content)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: save_file
+Type: Function
+Description: Saves the content of the ScrolledText widget to a .py file.
+Code:
+    def save_file(self):
+        """Saves the content of the ScrolledText widget to a .py file."""
+        file_path = filedialog.asksaveasfilename(defaultextension=".py",
+                                                 filetypes=[("Python Files", "*.py"), ("All Files", "*.*")])
+        if file_path:
+            with open(file_path, "w") as file:
+                content = self.code_text.get(1.0, tk.END)
+                file.write(content)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        self.main_frame = ttk.Frame(self.parent, padding="10")
+        self.main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        ttk.Label(self.main_frame, text="Number of frames:").grid(row=0, column=0, sticky=tk.W)
+        self.num_frames_entry = ttk.Entry(self.main_frame)
+        self.num_frames_entry.grid(row=0, column=1, sticky=(tk.W, tk.E))
+
+        ttk.Label(self.main_frame, text="Select Images:").grid(row=1, column=0, sticky=tk.W)
+        self.images_listbox = tk.Listbox(self.main_frame, selectmode=tk.MULTIPLE, height=5)
+        self.images_listbox.grid(row=1, column=1, sticky=(tk.W, tk.E))
+        self.load_images_button = ttk.Button(self.main_frame, text="Load Images", command=self.load_images)
+        self.load_images_button.grid(row=2, column=1, sticky=(tk.W, tk.E))
+
+        self.generate_button = ttk.Button(self.main_frame, text="Generate Code", command=self.generate_code)
+        self.generate_button.grid(row=3, column=0, columnspan=2)
+
+        self.code_text = scrolledtext.ScrolledText(self.main_frame, width=80, height=20)
+        self.code_text.grid(row=4, column=0, columnspan=2)
+
+        self.image_paths = []
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: load_images
+Type: Function
+Description: No description available
+Code:
+    def load_images(self):
+        filepaths = filedialog.askopenfilenames(filetypes=[("All Files", "*.*")])
+        for filepath in filepaths:
+            self.image_paths.append(filepath)
+            self.images_listbox.insert(tk.END, os.path.basename(filepath))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: generate_code
+Type: Function
+Description: No description available
+Code:
+    def generate_code(self):
+        try:
+            num_frames = int(self.num_frames_entry.get())
+        except ValueError:
+            self.code_text.insert(tk.END, "Please enter a valid number of frames.\n")
+            return
+
+        if not self.image_paths:
+            self.code_text.insert(tk.END, "Please load at least one image.\n")
+            return
+
+        image_loads = "\n".join([f'images.append(pygame.image.load("{path}"))' for path in self.image_paths])
+        code = f"""
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Screen dimensions
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# Load images
+images = []
+{image_loads}
+
+# Animation settings
+num_frames = {num_frames}
+frame_duration = 100  # milliseconds per frame
+clock = pygame.time.Clock()
+
+def main():
+    running = True
+    frame = 0
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        screen.fill((255, 255, 255))
+        screen.blit(images[frame % len(images)], (100, 100))
+        pygame.display.flip()
+        
+        frame += 1
+        clock.tick(1000 // frame_duration)
+
+    pygame.quit()
+    sys.exit()
+
+if __name__ == "__main__":
+    main()
+"""
+        self.code_text.delete("1.0", tk.END)
+        self.code_text.insert(tk.END, code)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        
+        self.path_entry = tk.Entry(self.parent, bd=7, width=50)
+        self.path_entry.grid(row=0, column=0, padx=10, pady=10, columnspan=2)
+       
+        self.update_button = tk.Button(self.parent, bd=3, text="Update Directory", command=self.update_directory)
+        self.update_button.grid(row=0, column=2, padx=10, pady=10)
+        self.file_listbox = tk.Listbox(self.parent, bd=5, selectmode=tk.MULTIPLE, width=50, height=15)
+        self.file_listbox.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+        self.add_image_button = tk.Button(self.parent, bd=4, text="Add Selected Images", command=self.add_selected_images)
+        self.add_image_button.grid(row=2, column=0, padx=10, pady=10)
+        self.merge_button = tk.Button(self.parent, bd=6, text="Merge Images", command=self.merge_images)
+        self.merge_button.grid(row=2, column=1, padx=10, pady=10)
+        self.save_button = tk.Button(self.parent, text="Save Merged Image", command=self.save_merged_image)
+        self.save_button.grid(row=2, column=2, padx=10, pady=10)
+        self.browse_button = tk.Button(self.parent, bd=5, bg="light blue", text="Browse/Change Directory", command=self.browse_directories)
+        self.browse_button.grid(row=0, column=3, padx=10, pady=10)
+        self.canvas = tk.Canvas(self.parent, width=800, height=600)
+        self.canvas.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
+        self.images = []
+        self.merged_image = None
+        self.path = os.getcwd()
+        self.path_entry.insert(0, self.path)
+        self.update_file_list()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: update_directory
+Type: Function
+Description: No description available
+Code:
+    def update_directory(self):
+        self.path = self.path_entry.get()
+        if os.path.isdir(self.path):
+            self.update_file_list()
+        else:
+            messagebox.showerror("Error", "Invalid directory path.")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: update_file_list
+Type: Function
+Description: No description available
+Code:
+    def update_file_list(self):
+        self.file_listbox.delete(0, tk.END)
+        files = os.listdir(self.path_entry.get())
+        for file in files:
+            if file.lower().endswith(('.jpg', '.jpeg', '.png')):
+                self.file_listbox.insert(tk.END, file)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: browse_directories
+Type: Function
+Description: No description available
+Code:
+    def browse_directories(self):
+        self.path = filedialog.askdirectory()
+        self.file_listbox.delete(0, tk.END)
+        self.path_entry.delete(0, tk.END)
+        self.path_entry.insert(tk.END, self.path)
+        os.listdir(self.path)
+        for file in self.path:
+            print(self.path)
+            self.update_directory()
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: add_selected_images
+Type: Function
+Description: No description available
+Code:
+    def add_selected_images(self):
+        selected_files = [self.file_listbox.get(i) for i in self.file_listbox.curselection()]
+        for file in selected_files:
+            file_path = os.path.join(self.path_entry.get(), file)
+            image = Image.open(file_path)
+            self.images.append(image)
+            self.display_image(image)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: display_image
+Type: Function
+Description: No description available
+Code:
+    def display_image(self, image):
+        tk_image = ImageTk.PhotoImage(image.resize((200, 200)))
+        self.canvas.create_image(10 + len(self.images) * 210, 10, anchor=tk.NW, image=tk_image)
+        self.canvas.image = tk_image  # Keep a reference to avoid garbage collection
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: merge_images
+Type: Function
+Description: No description available
+Code:
+    def merge_images(self):
+        if len(self.images) < 2:
+            messagebox.showerror("Error", "Please add at least two images to merge.")
+            return
+
+        widths, heights = zip(*(i.size for i in self.images))
+        total_width = sum(widths)
+        max_height = max(heights)
+
+        self.merged_image = Image.new('RGB', (total_width, max_height))
+
+        x_offset = 0
+        for image in self.images:
+            self.merged_image.paste(image, (x_offset, 0))
+            x_offset += image.width
+
+        self.display_merged_image(self.merged_image)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: display_merged_image
+Type: Function
+Description: No description available
+Code:
+    def display_merged_image(self, image):
+        image = image.resize((800, 600))
+        tk_image = ImageTk.PhotoImage(image)
+        self.canvas.create_image(0, 0, anchor=tk.NW, image=tk_image)
+        self.canvas.image = tk_image  # Keep a reference to avoid garbage collection
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: save_merged_image
+Type: Function
+Description: No description available
+Code:
+    def save_merged_image(self):
+        if self.merged_image:
+            file_path = filedialog.asksaveasfilename(defaultextension=".jpg", filetypes=[("JPEG files", "*.jpg"), ("PNG files", "*.png")])
+            if file_path:
+                self.merged_image.save(file_path)
+                messagebox.showinfo("Success", "Image saved successfully!")
+        else:
+            messagebox.showerror("Error", "No merged image to save.")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, parent, notebook):
+        super().__init__(notebook)
+        self.parent = parent
+        tk.Label(self.parent, text="Width:").grid(row=0, column=0, padx=10, pady=5)
+        self.entry_width = tk.Entry(self.parent)
+        self.entry_width.grid(row=0, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Height:").grid(row=1, column=0, padx=10, pady=5)
+        self.entry_height = tk.Entry(self.parent)
+        self.entry_height.grid(row=1, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Sheet Width:").grid(row=2, column=0, padx=10, pady=5)
+        self.entry_sheet_width = tk.Entry(self.parent)
+        self.entry_sheet_width.grid(row=2, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Sheet Height:").grid(row=3, column=0, padx=10, pady=5)
+        self.entry_sheet_height = tk.Entry(self.parent)
+        self.entry_sheet_height.grid(row=3, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Number of Frames:").grid(row=4, column=0, padx=10, pady=5)
+        self.entry_num_frames = tk.Entry(self.parent)
+        self.entry_num_frames.grid(row=4, column=1, padx=10, pady=5)
+
+        tk.Label(self.parent, text="Spritesheet File:").grid(row=5, column=0, padx=10, pady=5)
+        self.entry_file_path = tk.Entry(self.parent, width=50)
+        self.entry_file_path.grid(row=5, column=1, padx=10, pady=5)
+        self.button_file_path = tk.Button(self.parent, text="Browse", command=self.select_file_path)
+        self.button_file_path.grid(row=5, column=2, padx=10, pady=5)
+
+        # Create and place the button to generate the code
+        self.button_generate = tk.Button(self.parent, text="Generate Code", command=self.generate_code)
+        self.button_generate.grid(row=6, columnspan=3, pady=10)
+
+        # Create a Text widget to display the generated code
+        self.text_output = tk.Text(self.parent, width=80, height=20)
+        self.text_output.grid(row=7, columnspan=3, padx=10, pady=10)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: select_file_path
+Type: Function
+Description: No description available
+Code:
+    def select_file_path(self):
+        file_path = self.select_file([("Image files", "*.png;*.jpg;*.jpeg")])
+        self.entry_file_path.delete(0, tk.END)
+        self.entry_file_path.insert(0, file_path)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: generate_code
+Type: Function
+Description: No description available
+Code:
+    def generate_code(self):
+        width = int(self.entry_width.get())
+        height = int(self.entry_height.get())
+        sheet_width = int(self.entry_sheet_width.get())
+        sheet_height = int(self.entry_sheet_height.get())
+        num_frames = int(self.entry_num_frames.get())
+        file_path = self.entry_file_path.get()
+
+        pygame_code = f"""
+import pygame
+import sys
+
+pygame.init()
+
+# Screen dimensions
+width, height = {width}, {height}
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption('Spritesheet Animation')
+
+# Load spritesheet
+spritesheet = pygame.image.load(r'{file_path}').convert_alpha()
+
+# Frame dimensions
+frame_width = {sheet_width} // {num_frames}
+
+# Animation settings
+frame_index = 0
+clock = pygame.time.Clock()
+animation_speed = 10  # Adjust as needed
+
+def get_frame(index):
+    x = index * frame_width
+    return spritesheet.subsurface(pygame.Rect(x, 0, frame_width, {sheet_height}))
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    frame_index = (frame_index + 1) % {num_frames}
+    frame = get_frame(frame_index)
+
+    screen.fill((0, 0, 0))
+    screen.blit(frame, (0, 0))
+
+    pygame.display.flip()
+    clock.tick(animation_speed)
+
+pygame.quit()
+sys.exit()
+"""
+        self.text_output.delete("1.0", tk.END)
+        self.text_output.insert(tk.END, pygame_code)
+
+        # Save the generated code to a filede
+        epoch_time = int(time.time())
+        file_name = f"pygame_code_{epoch_time}.py"
+        with open(file_name, "w") as file:
+            file.write(pygame_code)
+        messagebox.showinfo("Saved", f"Pygame code saved as {file_name}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, parent, notebook):
+        self.parent = parent
+        self.notebook = notebook
+        self.select_button = tk.Button(self.parent, text="Select Folder and Resize Images", command=self.select_folder)
+        self.select_button.grid(row=5,column=5)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: select_folder
+Type: Function
+Description: No description available
+Code:
+    def select_folder(self):
+        folder_selected = filedialog.askdirectory()
+        if folder_selected:
+            resize_factor = simpledialog.askfloat("Resize Factor", "Enter resize factor (e.g., 0.8 for 80%):", minvalue=0.1, maxvalue=1.0)
+            if resize_factor:
+                self.resize_images(folder_selected, resize_factor)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: resize_images
+Type: Function
+Description: No description available
+Code:
+    def resize_images(self, input_folder, resize_factor):
+        epoch_time = str(int(time.time()))
+        output_folder = os.path.join(input_folder, f'resized_output_{epoch_time}')
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+
+        for file in os.listdir(input_folder):
+            if file.lower().endswith(('.png', '.jpg', '.jpeg')):
+                img_path = os.path.join(input_folder, file)
+                try:
+                    with Image.open(img_path) as img:
+                        # Resizing the image
+                        new_size = tuple(int(dim * resize_factor) for dim in img.size)
+                        resized_img = img.resize(new_size, Image.Resampling.LANCZOS)
+                        # Saving the resized image
+                        resized_img.save(os.path.join(output_folder, file))
+                        print(f"Resized and saved: {file}")
+                except Exception as e:
+                    print(f"Error processing {file}: {e}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, parent):
+        self.parent = parent
+             # Frames
+        self.main_frame = ttk.Frame(self.parent, padding="10")
+        self.main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        # Widgets
+        ttk.Label(self.main_frame, text="Select images to create a sprite sheet:").grid(row=0, column=0, columnspan=2)
+
+        self.select_button = ttk.Button(self.main_frame, text="Select Images", command=self.select_images)
+        self.select_button.grid(row=1, column=0, columnspan=2, pady=10)
+
+        self.grid_size_label = ttk.Label(self.main_frame, text="Grid Size (Columns x Rows):")
+        self.grid_size_label.grid(row=2, column=0, sticky=tk.W)
+
+        self.columns_entry = ttk.Entry(self.main_frame, width=5)
+        self.columns_entry.grid(row=2, column=1, sticky=tk.W)
+        self.columns_entry.insert(0, "3")  # Default 3 columns
+
+        self.build_button = ttk.Button(self.main_frame, text="Build Sprite Sheet", command=self.build_sprite_sheet)
+        self.build_button.grid(row=3, column=0, columnspan=2, pady=10)
+
+        self.save_button = ttk.Button(self.main_frame, text="Save Sprite Sheet", command=self.save_sprite_sheet)
+        self.save_button.grid(row=4, column=0, columnspan=2, pady=10)
+        self.save_button.config(state=tk.DISABLED)
+
+        self.preview_button = ttk.Button(self.main_frame, text="Preview Sprite Sheet", command=self.preview_sprite_sheet)
+        self.preview_button.grid(row=5, column=0, columnspan=2, pady=10)
+        self.preview_button.config(state=tk.DISABLED)
+
+        # Canvas for preview with scrollbars
+        self.canvas_frame = ttk.Frame(self.parent)
+        self.canvas_frame.grid(row=6, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        self.canvas = tk.Canvas(self.canvas_frame)
+        self.canvas.grid(row=0, column=0, sticky=tk.NSEW)
+
+        # Add scrollbars
+        self.scroll_x = ttk.Scrollbar(self.canvas_frame, orient="horizontal", command=self.canvas.xview)
+        self.scroll_x.grid(row=1, column=0, sticky=tk.EW)
+
+        self.scroll_y = ttk.Scrollbar(self.canvas_frame, orient="vertical", command=self.canvas.yview)
+        self.scroll_y.grid(row=0, column=1, sticky=tk.NS)
+
+        self.canvas.configure(xscrollcommand=self.scroll_x.set, yscrollcommand=self.scroll_y.set)
+
+        # Zoom buttons
+        self.zoom_in_button = ttk.Button(self.main_frame, text="Zoom In", command=lambda: self.zoom(1.2))
+        self.zoom_in_button.grid(row=7, column=0)
+
+        self.zoom_out_button = ttk.Button(self.main_frame, text="Zoom Out", command=lambda: self.zoom(0.8))
+        self.zoom_out_button.grid(row=7, column=1)
+
+        self.images = []
+        self.sprite_sheet = None
+        self.preview_image = None  # To hold the preview image
+        self.zoom_level = 1.0  # Track the zoom level
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: select_images
+Type: Function
+Description: Opens a file dialog to select multiple image files.
+Code:
+    def select_images(self):
+        """Opens a file dialog to select multiple image files."""
+        file_paths = filedialog.askopenfilenames(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp"),("All Files", "*.*")])
+
+        if not file_paths:
+            return  # No images selected
+
+        # Load the selected images
+        self.images = [Image.open(img_path) for img_path in file_paths]
+        messagebox.showinfo("Images Selected", f"{len(self.images)} images selected.")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: build_sprite_sheet
+Type: Function
+Description: Creates a sprite sheet from the selected images.
+Code:
+    def build_sprite_sheet(self):
+        """Creates a sprite sheet from the selected images."""
+        if not self.images:
+            messagebox.showerror("No Images", "Please select images before building the sprite sheet.")
+            return
+
+        try:
+            columns = int(self.columns_entry.get())
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter a valid number for columns.")
+            return
+
+        # Determine rows based on the number of images and columns
+        rows = (len(self.images) + columns - 1) // columns
+
+        # Get the size of the first image to determine the size of each cell in the grid
+        img_width, img_height = self.images[0].size
+
+        # Create a new image (sprite sheet) large enough to hold all selected images in the grid
+        sprite_width = img_width * columns
+        sprite_height = img_height * rows
+        self.sprite_sheet = Image.new('RGBA', (sprite_width, sprite_height))
+
+        # Paste each image into the appropriate location in the sprite sheet
+        for index, img in enumerate(self.images):
+            row, col = divmod(index, columns)
+            self.sprite_sheet.paste(img, (col * img_width, row * img_height))
+
+        # Display a success message and enable the save and preview buttons
+        messagebox.showinfo("Sprite Sheet Built", "Sprite sheet built successfully.")
+        self.save_button.config(state=tk.NORMAL)
+        self.preview_button.config(state=tk.NORMAL)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: save_sprite_sheet
+Type: Function
+Description: Saves the generated sprite sheet to a file.
+Code:
+    def save_sprite_sheet(self):
+        """Saves the generated sprite sheet to a file."""
+        if self.sprite_sheet is None:
+            messagebox.showerror("No Sprite Sheet", "Please build a sprite sheet first.")
+            return
+
+        save_path = filedialog.asksaveasfilename(defaultextension=".png",
+                                                 filetypes=[("PNG Image", "*.png"), ("All Files", "*.*")])
+
+        if save_path:
+            self.sprite_sheet.save(save_path)
+            messagebox.showinfo("Save Successful", f"Sprite sheet saved as {save_path}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: preview_sprite_sheet
+Type: Function
+Description: Displays a preview of the generated sprite sheet on the canvas.
+Code:
+    def preview_sprite_sheet(self):
+        """Displays a preview of the generated sprite sheet on the canvas."""
+        if self.sprite_sheet is None:
+            messagebox.showerror("No Sprite Sheet", "Please build a sprite sheet first.")
+            return
+
+        self.update_preview(self.sprite_sheet)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: update_preview
+Type: Function
+Description: Updates the canvas with the provided image.
+Code:
+    def update_preview(self, image):
+        """Updates the canvas with the provided image."""
+        self.preview_image = ImageTk.PhotoImage(image)
+        self.canvas.create_image(0, 0, image=self.preview_image, anchor="nw")
+        self.canvas.config(scrollregion=self.canvas.bbox(tk.ALL))  # Update scroll region
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: zoom
+Type: Function
+Description: Zooms in or out the sprite sheet by adjusting the zoom level.
+Code:
+    def zoom(self, scale_factor):
+        """Zooms in or out the sprite sheet by adjusting the zoom level."""
+        if self.sprite_sheet is None:
+            messagebox.showerror("No Sprite Sheet", "Please build a sprite sheet first.")
+            return
+
+        # Update the zoom level
+        self.zoom_level *= scale_factor
+
+        # Resize the image according to the new zoom level
+        new_width = int(self.sprite_sheet.width * self.zoom_level)
+        new_height = int(self.sprite_sheet.height * self.zoom_level)
+        resized_sprite_sheet = self.sprite_sheet.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+        # Update the preview
+        self.update_preview(resized_sprite_sheet)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, parent):
+        self.parent = parent
+        self.snippet_frame = tk.Frame(self.parent)
+        self.snippet_frame.grid(row=0, column=0, padx=10, pady=10)
+        
+        # Add multiple snippet buttons
+        tk.Button(self.snippet_frame, text="Basic Pygame Setup", command=self.insert_basic_setup).grid(row=0, column=0, padx=5, pady=5)
+        tk.Button(self.snippet_frame, text="Event Handling", command=self.insert_event_handling).grid(row=0, column=1, padx=5, pady=5)
+        tk.Button(self.snippet_frame, text="Drawing Shapes", command=self.insert_drawing_shapes).grid(row=0, column=2, padx=5, pady=5)
+        
+        # Add ScrolledText for displaying code
+        self.txtwidget = scrolledtext.ScrolledText(self.parent, width=80, height=40, font=("Courier", 10))
+        self.txtwidget.grid(row=1, column=0, columnspan=3)
+        
+        # Add buttons to clear, copy, and save the snippet
+        button_frame = tk.Frame(self.parent)
+        button_frame.grid(row=2, column=0, columnspan=3, pady=10)
+        tk.Button(button_frame, text="Clear", command=self.clear_text).grid(row=0, column=0, padx=5)
+        tk.Button(button_frame, text="Copy", command=self.copy_text).grid(row=0, column=1, padx=5)
+        tk.Button(button_frame, text="Save", command=self.save_snippet).grid(row=0, column=2, padx=5)
+        tk.Button(self.snippet_frame, text="sacred_pygame", command=self.insert_event_handling2).grid(row=0, column=4, padx=5, pady=5)
+
+        self.basic_setup_code = '''import pygame
+
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption("Basic Setup")
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        screen.fill((0, 0, 0))
+        pygame.display.flip()
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()'''
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: insert_basic_setup
+Type: Function
+Description: No description available
+Code:
+    def insert_basic_setup(self):
+        self.txtwidget.insert(tk.END, self.basic_setup_code + "\n\n")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: insert_event_handling
+Type: Function
+Description: No description available
+Code:
+    def insert_event_handling(self):
+        event_handling_code = '''for event in pygame.event.get():
+    if event.type == pygame.KEYDOWN:
+    if event.key == pygame.K_SPACE:
+        print("Spacebar pressed")'''
+        self.txtwidget.insert(tk.END, event_handling_code + "\n\n")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: insert_event_handling2
+Type: Function
+Description: No description available
+Code:
+    def insert_event_handling2(self):
+        event_handling_code2 = '''for event in pygame.event.get():
+if event.type == pg.QUIT:
+    done = True
+if event.type == pygame.K_ESCAPE:
+    done=False
+        if event.key == pygame.K_SPACE:
+            print("Spacebar pressed")'''
+        self.txtwidget.insert(tk.END, event_handling_code2 + "\n\n")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: insert_drawing_shapes
+Type: Function
+Description: No description available
+Code:
+    def insert_drawing_shapes(self):
+        drawing_shapes_code = '''pygame.draw.rect(screen, (255, 0, 0), (50, 50, 100, 100))
+pygame.draw.circle(screen, (0, 255, 0), (400, 300), 50)'''
+        self.txtwidget.insert(tk.END, drawing_shapes_code + "\n\n")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: clear_text
+Type: Function
+Description: No description available
+Code:
+    def clear_text(self):
+        self.txtwidget.delete(1.0, tk.END)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: copy_text
+Type: Function
+Description: No description available
+Code:
+    def copy_text(self):
+        self.parent.clipboard_clear()
+        self.parent.clipboard_append(self.txtwidget.get(1.0, tk.END))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: save_snippet
+Type: Function
+Description: No description available
+Code:
+    def save_snippet(self):
+        file_path = filedialog.asksaveasfilename(defaultextension=".py", filetypes=[("Python Files", "*.py")])
+        if file_path:
+            with open(file_path, "w") as file:
+                file.write(self.txtwidget.get(1.0, tk.END))
+            messagebox.showinfo("Saved", "Code snippet saved successfully!")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/Suite of PyGame_Tools_V1_3.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, notebook):
+        self.f0 = notebook.add_tab("Title Page")
+        ttk.Label(self.f0, text="A Suite of Pygame Tools").grid(row=1, column=1)
+        self.f1 = notebook.add_tab("Image Split")
+        ImageTileSplitter(self.f1, notebook)
+        self.f2 = notebook.add_tab("Create Shapes")
+        ShapeTerrainGenerator(self.f2, notebook)
+        self.f3 = notebook.add_tab("Animation")
+        AnimationGenerator(self.f3, notebook)
+        self.f4 = notebook.add_tab("Image Merger")
+        ImageMerger(self.f4, notebook)
+        self.f5 = notebook.add_tab("Sprite Animator")
+        SpritesheetAnimationGenerator(self.f5, notebook)
+        self.f6 = notebook.add_tab("Image Browser")
+        ImageBrowser(self.f6, notebook)
+        self.f7 = notebook.add_tab("Multi Image Resizer")
+        ImageResizerApp(self.f7, notebook)
+        self.f8 = notebook.add_tab("Spritesheet Builder")
+        SpriteSheetBuilder(self.f8)
+        
+        self.f9 = notebook.add_tab("Code_Snips")
+        Standard_Pygame_Code(self.f9)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/blockdrag2.py
+Name: random_color
+Type: Function
+Description: No description available
+Code:
+def random_color():
+    return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/blockdrag2.py
+Name: generate_grid
+Type: Function
+Description: No description available
+Code:
+def generate_grid(size):
+    return [[random.choice(PREDEFINED_COLORS) for _ in range(size)] for _ in range(size)]
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/blockdrag2.py
+Name: draw_grid
+Type: Function
+Description: No description available
+Code:
+def draw_grid(grid):
+    for row in range(len(grid)):
+        for col in range(len(grid[row])):
+            pygame.draw.rect(screen, grid[row][col], (col * BLOCK_SIZE, row * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/blockdrag2.py
+Name: check_for_matches
+Type: Function
+Description: No description available
+Code:
+def check_for_matches(grid):
+    # Check for any horizontal, vertical, or diagonal matches of 3 or more
+    pass  # Add your matching logic here
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/blockdrag2.py
+Name: expand_grid
+Type: Function
+Description: No description available
+Code:
+def expand_grid(grid):
+    # Expand grid size by adding more rows/columns
+    new_row = [random.choice(PREDEFINED_COLORS) for _ in range(len(grid) + 1)]
+    for row in grid:
+        row.append(random.choice(PREDEFINED_COLORS))  # Add a new column to each row
+    grid.append(new_row)  # Add a new row at the bottom
+    return grid
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/blockdrag2.py
+Name: get_block_at_pos
+Type: Function
+Description: Returns the row, col of the block based on mouse position. 
+Code:
+def get_block_at_pos(pos):
+    """ Returns the row, col of the block based on mouse position. """
+    x, y = pos
+    col = x // BLOCK_SIZE
+    row = y // BLOCK_SIZE
+    if row < GRID_SIZE and col < GRID_SIZE:
+        return row, col
+    return None, None
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/blockdrag2.py
+Name: move_block
+Type: Function
+Description: Move the block to a new position and swap the positions in the grid. 
+Code:
+def move_block(grid, start_pos, end_pos):
+    """ Move the block to a new position and swap the positions in the grid. """
+    if start_pos and end_pos:
+        start_row, start_col = start_pos
+        end_row, end_col = end_pos
+        grid[start_row][start_col], grid[end_row][end_col] = grid[end_row][end_col], grid[start_row][start_col]
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/blockdrag2.py
+Name: random_move
+Type: Function
+Description: Move random blocks to adjacent positions 
+Code:
+def random_move(grid):
+    """ Move random blocks to adjacent positions """
+    for _ in range(2):  # You can control how many blocks move
+        row, col = random.randint(0, GRID_SIZE-1), random.randint(0, GRID_SIZE-1)
+        direction = random.choice(["up", "down", "left", "right"])
+        
+        if direction == "up" and row > 0:
+            move_block(grid, (row, col), (row - 1, col))
+        elif direction == "down" and row < GRID_SIZE - 1:
+            move_block(grid, (row, col), (row + 1, col))
+        elif direction == "left" and col > 0:
+            move_block(grid, (row, col), (row, col - 1))
+        elif direction == "right" and col < GRID_SIZE - 1:
+            move_block(grid, (row, col), (row, col + 1))
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: TextManipulationApp
+Type: Class
+Description: No description available
+Code:
+class TextManipulationApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Text Manipulation App with Menu")
+
+        # Add a Menu
+        self.menu = tk.Menu(root)
+        root.config(menu=self.menu)
+
+        # File Menu
+        file_menu = tk.Menu(self.menu, tearoff=0)
+        file_menu.add_command(label="Load Text", command=self.load_text)
+        file_menu.add_command(label="Save Text", command=self.save_text)
+        self.menu.add_cascade(label="File", menu=file_menu)
+
+        # Edit Menu
+        edit_menu = tk.Menu(self.menu, tearoff=0)
+        edit_menu.add_command(label="Find and Replace", command=self.find_and_replace)
+        edit_menu.add_command(label="Word Count", command=self.word_count)
+        edit_menu.add_command(label="Character Count", command=self.character_count)
+        edit_menu.add_command(label="Line Count", command=self.line_count)
+        edit_menu.add_command(label="Regex Search", command=self.regex_search)
+        self.menu.add_cascade(label="Edit", menu=edit_menu)
+
+        # Text widget for displaying text
+        self.text_widget = tk.Text(root, wrap='word', height=15, width=60)
+        self.text_widget.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+
+        # Load Text Button
+        self.load_button = tk.Button(root, text="Load Text", command=self.load_text)
+        self.load_button.grid(row=1, column=0, padx=5, pady=5)
+
+        # Save Text Button
+        self.save_button = tk.Button(root, text="Save Text", command=self.save_text)
+        self.save_button.grid(row=1, column=1, padx=5, pady=5)
+
+        # Reverse Text Button
+        self.reverse_button = tk.Button(root, text="Reverse Text", command=self.reverse_text)
+        self.reverse_button.grid(row=2, column=0, padx=5, pady=5)
+
+        # Convert to Uppercase Button
+        self.uppercase_button = tk.Button(root, text="To Uppercase", command=self.to_uppercase)
+        self.uppercase_button.grid(row=2, column=1, padx=5, pady=5)
+
+        # Convert to Lowercase Button
+        self.lowercase_button = tk.Button(root, text="To Lowercase", command=self.to_lowercase)
+        self.lowercase_button.grid(row=2, column=2, padx=5, pady=5)
+
+        # Remove Whitespace Button
+        self.trim_button = tk.Button(root, text="Trim Whitespace", command=self.trim_whitespace)
+        self.trim_button.grid(row=2, column=3, padx=5, pady=5)
+
+    def load_text(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
+        if file_path:
+            try:
+                with open(file_path, 'r') as file:
+                    content = file.read()
+                    self.text_widget.delete(1.0, tk.END)
+                    self.text_widget.insert(tk.END, content)
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to load file: {e}")
+
+    def save_text(self):
+        file_path = filedialog.asksaveasfilename(defaultextension=".txt", 
+                                                 filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
+        if file_path:
+            try:
+                with open(file_path, 'w') as file:
+                    content = self.text_widget.get(1.0, tk.END)
+                    file.write(content)
+                messagebox.showinfo("Success", "File saved successfully!")
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to save file: {e}")
+
+    def reverse_text(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        reversed_content = content[::-1]
+        self.text_widget.delete(1.0, tk.END)
+        self.text_widget.insert(tk.END, reversed_content)
+
+    def to_uppercase(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        upper_content = content.upper()
+        self.text_widget.delete(1.0, tk.END)
+        self.text_widget.insert(tk.END, upper_content)
+
+    def to_lowercase(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        lower_content = content.lower()
+        self.text_widget.delete(1.0, tk.END)
+        self.text_widget.insert(tk.END, lower_content)
+
+    def trim_whitespace(self):
+        content = self.text_widget.get(1.0, tk.END)
+        trimmed_content = content.strip()
+        self.text_widget.delete(1.0, tk.END)
+        self.text_widget.insert(tk.END, trimmed_content)
+
+    def find_and_replace(self):
+        find_str = simpledialog.askstring("Find", "Enter the word to find:")
+        replace_str = simpledialog.askstring("Replace", "Enter the word to replace:")
+        if find_str and replace_str:
+            content = self.text_widget.get(1.0, tk.END)
+            new_content = content.replace(find_str, replace_str)
+            self.text_widget.delete(1.0, tk.END)
+            self.text_widget.insert(tk.END, new_content)
+
+    def word_count(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        words = len(content.split())
+        messagebox.showinfo("Word Count", f"Total Words: {words}")
+
+    def character_count(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        characters = len(content)
+        messagebox.showinfo("Character Count", f"Total Characters: {characters}")
+
+    def line_count(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        lines = content.count('\n') + 1
+        messagebox.showinfo("Line Count", f"Total Lines: {lines}")
+
+    def regex_search(self):
+        pattern = simpledialog.askstring("Regex Search", "Enter the regex pattern:")
+        if pattern:
+            content = self.text_widget.get(1.0, tk.END)
+            matches = re.findall(pattern, content)
+            messagebox.showinfo("Regex Search", f"Matches found: {matches}" if matches else "No matches found.")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Text Manipulation App with Menu")
+
+        # Add a Menu
+        self.menu = tk.Menu(root)
+        root.config(menu=self.menu)
+
+        # File Menu
+        file_menu = tk.Menu(self.menu, tearoff=0)
+        file_menu.add_command(label="Load Text", command=self.load_text)
+        file_menu.add_command(label="Save Text", command=self.save_text)
+        self.menu.add_cascade(label="File", menu=file_menu)
+
+        # Edit Menu
+        edit_menu = tk.Menu(self.menu, tearoff=0)
+        edit_menu.add_command(label="Find and Replace", command=self.find_and_replace)
+        edit_menu.add_command(label="Word Count", command=self.word_count)
+        edit_menu.add_command(label="Character Count", command=self.character_count)
+        edit_menu.add_command(label="Line Count", command=self.line_count)
+        edit_menu.add_command(label="Regex Search", command=self.regex_search)
+        self.menu.add_cascade(label="Edit", menu=edit_menu)
+
+        # Text widget for displaying text
+        self.text_widget = tk.Text(root, wrap='word', height=15, width=60)
+        self.text_widget.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+
+        # Load Text Button
+        self.load_button = tk.Button(root, text="Load Text", command=self.load_text)
+        self.load_button.grid(row=1, column=0, padx=5, pady=5)
+
+        # Save Text Button
+        self.save_button = tk.Button(root, text="Save Text", command=self.save_text)
+        self.save_button.grid(row=1, column=1, padx=5, pady=5)
+
+        # Reverse Text Button
+        self.reverse_button = tk.Button(root, text="Reverse Text", command=self.reverse_text)
+        self.reverse_button.grid(row=2, column=0, padx=5, pady=5)
+
+        # Convert to Uppercase Button
+        self.uppercase_button = tk.Button(root, text="To Uppercase", command=self.to_uppercase)
+        self.uppercase_button.grid(row=2, column=1, padx=5, pady=5)
+
+        # Convert to Lowercase Button
+        self.lowercase_button = tk.Button(root, text="To Lowercase", command=self.to_lowercase)
+        self.lowercase_button.grid(row=2, column=2, padx=5, pady=5)
+
+        # Remove Whitespace Button
+        self.trim_button = tk.Button(root, text="Trim Whitespace", command=self.trim_whitespace)
+        self.trim_button.grid(row=2, column=3, padx=5, pady=5)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: load_text
+Type: Function
+Description: No description available
+Code:
+    def load_text(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
+        if file_path:
+            try:
+                with open(file_path, 'r') as file:
+                    content = file.read()
+                    self.text_widget.delete(1.0, tk.END)
+                    self.text_widget.insert(tk.END, content)
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to load file: {e}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: save_text
+Type: Function
+Description: No description available
+Code:
+    def save_text(self):
+        file_path = filedialog.asksaveasfilename(defaultextension=".txt", 
+                                                 filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
+        if file_path:
+            try:
+                with open(file_path, 'w') as file:
+                    content = self.text_widget.get(1.0, tk.END)
+                    file.write(content)
+                messagebox.showinfo("Success", "File saved successfully!")
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to save file: {e}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: reverse_text
+Type: Function
+Description: No description available
+Code:
+    def reverse_text(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        reversed_content = content[::-1]
+        self.text_widget.delete(1.0, tk.END)
+        self.text_widget.insert(tk.END, reversed_content)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: to_uppercase
+Type: Function
+Description: No description available
+Code:
+    def to_uppercase(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        upper_content = content.upper()
+        self.text_widget.delete(1.0, tk.END)
+        self.text_widget.insert(tk.END, upper_content)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: to_lowercase
+Type: Function
+Description: No description available
+Code:
+    def to_lowercase(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        lower_content = content.lower()
+        self.text_widget.delete(1.0, tk.END)
+        self.text_widget.insert(tk.END, lower_content)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: trim_whitespace
+Type: Function
+Description: No description available
+Code:
+    def trim_whitespace(self):
+        content = self.text_widget.get(1.0, tk.END)
+        trimmed_content = content.strip()
+        self.text_widget.delete(1.0, tk.END)
+        self.text_widget.insert(tk.END, trimmed_content)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: find_and_replace
+Type: Function
+Description: No description available
+Code:
+    def find_and_replace(self):
+        find_str = simpledialog.askstring("Find", "Enter the word to find:")
+        replace_str = simpledialog.askstring("Replace", "Enter the word to replace:")
+        if find_str and replace_str:
+            content = self.text_widget.get(1.0, tk.END)
+            new_content = content.replace(find_str, replace_str)
+            self.text_widget.delete(1.0, tk.END)
+            self.text_widget.insert(tk.END, new_content)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: word_count
+Type: Function
+Description: No description available
+Code:
+    def word_count(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        words = len(content.split())
+        messagebox.showinfo("Word Count", f"Total Words: {words}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: character_count
+Type: Function
+Description: No description available
+Code:
+    def character_count(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        characters = len(content)
+        messagebox.showinfo("Character Count", f"Total Characters: {characters}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: line_count
+Type: Function
+Description: No description available
+Code:
+    def line_count(self):
+        content = self.text_widget.get(1.0, tk.END).strip()
+        lines = content.count('\n') + 1
+        messagebox.showinfo("Line Count", f"Total Lines: {lines}")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/text_mapu_01.py
+Name: regex_search
+Type: Function
+Description: No description available
+Code:
+    def regex_search(self):
+        pattern = simpledialog.askstring("Regex Search", "Enter the regex pattern:")
+        if pattern:
+            content = self.text_widget.get(1.0, tk.END)
+            matches = re.findall(pattern, content)
+            messagebox.showinfo("Regex Search", f"Matches found: {matches}" if matches else "No matches found.")
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/enemy.py
+Name: Enemy
+Type: Class
+Description: No description available
+Code:
+class Enemy:
+    def __init__(self, x, y, width, height, velocity):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.velocity = velocity
+        self.color = (255, 0, 0)  # Red for the enemy
+    
+    def move_towards_player(self, player_rect):
+        # Basic AI to move towards the player
+        if self.rect.x < player_rect.x:
+            self.rect.x += self.velocity
+        if self.rect.x > player_rect.x:
+            self.rect.x -= self.velocity
+        if self.rect.y < player_rect.y:
+            self.rect.y += self.velocity
+        if self.rect.y > player_rect.y:
+            self.rect.y -= self.velocity
+    
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect)
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/enemy.py
+Name: __init__
+Type: Function
+Description: No description available
+Code:
+    def __init__(self, x, y, width, height, velocity):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.velocity = velocity
+        self.color = (255, 0, 0)  # Red for the enemy
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/enemy.py
+Name: move_towards_player
+Type: Function
+Description: No description available
+Code:
+    def move_towards_player(self, player_rect):
+        # Basic AI to move towards the player
+        if self.rect.x < player_rect.x:
+            self.rect.x += self.velocity
+        if self.rect.x > player_rect.x:
+            self.rect.x -= self.velocity
+        if self.rect.y < player_rect.y:
+            self.rect.y += self.velocity
+        if self.rect.y > player_rect.y:
+            self.rect.y -= self.velocity
+----------------------------------------
+
+File: /home/jh/Desktop/Local_Python/GAMES_Projects/enemy.py
+Name: draw
+Type: Function
+Description: No description available
+Code:
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect)
+----------------------------------------

@@ -1,0 +1,148 @@
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/maze_gen1.py
+Function: generate_maze
+Description: No description available
+Code:
+stack = [(0, 0)]
+    while stack:
+        x, y = stack[-1]
+        maze[y][x] = 0  # Mark path
+        neighbors = []
+        if x > 1 and maze[y][x - 2] == 1: neighbors.append((x - 2, y))
+        if y > 1 and maze[y - 2][x] == 1: neighbors.append((x, y - 2))
+        if x < maze_width - 2 and maze[y][x + 2] == 1: neighbors.append((x + 2, y))
+        if y < maze_height - 2 and maze[y + 2][x] == 1: neighbors.append((x, y + 2))
+        if neighbors:
+            nx, ny = random.choice(neighbors)
+            maze[(y + ny) // 2][(x + nx) // 2] = 0  # Remove wall
+            stack.append((nx, ny))
+        else:
+            stack.pop()
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/mazegen4.py
+Function: __init__
+Description: No description available
+Code:
+self.tiles = {}  # Dictionary to store maze tiles
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/mazegen4.py
+Function: get_tile
+Description: No description available
+Code:
+if (x, y) not in self.tiles:
+            # Generate new tile (1 for wall, 0 for path)
+            if random.random() < 0.2:  # 20% chance of being a wall
+                self.tiles[(x, y)] = 1
+            else:
+                self.tiles[(x, y)] = 0
+        return self.tiles[(x, y)]
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/mazegen4.py
+Function: draw
+Description: No description available
+Code:
+for y in range(-1, SCREEN_HEIGHT // TILE_SIZE + 1):
+            for x in range(-1, SCREEN_WIDTH // TILE_SIZE + 1):
+                maze_x = (camera_x // TILE_SIZE) + x
+                maze_y = (camera_y // TILE_SIZE) + y
+                tile = self.get_tile(maze_x, maze_y)
+                if tile == 1:  # Draw wall
+                    screen.blit(
+                        wall_image,
+                        (x * TILE_SIZE - camera_x % TILE_SIZE,
+                         y * TILE_SIZE - camera_y % TILE_SIZE)
+                    )
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/mazegen4.py
+Function: __init__
+Description: No description available
+Code:
+self.x = x
+        self.y = y
+        self.speed = 5
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/mazegen4.py
+Function: move
+Description: No description available
+Code:
+keys = pygame.key.get_pressed()
+        new_x, new_y = self.x, self.y
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/mazegen4.py
+Function: can_move_to
+Description: No description available
+Code:
+tile_x = new_x // TILE_SIZE
+        tile_y = new_y // TILE_SIZE
+        corners = [
+            (tile_x, tile_y),  # Top-left
+            (tile_x + PLAYER_SIZE // TILE_SIZE, tile_y),  # Top-right
+            (tile_x, tile_y + PLAYER_SIZE // TILE_SIZE),  # Bottom-left
+            (tile_x + PLAYER_SIZE // TILE_SIZE, tile_y + PLAYER_SIZE // TILE_SIZE),  # Bottom-right
+        ]
+        for corner in corners:
+            if maze.get_tile(*corner) == 1:  # If any corner collides with a wall
+                return False
+        return True
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/mazegen4.py
+Function: draw
+Description: No description available
+Code:
+screen.blit(
+            player_image,
+            (self.x - camera_x, self.y - camera_y)
+        )
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/maze gen3.py
+Function: get_tile
+Description: No description available
+Code:
+if (x, y) not in maze:
+        # Generate new tile (1 for wall, 0 for path)
+        if random.random() < 0.2:  # 20% chance of being a wall
+            maze[(x, y)] = 1
+        else:
+            maze[(x, y)] = 0
+    return maze[(x, y)]
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/maze gen3.py
+Function: can_move_to
+Description: No description available
+Code:
+# Calculate player's tile coordinates
+    tile_x = new_x // tile_size
+    tile_y = new_y // tile_size
+    # Check all corners of the player's bounding box
+    corners = [
+        (tile_x, tile_y),  # Top-left
+        (tile_x + player_size // tile_size, tile_y),  # Top-right
+        (tile_x, tile_y + player_size // tile_size),  # Bottom-left
+        (tile_x + player_size // tile_size, tile_y + player_size // tile_size),  # Bottom-right
+    ]
+    for corner in corners:
+        if get_tile(*corner) == 1:  # If any corner collides with a wall
+            return False
+    return True
+----------------------------------------
+
+File: /media/jh/Extended/All_Python/Scripts_Past/maze generastor/maze_gen2.py
+Function: get_tile
+Description: No description available
+Code:
+if (x, y) not in maze:
+        # Generate new tile (1 for wall, 0 for path)
+        if random.random() < 0.2:  # 20% chance of being a wall
+            maze[(x, y)] = 1
+        else:
+            maze[(x, y)] = 0
+    return maze[(x, y)]
+----------------------------------------
